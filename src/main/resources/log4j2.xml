@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_LEVEL_PATTERN" >%highlight{%-5p}{FATAL=red bold, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue}</Property>
+        <Property name="LOG_PATTERN" >%d{yyyy-MM-dd HH:mm:ss.fff} [%t] ${LOG_LEVEL_PATTERN} %logger{36}: %style{%msg%n}{cyan}</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false" pattern="${LOG_PATTERN}" />
+        </Console>
+
+        <RollingFile name="File" fileName="logs/app.log" filePattern="logs/app.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <!--            최근 30개만 보관-->
+            <DefaultRolloverStrategy max="30" />
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </Root>
+    </Loggers>
+</Configuration>
