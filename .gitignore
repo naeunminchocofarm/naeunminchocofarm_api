@@ -34,4 +34,4 @@ out/
 /.nb-gradle/
 
 ### Jasypt Test ###
-/src/test/java/com.naeunminchocofarm.ncf_api/jasypt/*
+src/test/java/com.naeunminchocofarm.ncf_api/jasypt/
