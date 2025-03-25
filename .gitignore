@@ -36,3 +36,5 @@ out/
 ### Jasypt Test ###
 src/test/java/com/naeunminchocofarm/ncf_api/jasypt/
 
+# logs
+logs/
