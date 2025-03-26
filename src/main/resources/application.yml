@@ -5,7 +5,7 @@ spring:
   application:
     name: ncf-api
 
-# ??????(postgresql) ??
+# 데이터베이스 연결 설정 (postgresql)
   datasource:
     url: jdbc:postgresql://ENC(VOhMghnIumLiqSeEmXsem2Z/dD5Gu8tHriUJMukBtgzLaIeh/Kv2MdRvaoeZVFlLpTDDe9KNturfkxUMKqpliw==)/ENC(7lvgTbpjw0N/ZK7g1A/QtgnaZrbdMDbH/bfC2IEpiUZpgxUTBzP6jAVpUKi5k85kg/C2HkL9Wfy3amQZbLpmIg==)
     username: ENC(0gMTIsuEZSe7M6pMUpiUyNqrza5ddahb/7IAKMZFTuiLVOvQ7QLEjR9UNGk9F2QTIOba24DOL3P1D4VlHvRCCA==)
