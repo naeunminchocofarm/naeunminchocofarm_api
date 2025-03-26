@@ -6,4 +6,21 @@
         INSERT INTO air_temperatures (temperature_c, measured_at)
         VALUES (#{temperatureC}, #{measuredAt})
     </insert>
+
+    <select id="getRecentTemperaturesGroupedByHour" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
+        SELECT
+            MAX(id) AS id,
+            DATE_TRUNC('hour', measured_at) AS measuredAt,
+            AVG(temperature_c) AS temperature_c
+        FROM air_temperatures
+        GROUP BY measuredAt
+        ORDER BY id DESC
+        LIMIT #{pagination.size} OFFSET #{pagination.skip};
+    </select>
+
+    <select id="getRecentTemperatures" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
+        SELECT * FROM air_temperatures
+        ORDER BY id DESC
+        LIMIT #{pagination.size} OFFSET #{pagination.skip};
+    </select>
 </mapper>
