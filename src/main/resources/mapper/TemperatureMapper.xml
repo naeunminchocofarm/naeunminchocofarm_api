@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.iot.mapper.TemperatureMapper">
-    <insert id="insert">
-    </insert>
+    <!-- 온도 조회 할때 1. 가장 최신의 데이터-->
+<!--    <select id="getNowTemp">-->
+<!--        SELECT TEMP_DATE
+                , TEMP_NUM-->
+<!--        FROM 온도테이블-->
+<!--        WHERE COUNT(온도테이블) 테이블의갯수-->
+<!--    </select>-->
+
+    <!--2. 동일 날짜의 시간별 데이터-->
+<!--    <select id="getTodayTemp">-->
+<!--        SELECT TEMP_NUM-->
+<!--        , TEMP_DATE-->
+<!--        FROM 온도테이블-->
+<!--        WHERE 오늘날짜 = TEMP_DATE-->
+<!--    </select>-->
 </mapper>
