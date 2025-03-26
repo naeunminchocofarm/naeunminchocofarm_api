@@ -25,6 +25,6 @@ public class HumidityController {
 
     @PostMapping("/humidities")
     public void insertHumidity(@RequestParam("value") Float value, @RequestParam("measuredAt") OffsetDateTime measuredAt) {
-        return humidityService.insert(value, measuredAt);
+        humidityService.insert(value, measuredAt);
     }
 }
