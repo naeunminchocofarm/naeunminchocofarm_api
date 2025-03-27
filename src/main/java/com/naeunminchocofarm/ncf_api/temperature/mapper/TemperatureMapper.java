@@ -1,7 +1,6 @@
 package com.naeunminchocofarm.ncf_api.temperature.mapper;
 
 import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
-import com.naeunminchocofarm.ncf_api.temperature.dto.AirTemperatureDTO;
 import com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
