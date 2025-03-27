@@ -21,7 +21,6 @@ public class LdrController {
     @PostMapping("/ldr-values")
     public void insertLdrValue(@RequestParam("ldr-value") Integer ldrValue, @RequestParam("measured-at")OffsetDateTime measuredAt) {
         log.info("insert ldr value: value = {}, measured at = {}", ldrValue, measuredAt);
-
         ldrService.insertLdrValue(ldrValue, measuredAt);
     }
 }
