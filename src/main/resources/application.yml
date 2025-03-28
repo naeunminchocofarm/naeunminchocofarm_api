@@ -11,6 +11,11 @@ spring:
     username: ENC(0gMTIsuEZSe7M6pMUpiUyNqrza5ddahb/7IAKMZFTuiLVOvQ7QLEjR9UNGk9F2QTIOba24DOL3P1D4VlHvRCCA==)
     password: ENC(xW/qXlrR7dCIwXLKZL6nfnFryR1xVf/lhvKLl0sH/e2vKXQsBh9GonwkZQwZftTAQmHsMDuu5vDv3W943GC5IA==)
     driver-class-name: org.postgresql.Driver
+    time-zone: Asia/Seoul
+
+  jpa:
+    properties:
+      hibernate.jdbc.time_zone: Asia/Seoul
 
 # mybatis 설정
 mybatis:
