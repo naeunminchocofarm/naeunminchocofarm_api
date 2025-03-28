@@ -28,9 +28,10 @@ public class TemperatureController {
         temperatureService.insertTemperature(temperature, measuredAt);
     }
 
-
     @GetMapping("/temperatures")
-    public List<AirTemperatureDTO> getTemperatures(@RequestParam(value = "interval", defaultValue = "") String rawInterval, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "1000") Integer size) {
+    public List<AirTemperatureDTO> getTemperatures(@RequestParam(value = "interval", defaultValue = "") String rawInterval
+            , @RequestParam(value = "page", defaultValue = "1") Integer page
+            , @RequestParam(value = "size", defaultValue = "1000") Integer size) {
         Pagination pagination;
 
         try {
@@ -44,4 +45,9 @@ public class TemperatureController {
             default -> temperatureService.getTemperatures(pagination);
         };
     }
+
+//    @GetMapping("/temperaturesOne")
+//    public AirTemperatureDTO getRecentOneTemp() {
+//       return temperatureService.getRecentOneTemp();
+//    }
 }
