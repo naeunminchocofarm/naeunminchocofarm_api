@@ -55,12 +55,12 @@ public class NcfFrame {
     }
 
     public static NcfFrame parse(String rawFrame) {
-        var lines = rawFrame.trim().split("\n");
+        var lines = rawFrame.split("\n");
         var command = lines[0].trim();
 
         var index = 1;
         var headers = new HashMap<String, String>();
-        while (true) {
+        while (index < lines.length) {
             var rawHeader = lines[index].trim();
             index += 1;
 
