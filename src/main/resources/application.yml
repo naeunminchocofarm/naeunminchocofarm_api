@@ -13,10 +13,6 @@ spring:
     driver-class-name: org.postgresql.Driver
     time-zone: Asia/Seoul
 
-  jpa:
-    properties:
-      hibernate.jdbc.time_zone: Asia/Seoul
-
 # mybatis 설정
 mybatis:
   mapper-locations: classpath:mapper/*.xml

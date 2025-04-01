@@ -2,7 +2,7 @@
 <Configuration status="WARN">
     <Properties>
         <Property name="LOG_LEVEL_PATTERN" >%highlight{%-5p}{FATAL=red bold, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue}</Property>
-        <Property name="LOG_PATTERN" >%d{yyyy-MM-dd HH:mm:ss.fff} [%t] ${LOG_LEVEL_PATTERN} %logger{36}: %style{%msg%n}{cyan}</Property>
+        <Property name="LOG_PATTERN" >%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] ${LOG_LEVEL_PATTERN} %logger{36}: %style{%msg%n}{cyan}</Property>
     </Properties>
 
     <Appenders>
@@ -15,7 +15,7 @@
             <Policies>
                 <TimeBasedTriggeringPolicy />
             </Policies>
-            <!--            최근 30개만 보관-->
+            <!--최근 30개만 보관-->
             <DefaultRolloverStrategy max="30" />
         </RollingFile>
     </Appenders>

@@ -12,31 +12,23 @@
     <select id="getRecentTemperaturesGroupedByHour" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
         SELECT
             MAX(id) AS id,
-            DATE_TRUNC('hour', measured_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul') AS measuredAt,
+            DATE_TRUNC('hour', measured_at) AS measuredAt,
             AVG(temperature_c) AS temperature_c
         FROM air_temperatures
+        WHERE (measured_at)::date = CURRENT_DATE
         GROUP BY measuredAt
-        WHERE (measured_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul')::date = CURRENT_DATE
         ORDER BY id DESC
         LIMIT #{pagination.size} OFFSET #{pagination.skip};
     </select>
 
-    <!--최근전체데이터 TODAY 전체-->
+    <!--최근전체데이터 TODAY 전체 오늘껀 불러옴-->
     <select id="getRecentTemperatures" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
         SELECT id
         , temperature_c
-        , measured_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul' AS measured_at
+        , measured_at AS measured_at
         FROM air_temperatures
-        WHERE (measured_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul' )::date = CURRENT_DATE
+        WHERE (measured_at)::date = CURRENT_DATE
         ORDER BY id DESC
         LIMIT #{pagination.size} OFFSET #{pagination.skip};
-    </select>
-
-    <!--숫자 1개  ar... 위에꺼에서 max를 불러오면되구나;-->
-    <select id="getRecentOneTemp" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
-        SELECT *
-        FROM air_temperatures
-        ORDER BY id DESC
-        LIMIT 1;
     </select>
 </mapper>
