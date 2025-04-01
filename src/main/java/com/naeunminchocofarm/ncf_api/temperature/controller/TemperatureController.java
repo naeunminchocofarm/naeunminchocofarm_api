@@ -28,6 +28,7 @@ public class TemperatureController {
         temperatureService.insertTemperature(temperature, measuredAt);
     }
 
+    //최신데이터 불러오는 중임
     @GetMapping("/temperatures")
     public List<AirTemperatureDTO> getTemperatures(@RequestParam(value = "interval", defaultValue = "") String rawInterval
             , @RequestParam(value = "page", defaultValue = "1") Integer page
@@ -46,9 +47,9 @@ public class TemperatureController {
         };
     }
 
-//    @GetMapping("/temperaturesOne")
+//    @GetMapping("/getRecentTemperatures")
 //    public AirTemperatureDTO getRecentOneTemp() {
-//       return temperatureService.getRecentOneTemp();
+//       return AirTemperatureDTO;
 //    }
 }
 

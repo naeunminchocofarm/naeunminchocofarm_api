@@ -15,6 +15,7 @@
             DATE_TRUNC('hour', measured_at) AS measuredAt,
             AVG(temperature_c) AS temperature_c
         FROM air_temperatures
+        WHERE (measured_at)::date = CURRENT_DATE or
         GROUP BY measuredAt
         ORDER BY id DESC
         LIMIT #{pagination.size} OFFSET #{pagination.skip};
