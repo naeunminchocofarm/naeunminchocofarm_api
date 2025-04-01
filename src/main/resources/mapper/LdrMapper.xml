@@ -6,4 +6,11 @@
         INSERT INTO ldr_values (ldr_value, measured_at)
         VALUES (#{ldrValue}, #{measuredAt})
     </insert>
+
+    <select id="getAllLdrValue" resultType="com.naeunminchocofarm.ncf_api.ldr.dto.LdrValueDTO">
+        SELECT id, ldr_value, measured_at
+        FROM ldr_values
+        ORDER BY measured_at DESC;
+    </select>
+
 </mapper>
