@@ -20,7 +20,7 @@
         LIMIT #{pagination.size} OFFSET #{pagination.skip};
     </select>
 
-    <!--최근전체데이터 TODAY 전체-->
+    <!--최근전체데이터 TODAY 전체 오늘껀 불러옴-->
     <select id="getRecentTemperatures" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
         SELECT id
         , temperature_c
