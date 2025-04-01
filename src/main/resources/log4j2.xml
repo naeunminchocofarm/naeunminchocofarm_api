@@ -15,7 +15,7 @@
             <Policies>
                 <TimeBasedTriggeringPolicy />
             </Policies>
-            <!--            최근 30개만 보관-->
+            <!--최근 30개만 보관-->
             <DefaultRolloverStrategy max="30" />
         </RollingFile>
     </Appenders>
