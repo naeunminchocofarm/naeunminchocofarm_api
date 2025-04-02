@@ -51,7 +51,7 @@ public class NcfFrameHandler {
         var destination = frame.getDestination();
         var subscribeHandler = findSubscribeHandler(destination);
         subscribeHandler.ifPresent(x -> {
-            log.info("client send: " + frame.getBody());
+            log.info("client send: " + frame.getBody() + ", destination: " + x.getDestination());
             x.broadcast(frame.getBody());
         });
     }

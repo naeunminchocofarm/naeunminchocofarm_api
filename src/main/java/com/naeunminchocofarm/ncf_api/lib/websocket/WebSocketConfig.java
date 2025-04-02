@@ -11,7 +11,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public WebSocketConfig(NcfFrameHandler ncfFrameHandler) {
         ncfFrameHandler.addSubscribeHandlers(
                 NcfSubscribeHandler.createDefault("test-subject"),
-                NcfSubscribeHandler.createDefault("motion-detecting")
+                NcfSubscribeHandler.createDefault("motion-detecting"),
+                NcfSubscribeHandler.createDefault("awning")
         );
 
         this.ncfFrameHandler = ncfFrameHandler;

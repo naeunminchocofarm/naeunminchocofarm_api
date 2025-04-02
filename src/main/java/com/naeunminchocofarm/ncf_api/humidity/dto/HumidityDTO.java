@@ -5,16 +5,16 @@ import com.naeunminchocofarm.ncf_api.humidity.entity.Humidity;
 import java.time.OffsetDateTime;
 
 public class HumidityDTO {
-    private final Float value;
+    private final Double humidityPercentage;
     private final OffsetDateTime measuredAt;
 
-    public HumidityDTO(Float value, OffsetDateTime measuredAt) {
-        this.value = value;
+    public HumidityDTO(Double value, OffsetDateTime measuredAt) {
+        this.humidityPercentage = value;
         this.measuredAt = measuredAt;
     }
 
-    public Float getValue() {
-        return value;
+    public Double getHumidityPercentage() {
+        return humidityPercentage;
     }
 
     public OffsetDateTime getMeasuredAt() {
@@ -22,6 +22,6 @@ public class HumidityDTO {
     }
 
     public static HumidityDTO from(Humidity humidity) {
-        return new HumidityDTO(humidity.getValue(), humidity.getMeasuredAt());
+        return new HumidityDTO(humidity.getHumidityPercentage(), humidity.getMeasuredAt());
     }
 }
