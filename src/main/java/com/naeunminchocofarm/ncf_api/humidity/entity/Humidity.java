@@ -4,12 +4,12 @@ import java.time.OffsetDateTime;
 
 public class Humidity {
     private Integer id;
-    private Float value;
+    private Double humidityPercentage;
     private OffsetDateTime measuredAt;
 
-    public Humidity(Integer id, Float value, OffsetDateTime measuredAt) {
+    public Humidity(Integer id, Double value, OffsetDateTime measuredAt) {
         this.id = id;
-        this.value = value;
+        this.humidityPercentage = value;
         this.measuredAt = measuredAt;
     }
 
@@ -17,8 +17,8 @@ public class Humidity {
         return id;
     }
 
-    public Float getValue() {
-        return value;
+    public Double getHumidityPercentage() {
+        return humidityPercentage;
     }
 
     public OffsetDateTime getMeasuredAt() {

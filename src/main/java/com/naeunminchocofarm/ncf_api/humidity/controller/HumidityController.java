@@ -18,13 +18,8 @@ public class HumidityController {
         this.humidityService = humidityService;
     }
 
-    @GetMapping("/humidities")
-    public List<HumidityDTO> getAll(@RequestParam("delta") String delta) {
-        return humidityService.getAll(delta);
-    }
-
     @PostMapping("/humidities")
-    public void insertHumidity(@RequestParam("value") Float value, @RequestParam("measuredAt") OffsetDateTime measuredAt) {
-        humidityService.insert(value, measuredAt);
+    public void insertHumidity(@RequestParam("humidity-percentage") Double humidityPercentage, @RequestParam("measured-at") OffsetDateTime measuredAt) {
+        humidityService.insert(humidityPercentage, measuredAt);
     }
 }
