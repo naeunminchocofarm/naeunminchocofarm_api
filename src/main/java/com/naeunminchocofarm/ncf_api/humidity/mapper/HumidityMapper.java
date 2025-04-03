@@ -12,7 +12,7 @@ import java.util.List;
 public interface HumidityMapper {
     void insert(@Param("humidityPercentage") Double humidityPercentage, @Param("measuredAt") OffsetDateTime measuredAt);
 
-    List<HumidityDTO> getAllHumidity();
+    List<Humidity> getAllHumidity();
 }
 
 

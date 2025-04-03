@@ -21,6 +21,8 @@ public class HumidityService {
     }
 
     public List<HumidityDTO> getAllHumidity() {
-        return humidityMapper.getAllHumidity();
+        return humidityMapper.getAllHumidity().stream()
+                .map(HumidityDTO::from)
+                .toList();
     }
 }
