@@ -26,4 +26,9 @@ public class HumidityController {
         log.info("humidity " + humidityPercentage + "%, measured at " + measuredAt);
         humidityService.insert(humidityPercentage, measuredAt);
     }
+
+    @GetMapping("/humidities")
+    public List<HumidityDTO> getAllHumidity() {
+        return humidityService.getAllHumidity();
+    }
 }
