@@ -6,4 +6,10 @@
         INSERT INTO humidities (humidity_percentage, measured_at)
         VALUES (#{humidityPercentage}, #{measuredAt})
     </insert>
+
+    <select id="getAllHumidity" resultType="com.naeunminchocofarm.ncf_api.humidity.entity.Humidity">
+        SELECT *
+        FROM humidities
+        ORDER BY id DESC;
+    </select>
 </mapper>

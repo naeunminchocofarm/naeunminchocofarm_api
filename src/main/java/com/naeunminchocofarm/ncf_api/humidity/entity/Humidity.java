@@ -7,6 +7,9 @@ public class Humidity {
     private Double humidityPercentage;
     private OffsetDateTime measuredAt;
 
+    public Humidity() {
+    }
+
     public Humidity(Integer id, Double value, OffsetDateTime measuredAt) {
         this.id = id;
         this.humidityPercentage = value;
