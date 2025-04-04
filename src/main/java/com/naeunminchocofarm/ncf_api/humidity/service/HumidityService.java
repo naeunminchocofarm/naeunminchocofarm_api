@@ -19,4 +19,10 @@ public class HumidityService {
     public void insert(Double humidityPercentage, OffsetDateTime measuredAt) {
         humidityMapper.insert(humidityPercentage, measuredAt);
     }
+
+    public List<HumidityDTO> getAllHumidity() {
+        return humidityMapper.getAllHumidity().stream()
+                .map(HumidityDTO::from)
+                .toList();
+    }
 }

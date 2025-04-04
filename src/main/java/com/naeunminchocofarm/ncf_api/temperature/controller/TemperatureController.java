@@ -53,9 +53,5 @@ public class TemperatureController {
         };
     }
 
-//    @GetMapping("/getRecentTemperatures")
-//    public AirTemperatureDTO getRecentOneTemp() {
-//       return AirTemperatureDTO;
-//    }
 }
 

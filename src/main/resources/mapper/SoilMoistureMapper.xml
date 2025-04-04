@@ -6,4 +6,33 @@
         INSERT INTO soil_moisture_values (soil_moisture_value, measured_at)
         VALUES (#{soilMoistureValue}, #{measuredAt})
     </insert>
+
+    <!-- 하나만있으면됨 일단-->
+    <select id="getNowSoilValue" resultType="com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoisture">
+        SELECT id, soil_moisture_value, measured_at
+        FROM soil_moisture_values
+        ORDER BY id DESC
+        WHERE MAX(id) AS id;
+    </select>
+
+    <select id="getRecentSoilGroupedByHour" resultType="com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoisture">
+        SELECT
+        MAX(id) AS id,
+        DATE_TRUNC('hour', measured_at) AS measuredAt,
+        AVG(soil_moisture_value) AS soil_moisture_value
+        FROM soil_moisture_values
+        WHERE (measured_at)::date = CURRENT_DATE
+        GROUP BY measuredAt
+        ORDER BY id DESC
+        LIMIT #{pagination.size} OFFSET #{pagination.skip};
+    </select>
+
+    <!--상세페이지에 뿌릴 오늘 하루치-->
+    <select id="getTodaySoilValue" resultType="com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoisture">
+        SELECT id, soil_moisture_value, measured_at
+        FROM soil_moisture_values
+        WHERE (measured_at)::date = CURRENT_DATE
+        ORDER BY id DESC
+        LIMIT #{pagination.size} OFFSET #{pagination.skip};
+    </select>
 </mapper>
