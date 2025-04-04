@@ -26,6 +26,12 @@ public class LdrController {
         ldrService.insertLdrValue(ldrValue, measuredAt);
     }
 
+    @PostMapping("/sunshines/v2")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void insertSunShineValue(@RequestParam("sunshine-value") Integer sunshineValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-name") String farmName, @RequestParam("measured-at") OffsetDateTime measuredAt) {
+        log.info("sunshine-value: " + sunshineValue + ", sensor-name: " + sensorName + ", section-name: " + sectionName + ", crops-name: " + cropsName + ", farm-name: " + farmName + ", measured-at: " + measuredAt);
+    }
+
     @GetMapping("/ldr-values")
     public List<LdrValueDTO> getAllLdrValue() {
         return ldrService.getAllLdrValue();
