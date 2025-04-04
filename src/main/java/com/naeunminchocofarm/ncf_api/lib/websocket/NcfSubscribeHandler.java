@@ -45,4 +45,8 @@ public abstract class NcfSubscribeHandler {
     public void unsubscribe(WebSocketSession session) {
         this.sessions.remove(session.getId(), session);
     }
+
+    public boolean isEmpty() {
+        return this.sessions.isEmpty();
+    }
 }

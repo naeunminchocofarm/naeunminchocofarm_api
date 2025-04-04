@@ -63,34 +63,58 @@ public class NcfFrameHandler {
     }
 
     private void handleSubscribe(WebSocketSession session, NcfFrame frame) {
-        var subscribeHandler = findSubscribeHandler(frame.getDestination());
+        var destination = frame.getDestination();
+        var subscribeHandlerOptional = findSubscribeHandler(destination);
+        var subscribeHandler = subscribeHandlerOptional.orElseGet(() -> {
+            var newHandler = NcfSubscribeHandler.createDefault(destination);
+            addSubscribeHandlers(newHandler);
+            return newHandler;
+        });
 
-        subscribeHandler.ifPresentOrElse(x -> {
-                    x.subscribe(session);
-                    var responseFrame = new NcfFrame("SUBSCRIBE_SUCCESS");
-                    var responseMessage = new TextMessage(responseFrame.toString());
-                    try {
-                        session.sendMessage(responseMessage);
-                    } catch (IOException e) {
-                        // throw new RuntimeException(e);
-                        log.error(e.getMessage());
-                    }
-                },
-                () -> {
-                    var responseFrame = new NcfFrame("SUBSCRIBE_FAILD");
-                    var responseMessage = new TextMessage(responseFrame.toString());
-                    try {
-                        session.sendMessage(responseMessage);
-                    } catch (IOException e) {
-                        // throw new RuntimeException(e);
-                        log.error(e.getMessage());
-                    }
-                });
+        subscribeHandler.subscribe(session);
+        var responseFrame = new NcfFrame("SUBSCRIBE_SUCCESS");
+        var responseMessage = new TextMessage(responseFrame.toString());
+        try {
+            session.sendMessage(responseMessage);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+
+//        subscribeHandlerOptional.ifPresentOrElse(x -> {
+//                    x.subscribe(session);
+//                    var responseFrame = new NcfFrame("SUBSCRIBE_SUCCESS");
+//                    var responseMessage = new TextMessage(responseFrame.toString());
+//                    try {
+//                        session.sendMessage(responseMessage);
+//                    } catch (IOException e) {
+//                        log.error(e.getMessage());
+//                    }
+//                },
+//                () -> {
+//                    this.addSubscribeHandlers(
+//                            NcfSubscribeHandler.createDefault(frame.getDestination())
+//                    );
+//                    var responseFrame = new NcfFrame("SUBSCRIBE_FAILD");
+//                    var responseMessage = new TextMessage(responseFrame.toString());
+//                    try {
+//                        session.sendMessage(responseMessage);
+//                    } catch (IOException e) {
+//                        log.error(e.getMessage());
+//                    }
+//                });
     }
 
     public void disconnect(WebSocketSession session) {
-        this.subscribeHandlers.forEach(x ->{
-            x.unsubscribe(session);
-        });
+        var iterator = this.subscribeHandlers.iterator();
+        while(iterator.hasNext()) {
+            var subscribHandler = iterator.next();
+            subscribHandler.unsubscribe(session);
+            if (subscribHandler.isEmpty()) {
+                iterator.remove();
+            }
+        }
+//        this.subscribeHandlers.forEach(x ->{
+//            x.unsubscribe(session);
+//        });
     }
 }
