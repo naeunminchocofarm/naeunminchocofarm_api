@@ -22,7 +22,7 @@ public class HumidityController {
     @PostMapping("/humidities/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertHumidity(@RequestParam("humidity-percentage") Double humidityPercentage, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("measured-at") OffsetDateTime measuredAt, @RequestParam("farm-uuid") String farmUuid) {
-        log.info(String.format("Farm uuid: %s, Crops: %s, Section: %s, Sensor: %s, Humidity: %.2f%%, Measured at: %s", farmUuid, cropsName, sectionName, sensorName, humidityPercentage, measuredAt));
+        log.info(String.format("Humidity: %.2f%%, Measured at: %s, Sensor: %s, Section: %s, Crops: %s, Farm uuid: %s", humidityPercentage, measuredAt, sensorName, sectionName, cropsName, farmUuid));
         humidityService.insertHumidity(farmUuid, cropsName, sectionName, sensorName, humidityPercentage, measuredAt);
     }
 
