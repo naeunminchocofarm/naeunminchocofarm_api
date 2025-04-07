@@ -2,12 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.temperature.mapper.TemperatureMapper">
-    <!--라즈베리에서 받아오는 자료가 들어가는 쿼리-->
-    <insert id="insert">
-        INSERT INTO air_temperatures (temperature_c, measured_at)
-        VALUES (#{temperatureC}, #{measuredAt})
-    </insert>
-    
     <insert id="insertAirTemperature">
         INSERT INTO air_temperatures (temperature_c, measured_at, sensor_id)
         SELECT #{temperatureC}, #{measuredAt}, ss.id

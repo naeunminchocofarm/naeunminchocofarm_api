@@ -2,11 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.humidity.mapper.HumidityMapper">
-    <insert id="insert">
-        INSERT INTO humidities (humidity_percentage, measured_at)
-        VALUES (#{humidityPercentage}, #{measuredAt})
-    </insert>
-
     <insert id="insertHumidity">
         INSERT INTO humidities (humidity_percentage, measured_at, sensor_id)
         SELECT #{humidityPercentage}, #{measuredAt}, ss.id
