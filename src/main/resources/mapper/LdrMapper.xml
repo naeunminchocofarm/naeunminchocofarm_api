@@ -7,6 +7,15 @@
         VALUES (#{ldrValue}, #{measuredAt})
     </insert>
 
+    <insert id="insertSunshineValue">
+        INSERT INTO ldr_values (ldr_value, measured_at, sensor_id)
+        SELECT #{sunshineValue}, #{measuredAt}, ss.id
+        FROM sensors ss
+        JOIN sections st ON ss.section_id = st.id AND ss.name = #{sensorName} AND st.name = #{sectionName}
+        JOIN crops c ON st.crop_id = c.id AND c.name = #{cropName}
+        JOIN farms f ON c.farm_id = f.id AND f.uuid = #{farmUuid};
+    </insert>
+
     <select id="getAllLdrValue" resultType="com.naeunminchocofarm.ncf_api.ldr.dto.LdrValueDTO">
         SELECT id, ldr_value, measured_at
         FROM ldr_values
