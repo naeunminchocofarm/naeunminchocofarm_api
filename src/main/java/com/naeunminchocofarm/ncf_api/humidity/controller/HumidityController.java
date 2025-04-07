@@ -19,16 +19,16 @@ public class HumidityController {
         this.humidityService = humidityService;
     }
 
-    @PostMapping("/humidities")
-    public void insertHumidity(@RequestParam("humidity-percentage") Double humidityPercentage, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info("humidity " + humidityPercentage + "%, measured at " + measuredAt);
-        humidityService.insert(humidityPercentage, measuredAt);
-    }
+//    @PostMapping("/humidities")
+//    public void insertHumidity(@RequestParam("humidity-percentage") Double humidityPercentage, @RequestParam("measured-at") OffsetDateTime measuredAt) {
+//        log.info("humidity " + humidityPercentage + "%, measured at " + measuredAt);
+//        humidityService.insert(humidityPercentage, measuredAt);
+//    }
 
     @PostMapping("/humidities/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertHumidity(@RequestParam("humidity-percentage") Double humidityPercentage, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-name") String farmName, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info("humidity-percentage: " + humidityPercentage + ", sensor-name: " + sensorName + ", section-name: " + sectionName + ", crops-name: " + cropsName + ", farm-name: " + farmName + ", measured-at: " + measuredAt);
+        log.info(String.format("Farm: %s, Crops: %s, Section: %s, Sensor: %s, Humidity: %.2f%%, Measured at: %s", farmName, cropsName, sectionName, sensorName, humidityPercentage, measuredAt));
         humidityService.insert(humidityPercentage, measuredAt);
     }
 

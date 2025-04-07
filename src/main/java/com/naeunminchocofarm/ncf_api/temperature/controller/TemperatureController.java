@@ -21,17 +21,17 @@ public class TemperatureController {
         this.temperatureService = temperatureService;
     }
 
-    @PostMapping("/temperatures")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertTemperature(@RequestParam("temperature") Double temperature, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info(String.format("temperature = %.2f, measuredAt = %s", temperature, measuredAt));
-        temperatureService.insertTemperature(temperature, measuredAt);
-    }
+//    @PostMapping("/temperatures")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void insertTemperature(@RequestParam("temperature") Double temperature, @RequestParam("measured-at") OffsetDateTime measuredAt) {
+//        log.info(String.format("temperature = %.2f, measuredAt = %s", temperature, measuredAt));
+//        temperatureService.insertTemperature(temperature, measuredAt);
+//    }
 
     @PostMapping("/air-temperatures/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertAirTemp(@RequestParam("temperature-c") Double temperatureC, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-name") String farmName, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info("temperature-c: " + temperatureC + ", sensor-name: " + sensorName + ", section-name: " + sectionName + ", crops-name: " + cropsName + ", farm-name: " + farmName + ", measured-at: " + measuredAt);
+        log.info(String.format("Farm: %s, Crops: %s, Section: %s, Sensor: %s, Air Temperature: %.1f'C, Measured at: %s", farmName, cropsName, sectionName, sensorName, temperatureC, measuredAt));
         temperatureService.insertTemperature(temperatureC, measuredAt);
     }
 

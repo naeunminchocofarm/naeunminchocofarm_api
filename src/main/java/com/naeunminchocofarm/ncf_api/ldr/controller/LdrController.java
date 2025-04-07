@@ -19,17 +19,17 @@ public class LdrController {
         this.ldrService = ldrService;
     }
 
-    @PostMapping("/ldr-values")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertLdrValue(@RequestParam("ldr-value") Integer ldrValue, @RequestParam("measured-at")OffsetDateTime measuredAt) {
-        log.info("insert ldr value: value = {}, measured at = {}", ldrValue, measuredAt);
-        ldrService.insertLdrValue(ldrValue, measuredAt);
-    }
+//    @PostMapping("/ldr-values")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void insertLdrValue(@RequestParam("ldr-value") Integer ldrValue, @RequestParam("measured-at")OffsetDateTime measuredAt) {
+//        log.info("insert ldr value: value = {}, measured at = {}", ldrValue, measuredAt);
+//        ldrService.insertLdrValue(ldrValue, measuredAt);
+//    }
 
     @PostMapping("/sunshines/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertSunShineValue(@RequestParam("sunshine-value") Integer sunshineValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-name") String farmName, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info("sunshine-value: " + sunshineValue + ", sensor-name: " + sensorName + ", section-name: " + sectionName + ", crops-name: " + cropsName + ", farm-name: " + farmName + ", measured-at: " + measuredAt);
+        log.info(String.format("Farm: %s, Crops: %s, Section: %s, Sensor: %s, Sunshine: %d, Measured at: %s", farmName, cropsName, sectionName, sensorName, sunshineValue, measuredAt));
         ldrService.insertLdrValue(sunshineValue, measuredAt);
     }
 
