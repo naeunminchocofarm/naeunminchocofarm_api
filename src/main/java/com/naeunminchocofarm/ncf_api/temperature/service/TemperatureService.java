@@ -20,10 +20,6 @@ public class TemperatureService {
         this.temperatureMapper = temperatureMapper;
     }
 
-    public void insertTemperature(Double temperature, OffsetDateTime measuredAt) {
-        temperatureMapper.insert(temperature, measuredAt);
-    }
-
     public List<AirTemperatureDTO> getRecentTemperaturesGroupedByHour(Pagination pagination) {
         log.info("hello, page = {}, size = {}", pagination.getPage(), pagination.getSize());
         return this.temperatureMapper.getRecentTemperaturesGroupedByHour(pagination).stream()
@@ -37,10 +33,9 @@ public class TemperatureService {
                 .toList();
     }
 
-		public AirTemperature getRecentOneTemp() {
-			return this.temperatureMapper.getRecentOneTemp();
-		}
-
+    public AirTemperature getRecentOneTemp() {
+        return this.temperatureMapper.getRecentOneTemp();
+    }
 
     public void insertAirTemperature(String farmUuid, String cropsName, String sectionName, String sensorName, Double temperatureC, OffsetDateTime measuredAt) {
         temperatureMapper.insertAirTemperature(farmUuid, cropsName, sectionName, sensorName, temperatureC, measuredAt);

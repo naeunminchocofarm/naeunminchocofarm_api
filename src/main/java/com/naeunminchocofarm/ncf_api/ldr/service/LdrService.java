@@ -15,10 +15,6 @@ public class LdrService {
         this.ldrMapper = ldrMapper;
     }
 
-    public void insertLdrValue(Integer ldrValue, OffsetDateTime measuredAt) {
-        ldrMapper.insertLdrValue(ldrValue, measuredAt);
-    }
-
     public void insertSunshineValue(String farmUuid, String cropName, String sectionName, String sensorName, Integer sunshineValue, OffsetDateTime measuredAt) {
         ldrMapper.insertSunshineValue(farmUuid, cropName, sectionName, sensorName, sunshineValue, measuredAt);
     }
@@ -26,5 +22,4 @@ public class LdrService {
     public List<LdrValueDTO> getAllLdrValue() {
         return ldrMapper.getAllLdrValue();
     }
-
 }

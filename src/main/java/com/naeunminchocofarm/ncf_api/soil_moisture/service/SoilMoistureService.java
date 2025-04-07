@@ -18,7 +18,6 @@ public class SoilMoistureService {
     }
 
     public void insertSoilMoistureValue(String farmUuid, String cropName, String sectionName, String sensorName, Integer soilMoistureValue, OffsetDateTime measuredAt) {
-//        this.soilMoistureMapper.insert(soilMoistureValue, measuredAt);
         soilMoistureMapper.insertSoilMoistureValue(farmUuid, cropName, sectionName, sensorName, soilMoistureValue, measuredAt);
     }
 
@@ -35,5 +34,4 @@ public class SoilMoistureService {
                 .map(SoilMoistureDTO::from)
                 .toList();
     }
-
 }

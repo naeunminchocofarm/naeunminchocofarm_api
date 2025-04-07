@@ -11,7 +11,6 @@ import java.util.List;
 
 @Mapper
 public interface TemperatureMapper {
-    void insert(@Param("temperatureC") Double temperatureC, @Param("measuredAt") OffsetDateTime measuredAt);
     //그룹변 시간평균?
     List<AirTemperature> getRecentTemperaturesGroupedByHour(@Param("pagination") Pagination pagination);
     //최근들 받아온 날짜에

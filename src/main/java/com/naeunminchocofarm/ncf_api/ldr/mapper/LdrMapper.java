@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface LdrMapper {
-    void insertLdrValue(@Param("ldrValue") Integer ldrValue, @Param("measuredAt") OffsetDateTime measuredAt);
     List<LdrValueDTO> getAllLdrValue();
     void insertSunshineValue(@Param("farmUuid") String farmUuid
             , @Param("cropName") String cropName

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface SoilMoistureMapper {
-//    void insert(@Param("soilMoistureValue") Integer soilMoistureValue, @Param("measuredAt") OffsetDateTime measuredAt);
     List<SoilMoisture> getTodaySoilValue(@Param("pagination") Pagination pagination);
     List<SoilMoisture> getRecentSoilGroupedByHour(@Param("pagination") Pagination pagination);
     void insertSoilMoistureValue(@Param("farmUuid") String farmUuid
