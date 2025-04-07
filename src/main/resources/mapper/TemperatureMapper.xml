@@ -9,7 +9,7 @@
     </insert>
     
     <insert id="insertAirTemperature">
-        INSERT INTO ldr_values (temperature_c, measured_at, sensor_id)
+        INSERT INTO air_temperatures (temperature_c, measured_at, sensor_id)
         SELECT #{temperatureC}, #{measuredAt}, ss.id
         FROM sensors ss
         JOIN sections st ON ss.section_id = st.id AND ss.name = #{sensorName} AND st.name = #{sectionName}
