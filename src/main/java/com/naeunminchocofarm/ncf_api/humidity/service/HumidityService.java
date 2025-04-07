@@ -25,4 +25,8 @@ public class HumidityService {
                 .map(HumidityDTO::from)
                 .toList();
     }
+
+    public void insertHumidity(String farmUuid, String cropsName, String sectionName, String sensorName, Double humidityPercentage, OffsetDateTime measuredAt) {
+        humidityMapper.insertHumidity(farmUuid, cropsName, sectionName, sensorName, humidityPercentage, measuredAt);
+    }
 }

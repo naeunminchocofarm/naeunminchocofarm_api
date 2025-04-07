@@ -7,6 +7,21 @@
         VALUES (#{humidityPercentage}, #{measuredAt})
     </insert>
 
+    <insert id="insertHumidity">
+        DO $$
+        DECLARE
+            sensor_id_value INTEGER;
+        BEGIN
+            SELECT ss.id INTO sensor_id_value FROM sensors ss
+            INNER JOIN sections st ON ss.name = #{sensorName} AND ss.section_id = st.id AND st.name = #{sectionName}
+            INNER JOIN crops c ON c.id = st.crop_id AND c.name = #{cropsName}
+            INNER JOIN farms f ON f.id = c.farm_id AND f.uuid = #{farmUuid};
+
+            INSERT INTO humidities (humidity_percentage, measured_at, sensor_id)
+            VALUES (#{humidityPercentage}, #{measuredAt}, sensor_id_value);
+        END $$
+    </insert>
+
     <select id="getAllHumidity" resultType="com.naeunminchocofarm.ncf_api.humidity.entity.Humidity">
         SELECT *
         FROM humidities
