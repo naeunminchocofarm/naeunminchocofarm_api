@@ -30,9 +30,10 @@ public class TemperatureController {
 
     @PostMapping("/air-temperatures/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertAirTemp(@RequestParam("temperature-c") Double temperatureC, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-name") String farmName, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info(String.format("Farm: %s, Crops: %s, Section: %s, Sensor: %s, Air Temperature: %.1f'C, Measured at: %s", farmName, cropsName, sectionName, sensorName, temperatureC, measuredAt));
-        temperatureService.insertTemperature(temperatureC, measuredAt);
+    public void insertAirTemp(@RequestParam("temperature-c") Double temperatureC, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-uuid") String farmUuid, @RequestParam("measured-at") OffsetDateTime measuredAt) {
+        log.info(String.format("Farm uuid: %s, Crops: %s, Section: %s, Sensor: %s, Air Temperature: %.1f'C, Measured at: %s", farmUuid, cropsName, sectionName, sensorName, temperatureC, measuredAt));
+//        temperatureService.insertTemperature(temperatureC, measuredAt);
+        temperatureService.insertAirTemperature(farmUuid, cropsName, sectionName, sensorName, temperatureC, measuredAt);
     }
 
     //최신데이터 불러오는 중임

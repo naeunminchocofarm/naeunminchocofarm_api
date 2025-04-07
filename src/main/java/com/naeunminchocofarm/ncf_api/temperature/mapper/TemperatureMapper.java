@@ -18,4 +18,11 @@ public interface TemperatureMapper {
     List<AirTemperature> getRecentTemperatures(@Param("pagination") Pagination pagination);
     //최근하나
     AirTemperature getRecentOneTemp();
+
+    void insertAirTemperature(@Param("farmUuid") String farmUuid
+            , @Param("cropsName") String cropsName
+            , @Param("sectionName") String sectionName
+            , @Param("sensorName") String sensorName
+            , @Param("temperatureC") Double temperatureC
+            , @Param("measuredAt") OffsetDateTime measuredAt);
 }

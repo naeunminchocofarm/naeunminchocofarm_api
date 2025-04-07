@@ -7,6 +7,15 @@
         INSERT INTO air_temperatures (temperature_c, measured_at)
         VALUES (#{temperatureC}, #{measuredAt})
     </insert>
+    
+    <insert id="insertAirTemperature">
+        INSERT INTO ldr_values (temperature_c, measured_at, sensor_id)
+        SELECT #{temperatureC}, #{measuredAt}, ss.id
+        FROM sensors ss
+        JOIN sections st ON ss.section_id = st.id AND ss.name = #{sensorName} AND st.name = #{sectionName}
+        JOIN crops c ON st.crop_id = c.id AND c.name = #{cropsName}
+        JOIN farms f ON c.farm_id = f.id AND f.uuid = #{farmUuid};
+    </insert>
 
     <!--TODAY의 시간당평균-->
     <select id="getRecentTemperaturesGroupedByHour" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
