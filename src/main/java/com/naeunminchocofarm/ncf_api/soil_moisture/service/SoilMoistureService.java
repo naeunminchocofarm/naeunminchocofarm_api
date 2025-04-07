@@ -17,8 +17,9 @@ public class SoilMoistureService {
         this.soilMoistureMapper = soilMoistureMapper;
     }
 
-    public void insertSoilMoistureValue(Integer soilMoistureValue, OffsetDateTime measuredAt) {
-        this.soilMoistureMapper.insert(soilMoistureValue, measuredAt);
+    public void insertSoilMoistureValue(String farmUuid, String cropName, String sectionName, String sensorName, Integer soilMoistureValue, OffsetDateTime measuredAt) {
+//        this.soilMoistureMapper.insert(soilMoistureValue, measuredAt);
+        soilMoistureMapper.insertSoilMoistureValue(farmUuid, cropName, sectionName, sensorName, soilMoistureValue, measuredAt);
     }
 
     //라스트 원 오늘꺼

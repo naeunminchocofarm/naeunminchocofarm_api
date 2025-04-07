@@ -33,9 +33,10 @@ public class SoilMoistureController {
 //    }
 
     @PostMapping("/soil-moistures/v2")
-    public void insertSoilMoistureValue(@RequestParam("soil-moisture-value") Integer soilMoistureValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-name") String farmName, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info(String.format("Farm: %s, Crops: %s, Section: %s, Sensor: %s, Soil Moisture: %d, Measured at: %s", farmName, cropsName, sectionName, sensorName, soilMoistureValue, measuredAt));
-        soilMoistureService.insertSoilMoistureValue(soilMoistureValue, measuredAt);
+    public void insertSoilMoistureValue(@RequestParam("soil-moisture-value") Integer soilMoistureValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-uuid") String farmUuid, @RequestParam("measured-at") OffsetDateTime measuredAt) {
+        log.info(String.format("Farm uuid: %s, Crops: %s, Section: %s, Sensor: %s, Soil Moisture: %d, Measured at: %s", farmUuid, cropsName, sectionName, sensorName, soilMoistureValue, measuredAt));
+//        soilMoistureService.insertSoilMoistureValue(soilMoistureValue, measuredAt);
+        soilMoistureService.insertSoilMoistureValue(farmUuid, cropsName, sectionName, sensorName, soilMoistureValue, measuredAt);
     }
 
     @GetMapping("/soil-moisture-values")
