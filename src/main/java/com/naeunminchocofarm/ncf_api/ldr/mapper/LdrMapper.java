@@ -10,10 +10,18 @@ import java.util.List;
 @Mapper
 public interface LdrMapper {
     List<LdrValueDTO> getAllLdrValue();
+
+    @Deprecated()
     void insertSunshineValue(@Param("farmUuid") String farmUuid
             , @Param("cropName") String cropName
             , @Param("sectionName") String sectionName
             , @Param("sensorName") String sensorName
             , @Param("sunshineValue") Integer sunshineValue
             , @Param("measuredAt") OffsetDateTime measuredAt);
+
+    void insertSunshineValueV2(
+            @Param("sunshineValue") Integer sunshineValue
+            , @Param("measuredAt") OffsetDateTime measuredAt
+            , @Param("sensorUuid") String sensorUuid
+    );
 }
