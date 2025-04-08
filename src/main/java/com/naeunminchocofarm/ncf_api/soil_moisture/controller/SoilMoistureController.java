@@ -9,10 +9,7 @@ import com.naeunminchocofarm.ncf_api.temperature.dto.AirTemperatureDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -27,9 +24,21 @@ public class SoilMoistureController {
     }
 
     @PostMapping("/soil-moistures/v2")
+    @Deprecated(since = "/soil-moistures/v3 를 대신 사용하시요.")
     public void insertSoilMoistureValue(@RequestParam("soil-moisture-value") Integer soilMoistureValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-uuid") String farmUuid, @RequestParam("measured-at") OffsetDateTime measuredAt) {
         log.info(String.format("Soil Moisture: %d, Measured at: %s, Sensor: %s, Section: %s, Crops: %s, Farm uuid: %s", soilMoistureValue, measuredAt, sensorName, sectionName, cropsName, farmUuid));
         soilMoistureService.insertSoilMoistureValue(farmUuid, cropsName, sectionName, sensorName, soilMoistureValue, measuredAt);
+    }
+
+    @PostMapping("/soil-moistures/v3")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void insertSoilMoistureValue(
+            @RequestParam("soil-moisture-value") Integer soilMoistureValue
+            , @RequestParam("measured-at") OffsetDateTime measuredAt
+            , @RequestParam("sensor-uuid") String sensorUuid
+    ){
+        log.info(String.format("Soil Moisture: %d, Measured at: %s, Sensor uuid: %s", soilMoistureValue, measuredAt, sensorUuid));
+        soilMoistureService.insertSoilMoistureValue(soilMoistureValue, measuredAt, sensorUuid);
     }
 
     @GetMapping("/soil-moisture-values")

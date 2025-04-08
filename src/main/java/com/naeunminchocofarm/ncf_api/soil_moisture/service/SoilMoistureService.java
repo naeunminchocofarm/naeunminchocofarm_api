@@ -17,6 +17,7 @@ public class SoilMoistureService {
         this.soilMoistureMapper = soilMoistureMapper;
     }
 
+    @Deprecated()
     public void insertSoilMoistureValue(String farmUuid, String cropName, String sectionName, String sensorName, Integer soilMoistureValue, OffsetDateTime measuredAt) {
         soilMoistureMapper.insertSoilMoistureValue(farmUuid, cropName, sectionName, sensorName, soilMoistureValue, measuredAt);
     }
@@ -33,5 +34,9 @@ public class SoilMoistureService {
         return this.soilMoistureMapper.getRecentSoilGroupedByHour(pagination).stream()
                 .map(SoilMoistureDTO::from)
                 .toList();
+    }
+
+    public void insertSoilMoistureValue(Integer soilMoistureValue, OffsetDateTime measuredAt, String sensorUuid) {
+        return this.soilMoistureMapper.insertSoilMoistureValueV2(soilMoistureValue, measuredAt, sensorUuid);
     }
 }
