@@ -37,6 +37,6 @@ public class SoilMoistureService {
     }
 
     public void insertSoilMoistureValue(Integer soilMoistureValue, OffsetDateTime measuredAt, String sensorUuid) {
-        return this.soilMoistureMapper.insertSoilMoistureValueV2(soilMoistureValue, measuredAt, sensorUuid);
+        this.soilMoistureMapper.insertSoilMoistureValueV2(soilMoistureValue, measuredAt, sensorUuid);
     }
 }
