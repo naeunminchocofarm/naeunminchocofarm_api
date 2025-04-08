@@ -21,9 +21,21 @@ public class HumidityController {
 
     @PostMapping("/humidities/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Deprecated(since = "/humidities/v3를 대신 사용하시오.")
     public void insertHumidity(@RequestParam("humidity-percentage") Double humidityPercentage, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("measured-at") OffsetDateTime measuredAt, @RequestParam("farm-uuid") String farmUuid) {
         log.info(String.format("Humidity: %.2f%%, Measured at: %s, Sensor: %s, Section: %s, Crops: %s, Farm uuid: %s", humidityPercentage, measuredAt, sensorName, sectionName, cropsName, farmUuid));
         humidityService.insertHumidity(farmUuid, cropsName, sectionName, sensorName, humidityPercentage, measuredAt);
+    }
+
+    @PostMapping("/humidities/v3")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void insertHumidity(
+            @RequestParam("humidity-percentage") Double humidityPercentage
+            , @RequestParam("measured-at") OffsetDateTime measuredAt
+            , @RequestParam("sensor-uuid") String sensorUuid
+    ){
+        log.info(String.format("Humidity: %.2f%%, Measured at: %s, Sensor uuid: %s", humidityPercentage, measuredAt, sensorUuid));
+        humidityService.insertHumidity(humidityPercentage, measuredAt, sensorUuid);
     }
 
     @GetMapping("/humidities")

@@ -17,6 +17,12 @@ public interface HumidityMapper {
             , @Param("humidityPercentage") Double humidityPercentage
             , @Param("measuredAt") OffsetDateTime measuredAt);
     List<Humidity> getAllHumidity();
+
+    void insertHumidityV2(
+            @Param("humidityPercentage") Double humidityPercentage
+            , @Param("measuredAt") OffsetDateTime measuredAt
+            , @Param("sensorUuid") String sensorUuid
+    );
 }
 
 

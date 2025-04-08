@@ -11,6 +11,10 @@
         JOIN farms f ON c.farm_id = f.id AND f.uuid = #{farmUuid};
     </insert>
 
+    <insert id="insertHumidityV2">
+        CALL insert_humidity(#{humidityPercentage}, #{measuredAt}, #{sensorUuid});
+    </insert>
+
     <select id="getAllHumidity" resultType="com.naeunminchocofarm.ncf_api.humidity.entity.Humidity">
         SELECT *
         FROM humidities

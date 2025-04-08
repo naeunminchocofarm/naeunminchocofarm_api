@@ -22,7 +22,12 @@ public class HumidityService {
                 .toList();
     }
 
+    @Deprecated()
     public void insertHumidity(String farmUuid, String cropsName, String sectionName, String sensorName, Double humidityPercentage, OffsetDateTime measuredAt) {
         humidityMapper.insertHumidity(farmUuid, cropsName, sectionName, sensorName, humidityPercentage, measuredAt);
+    }
+
+    public void insertHumidity(Double humidityPercentage, OffsetDateTime measuredAt, String sensorUuid) {
+        humidityMapper.insertHumidityV2(humidityPercentage, measuredAt, sensorUuid);
     }
 }
