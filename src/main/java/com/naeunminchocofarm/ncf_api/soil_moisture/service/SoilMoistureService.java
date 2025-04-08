@@ -17,11 +17,6 @@ public class SoilMoistureService {
         this.soilMoistureMapper = soilMoistureMapper;
     }
 
-    @Deprecated()
-    public void insertSoilMoistureValue(String farmUuid, String cropName, String sectionName, String sensorName, Integer soilMoistureValue, OffsetDateTime measuredAt) {
-        soilMoistureMapper.insertSoilMoistureValue(farmUuid, cropName, sectionName, sensorName, soilMoistureValue, measuredAt);
-    }
-
     //라스트 원 오늘꺼
     public List<SoilMoistureDTO> getTodayValue(Pagination pagination) {
         return this.soilMoistureMapper.getTodaySoilValue(pagination).stream() //반환된 리스트를 스트림으로 변환

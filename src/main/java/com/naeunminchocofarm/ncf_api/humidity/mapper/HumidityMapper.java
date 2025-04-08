@@ -10,14 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface HumidityMapper {
-    void insertHumidity(@Param("farmUuid") String farmUuid
-            , @Param("cropsName") String cropsName
-            , @Param("sectionName") String sectionName
-            , @Param("sensorName") String sensorName
-            , @Param("humidityPercentage") Double humidityPercentage
-            , @Param("measuredAt") OffsetDateTime measuredAt);
     List<Humidity> getAllHumidity();
-
     void insertHumidityV2(
             @Param("humidityPercentage") Double humidityPercentage
             , @Param("measuredAt") OffsetDateTime measuredAt

@@ -19,14 +19,6 @@ public class LdrController {
         this.ldrService = ldrService;
     }
 
-    @PostMapping("/sunshines/v2")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Deprecated(since = "/sunshines/v3를 사용하시오")
-    public void insertSunShineValue(@RequestParam("sunshine-value") Integer sunshineValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-uuid") String farmUuid, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info(String.format("Sunshine: %d, Measured at: %s, Sensor: %s, Section: %s, Crops: %s, Farm uuid: %s", sunshineValue, measuredAt, sensorName, sectionName, cropsName, farmUuid));
-        ldrService.insertSunshineValue(farmUuid, cropsName, sectionName, sensorName, sunshineValue, measuredAt);
-    }
-
     @PostMapping("/sunshines/v3")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertSunshineValue(

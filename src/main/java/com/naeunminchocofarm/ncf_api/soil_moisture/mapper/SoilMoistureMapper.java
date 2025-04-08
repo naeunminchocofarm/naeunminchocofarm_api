@@ -13,14 +13,6 @@ public interface SoilMoistureMapper {
     List<SoilMoisture> getTodaySoilValue(@Param("pagination") Pagination pagination);
     List<SoilMoisture> getRecentSoilGroupedByHour(@Param("pagination") Pagination pagination);
 
-    @Deprecated()
-    void insertSoilMoistureValue(@Param("farmUuid") String farmUuid
-            , @Param("cropName") String cropName
-            , @Param("sectionName") String sectionName
-            , @Param("sensorName") String sensorName
-            , @Param("soilMoistureValue") Integer soilMoistureValue
-            , @Param("measuredAt") OffsetDateTime measuredAt);
-
     void insertSoilMoistureValueV2(
             @Param("soilMoistureValue") Integer soilMoistureValue
             , @Param("measuredAt") OffsetDateTime measuredAt

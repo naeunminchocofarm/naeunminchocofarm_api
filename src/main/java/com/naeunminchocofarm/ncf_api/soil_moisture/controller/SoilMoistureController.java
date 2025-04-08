@@ -23,13 +23,6 @@ public class SoilMoistureController {
         this.soilMoistureService = soilMoistureService;
     }
 
-    @PostMapping("/soil-moistures/v2")
-    @Deprecated(since = "/soil-moistures/v3 를 대신 사용하시요.")
-    public void insertSoilMoistureValue(@RequestParam("soil-moisture-value") Integer soilMoistureValue, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-uuid") String farmUuid, @RequestParam("measured-at") OffsetDateTime measuredAt) {
-        log.info(String.format("Soil Moisture: %d, Measured at: %s, Sensor: %s, Section: %s, Crops: %s, Farm uuid: %s", soilMoistureValue, measuredAt, sensorName, sectionName, cropsName, farmUuid));
-        soilMoistureService.insertSoilMoistureValue(farmUuid, cropsName, sectionName, sensorName, soilMoistureValue, measuredAt);
-    }
-
     @PostMapping("/soil-moistures/v3")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertSoilMoistureValue(

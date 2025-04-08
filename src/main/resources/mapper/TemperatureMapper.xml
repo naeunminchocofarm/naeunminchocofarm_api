@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.temperature.mapper.TemperatureMapper">
-    <!--이 쿼리를 사용하지 마시오.-->
-    <insert id="insertAirTemperature">
-        INSERT INTO air_temperatures (temperature_c, measured_at, sensor_id)
-        SELECT #{temperatureC}, #{measuredAt}, ss.id
-        FROM sensors ss
-        JOIN sections st ON ss.section_id = st.id AND ss.name = #{sensorName} AND st.name = #{sectionName}
-        JOIN crops c ON st.crop_id = c.id AND c.name = #{cropsName}
-        JOIN farms f ON c.farm_id = f.id AND f.uuid = #{farmUuid};
-    </insert>
-
     <insert id="insertAirTemperatureV2">
         CALL insert_air_temperature(#{temperatureC}, #{measuredAt}, #{sensorUuid});
     </insert>

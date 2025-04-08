@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.ldr.mapper.LdrMapper">
-    <!--이 쿼리를 사용하지 마시오.-->
-    <insert id="insertSunshineValue">
-        INSERT INTO ldr_values (ldr_value, measured_at, sensor_id)
-        SELECT #{sunshineValue}, #{measuredAt}, ss.id
-        FROM sensors ss
-        JOIN sections st ON ss.section_id = st.id AND ss.name = #{sensorName} AND st.name = #{sectionName}
-        JOIN crops c ON st.crop_id = c.id AND c.name = #{cropName}
-        JOIN farms f ON c.farm_id = f.id AND f.uuid = #{farmUuid};
-    </insert>
-
     <insert id="insertSunshineValueV2">
         CALL insert_sunshine_value(#{sunshineValue}, #{measuredAt}, #{sensorUuid});
     </insert>

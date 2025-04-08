@@ -18,14 +18,6 @@ public interface TemperatureMapper {
     //최근하나
     AirTemperature getRecentOneTemp();
 
-    @Deprecated
-    void insertAirTemperature(@Param("farmUuid") String farmUuid
-            , @Param("cropsName") String cropsName
-            , @Param("sectionName") String sectionName
-            , @Param("sensorName") String sensorName
-            , @Param("temperatureC") Double temperatureC
-            , @Param("measuredAt") OffsetDateTime measuredAt);
-
     void insertAirTemperatureV2(
             @Param("temperatureC") Double temperatureC
             , @Param("measuredAt") OffsetDateTime measuredAt

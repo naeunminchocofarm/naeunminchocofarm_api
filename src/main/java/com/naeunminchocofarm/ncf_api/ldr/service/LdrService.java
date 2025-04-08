@@ -15,11 +15,6 @@ public class LdrService {
         this.ldrMapper = ldrMapper;
     }
 
-    @Deprecated()
-    public void insertSunshineValue(String farmUuid, String cropName, String sectionName, String sensorName, Integer sunshineValue, OffsetDateTime measuredAt) {
-        ldrMapper.insertSunshineValue(farmUuid, cropName, sectionName, sensorName, sunshineValue, measuredAt);
-    }
-
     public List<LdrValueDTO> getAllLdrValue() {
         return ldrMapper.getAllLdrValue();
     }
