@@ -37,7 +37,12 @@ public class TemperatureService {
         return this.temperatureMapper.getRecentOneTemp();
     }
 
+    @Deprecated()
     public void insertAirTemperature(String farmUuid, String cropsName, String sectionName, String sensorName, Double temperatureC, OffsetDateTime measuredAt) {
         temperatureMapper.insertAirTemperature(farmUuid, cropsName, sectionName, sensorName, temperatureC, measuredAt);
+    }
+
+    public void insertAirTemperature(Double temperatureC, OffsetDateTime measuredAt, String sensorUuid) {
+        temperatureMapper.insertAirTemperatureV2(temperatureC, measuredAt, sensorUuid);
     }
 }

@@ -23,9 +23,17 @@ public class TemperatureController {
 
     @PostMapping("/air-temperatures/v2")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Deprecated(since = "/air-temperatures/v3 를 대신 사용하시오.")
     public void insertAirTemp(@RequestParam("temperature-c") Double temperatureC, @RequestParam("sensor-name") String sensorName, @RequestParam("section-name") String sectionName, @RequestParam("crops-name") String cropsName, @RequestParam("farm-uuid") String farmUuid, @RequestParam("measured-at") OffsetDateTime measuredAt) {
         log.info(String.format("Air Temperature: %.1f'C, Measured at: %s, Sensor: %s, Section: %s, Crops: %s, Farm uuid: %s", temperatureC, measuredAt, sensorName, sectionName, cropsName, farmUuid));
         temperatureService.insertAirTemperature(farmUuid, cropsName, sectionName, sensorName, temperatureC, measuredAt);
+    }
+
+    @PostMapping("/air-temperatures/v3")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void insertAirTemp(@RequestParam("temperature-c") Double temperatureC, @RequestParam("measured-at") OffsetDateTime measuredAt, @RequestParam("sensor-uuid") String sensorUuid) {
+        log.info(String.format("Air temperature: %.2f'C, Measured at: %s, Sensor uuid: %s", temperatureC, measuredAt, sensorUuid));
+        temperatureService.insertAirTemperature(temperatureC, measuredAt, sensorUuid);
     }
 
     //최신데이터 불러오는 중임
