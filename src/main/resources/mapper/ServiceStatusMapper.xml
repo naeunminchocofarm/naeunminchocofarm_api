@@ -1,0 +1,19 @@
+<mapper namespace="com.naeunminchocofarm.ncf_api.smart_farm.mapper.ServiceStatusMapper">
+
+    <!-- 서비스 신청 전체 조회 -->
+    <select id="getAllServices" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.ServiceStatus">
+        SELECT * FROM service
+    </select>
+
+    <!-- 서비스 신청 -->
+    <insert id="insertService" parameterType="com.naeunminchocofarm.ncf_api.smart_farm.dto.ServiceStatusDTO">
+        INSERT INTO service (
+            member_id
+            , status
+        ) VALUES (
+            #{memberId}
+            , #{status}
+        )
+    </insert>
+
+</mapper>
