@@ -19,7 +19,7 @@
         ) VALUES (
             #{memberId}
             , #{farmName}
-            , #{uuid}
+            , #{uuid_generate_v4()}
         )
     </insert>
 

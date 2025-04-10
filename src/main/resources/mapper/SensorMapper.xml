@@ -19,7 +19,7 @@
         ) VALUES (
             #{sensorName}
             , #{sectionId}
-            , #{uuid}
+            , #{uuid_generate_v4()}
         )
     </insert>
 

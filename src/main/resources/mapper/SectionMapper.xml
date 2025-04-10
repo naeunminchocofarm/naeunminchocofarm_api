@@ -19,7 +19,7 @@
         ) VALUES (
             #{sectionName}
             , #{farmId}
-            , #{uuid}
+            , #{uuid_generate_v4()}
         )
     </insert>
 

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/services")
 public class ServiceStatusController {
 
   private final ServiceStatusService serviceStatusService;
@@ -18,13 +17,13 @@ public class ServiceStatusController {
   }
 
   // 서비스 신청 전체 조회
-  @GetMapping
+  @GetMapping("/applySmartFarm")
   public List<ServiceStatus> getAllServiceStatuses() {
     return serviceStatusService.getAllServiceStatuses();
   }
 
   // 서비스 신청 등록
-  @PostMapping
+  @PostMapping("/applySmartFarm")
   public void createService(@RequestBody ServiceStatusDTO serviceStatusDTO) {
     serviceStatusService.insertServiceStatus(serviceStatusDTO);
   }

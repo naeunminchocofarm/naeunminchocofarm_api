@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/farms")
 public class FarmController {
 
   private final FarmService farmService;
@@ -18,13 +17,13 @@ public class FarmController {
   }
 
   // 모든 스마트팜 조회
-  @GetMapping
+  @GetMapping("/farms")
   public List<Farm> getAllFarms() {
     return farmService.getAllFarms();
   }
 
   // 스마트팜 등록
-  @PostMapping
+  @PostMapping("/farms")
   public void createFarm(@RequestBody FarmDTO farmDTO) {
     farmService.insertFarm(farmDTO);
   }

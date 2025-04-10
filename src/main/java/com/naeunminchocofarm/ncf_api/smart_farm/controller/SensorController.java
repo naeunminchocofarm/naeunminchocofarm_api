@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/sensors")
 public class SensorController {
 
   private final SensorService sensorService;
@@ -18,13 +17,13 @@ public class SensorController {
   }
 
   // 모든 센서 조회
-  @GetMapping
+  @GetMapping("")
   public List<Sensor> getAllSensors() {
     return sensorService.getAllSensors();
   }
 
   // 센서 등록
-  @PostMapping
+  @PostMapping("")
   public void createSensor(@RequestBody SensorDTO sensorDTO) {
     sensorService.insertSensor(sensorDTO);
   }

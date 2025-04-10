@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/sections")
 public class SectionController {
 
   private final SectionService sectionService;
@@ -18,13 +17,13 @@ public class SectionController {
   }
 
   // 모든 구역 조회
-  @GetMapping
+  @GetMapping("")
   public List<Section> getAllSections() {
     return sectionService.getAllSections();
   }
 
   // 구역 등록
-  @PostMapping
+  @PostMapping("")
   public void createSection(@RequestBody SectionDTO sectionDTO) {
     sectionService.insertSection(sectionDTO);
   }
