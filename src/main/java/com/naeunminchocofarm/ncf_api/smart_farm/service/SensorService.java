@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.service;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.SensorMapper;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class SensorService {
   }
 
   // 센서 등록
-  public void insertSensor(SensorDTO sensorDTO) {
-    sensorMapper.insertSensor(sensorDTO);
+  public void insertSensor(Sensor sensor) {
+    sensorMapper.insertSensor(sensor);
   }
 }

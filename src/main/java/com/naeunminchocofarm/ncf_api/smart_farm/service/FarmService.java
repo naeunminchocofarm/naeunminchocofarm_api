@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.service;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.FarmDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.FarmMapper;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class FarmService {
   }
 
   // 스마트팜 등록
-  public void insertFarm(FarmDTO farmDTO) {
-    farmMapper.insertFarm(farmDTO);
+  public void insertFarm(Farm farm) {
+    farmMapper.insertFarm(farm);
   }
 }

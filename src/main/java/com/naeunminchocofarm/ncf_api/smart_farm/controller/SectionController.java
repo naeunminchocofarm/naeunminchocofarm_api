@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SectionDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Section;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.SectionService;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class SectionController {
 
   // 구역 등록
   @PostMapping("")
-  public void createSection(@RequestBody SectionDTO sectionDTO) {
-    sectionService.insertSection(sectionDTO);
+  public void createSection(@RequestBody Section section) {
+    sectionService.insertSection(section);
   }
 }

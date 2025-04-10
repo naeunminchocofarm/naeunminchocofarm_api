@@ -1,50 +1,53 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.dto;
 
+import java.time.OffsetDateTime;
+
 public class FarmDTO {
-  private Integer id;
-  private Integer  memberId;
-  private String farmName;
-  private Integer  uuid;
+  private final Integer id;
+  private final Integer memberId;
+  private final String farmName;
+  private final Integer uuidId;
+  private final String farmAddr;
+  private final OffsetDateTime useDate;
+  private final String crop;
 
-  public FarmDTO() {
-  }
-
-  public FarmDTO(Integer id, Integer  memberId, String farmName, Integer  uuid) {
+  public FarmDTO(Integer id, Integer memberId, String farmName, Integer uuidId, String farmAddr, OffsetDateTime useDate, String crop) {
     this.id = id;
     this.memberId = memberId;
     this.farmName = farmName;
-    this.uuid = uuid;
+    this.uuidId = uuidId;
+    this.farmAddr = farmAddr;
+    this.useDate = useDate;
+    this.crop = crop;
   }
 
   public Integer  getId() {
     return id;
   }
 
-  public void setId(Integer  id) {
-    this.id = id;
-  }
-
   public Integer  getMemberId() {
     return memberId;
-  }
-
-  public void setMemberId(Integer  memberId) {
-    this.memberId = memberId;
   }
 
   public String getFarmName() {
     return farmName;
   }
 
-  public void setFarmName(String farmName) {
-    this.farmName = farmName;
+  public Integer  getUuidId() {
+    return uuidId;
   }
 
-  public Integer  getUuid() {
-    return uuid;
+  public String getFarmAddr() {
+    return farmAddr;
   }
 
-  public void setUuid(Integer  uuid) {
-    this.uuid = uuid;
+  public OffsetDateTime getUseDate() {
+    return useDate;
   }
+
+  public String getCrop() {
+    return crop;
+  }
+
+
 }

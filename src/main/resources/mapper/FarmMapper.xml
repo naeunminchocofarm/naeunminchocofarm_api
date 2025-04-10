@@ -11,15 +11,21 @@
     </select>
 
     <!-- 스마트팜 등록 -->
-    <insert id="insertFarm" parameterType="com.naeunminchocofarm.ncf_api.smart_farm.dto.FarmDTO" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertFarm">
         INSERT INTO farm (
             member_id
+            , uuid_id
             , farm_name
-            , uuid
+            , farm-addr
+            , use_date
+            , crop
         ) VALUES (
             #{memberId}
-            , #{farmName}
             , #{uuid_generate_v4()}
+            , #{farmName}
+            , #{farmAddr}
+            , #{useDate}
+            , #{crop}
         )
     </insert>
 

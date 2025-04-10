@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.service;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SectionDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Section;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.SectionMapper;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class SectionService {
   }
 
   // 구역 등록
-  public void insertSection(SectionDTO sectionDTO) {
-    sectionMapper.insertSection(sectionDTO);
+  public void insertSection(Section section) {
+    sectionMapper.insertSection(section);
   }
 }
