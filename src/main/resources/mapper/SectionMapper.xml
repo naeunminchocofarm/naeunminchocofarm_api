@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naeunminchocofarm.ncf_api.smart_farm.mapper.SectionMapper">
+
+    <!-- 구역 전체 조회 -->
+    <select id="getAllSections" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.Section">
+        SELECT * FROM section
+    </select>
+
+    <!-- 구역 등록 -->
+    <insert id="insertSection" parameterType="com.naeunminchocofarm.ncf_api.smart_farm.dto.SectionDTO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO section (
+            section_name
+            , farm_id
+            , uuid
+        ) VALUES (
+            #{sectionName}
+            , #{farmId}
+            , #{uuid}
+        )
+    </insert>
+
+</mapper>
