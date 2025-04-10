@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.mapper;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.FarmDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +12,5 @@ public interface FarmMapper {
   List<Farm> getAllFarms();
 
   // 스마트팜 등록
-  void insertFarm(FarmDTO farmDTO);
+  void insertFarm(Farm farm);
 }

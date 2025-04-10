@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.FarmDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.FarmService;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class FarmController {
 
   // 스마트팜 등록
   @PostMapping("/farms")
-  public void createFarm(@RequestBody FarmDTO farmDTO) {
-    farmService.insertFarm(farmDTO);
+  public void createFarm(@RequestBody Farm farm) {
+    farmService.insertFarm(farm);
   }
 }

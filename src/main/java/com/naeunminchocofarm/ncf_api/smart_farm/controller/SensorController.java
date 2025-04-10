@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.SensorService;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class SensorController {
 
   // 센서 등록
   @PostMapping("")
-  public void createSensor(@RequestBody SensorDTO sensorDTO) {
-    sensorService.insertSensor(sensorDTO);
+  public void createSensor(@RequestBody Sensor sensor) {
+    sensorService.insertSensor(sensor);
   }
 }

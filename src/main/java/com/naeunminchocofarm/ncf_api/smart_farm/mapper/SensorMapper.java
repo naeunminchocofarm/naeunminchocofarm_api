@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.mapper;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +12,5 @@ public interface SensorMapper {
   List<Sensor> getAllSensors();
 
   // 센서 등록
-  void insertSensor(SensorDTO sensorDTO);
+  void insertSensor(Sensor sensor);
 }

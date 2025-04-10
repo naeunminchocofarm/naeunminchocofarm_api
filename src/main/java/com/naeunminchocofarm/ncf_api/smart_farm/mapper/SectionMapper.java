@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.mapper;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SectionDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Section;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +12,5 @@ public interface SectionMapper {
   List<Section> getAllSections();
 
   // 구역 등록
-  void insertSection(SectionDTO sectionDTO);
+  void insertSection(Section section);
 }
