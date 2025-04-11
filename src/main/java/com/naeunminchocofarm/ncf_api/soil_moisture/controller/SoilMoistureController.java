@@ -23,17 +23,6 @@ public class SoilMoistureController {
         this.soilMoistureService = soilMoistureService;
     }
 
-    @PostMapping("/soil-moistures/v3")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertSoilMoistureValue(
-            @RequestParam("soil-moisture-value") Integer soilMoistureValue
-            , @RequestParam("measured-at") OffsetDateTime measuredAt
-            , @RequestParam("sensor-uuid") String sensorUuid
-    ){
-        log.info(String.format("Soil Moisture: %d, Measured at: %s, Sensor uuid: %s", soilMoistureValue, measuredAt, sensorUuid));
-        soilMoistureService.insertSoilMoistureValue(soilMoistureValue, measuredAt, sensorUuid);
-    }
-
     @GetMapping("/soil-moisture-values")
     //모든 데이터를불러오면 느려지므로 시간당 페이지당 크기로 조절
     public List<SoilMoistureDTO> getTodayValue(@RequestParam(value = "interval", defaultValue = "") String rawInterval

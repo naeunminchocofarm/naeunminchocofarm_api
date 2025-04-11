@@ -30,8 +30,4 @@ public class SoilMoistureService {
                 .map(SoilMoistureDTO::from)
                 .toList();
     }
-
-    public void insertSoilMoistureValue(Integer soilMoistureValue, OffsetDateTime measuredAt, String sensorUuid) {
-        this.soilMoistureMapper.insertSoilMoistureValueV2(soilMoistureValue, measuredAt, sensorUuid);
-    }
 }

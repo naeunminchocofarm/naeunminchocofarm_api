@@ -19,10 +19,6 @@ public interface TemperatureMapper {
     List<AirTemperature> getRecentTemperatures(@Param("pagination") Pagination pagination);
     //최근하나
     AirTemperature getRecentOneTemp();
-    void insertAirTemperatureV2(
-            @Param("temperatureC") Double temperatureC
-            , @Param("measuredAt") OffsetDateTime measuredAt
-            , @Param("sensorUuid") String sensorUuid);
 
     void insertAll(@Param("datas") List<AirTempData> datas);
 }

@@ -2,10 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.humidity.mapper.HumidityMapper">
-    <insert id="insertHumidityV2">
-        CALL insert_humidity(#{humidityPercentage}, #{measuredAt}, #{sensorUuid});
-    </insert>
-    
     <insert id="insertAll">
         <foreach collection="datas" item="data">
             CALL insert_humidity(#{data.value}, #{data.measuredAt}, #{data.sensorUuid});

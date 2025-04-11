@@ -11,12 +11,5 @@ import java.util.List;
 @Mapper
 public interface LdrMapper {
     List<LdrValueDTO> getAllLdrValue();
-
-    void insertSunshineValueV2(
-            @Param("sunshineValue") Integer sunshineValue
-            , @Param("measuredAt") OffsetDateTime measuredAt
-            , @Param("sensorUuid") String sensorUuid
-    );
-
     void insertAll(@Param("datas") List<SunshineData> list);
 }

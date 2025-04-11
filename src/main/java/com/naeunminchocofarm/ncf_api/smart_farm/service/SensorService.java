@@ -74,11 +74,6 @@ public class SensorService {
     });
 
     tempMapper.insertAll(airTempDatas.stream().map(x -> new AirTempData((Double)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
-    log.info("기온 데이터 삽입 완료 (" + airTempDatas.size() + ")");
-    log.info(airTempDatas.get(0).getName());
-    log.info(airTempDatas.get(0).getValue());
-    log.info(airTempDatas.get(0).getMeasuredAt());
-    log.info(airTempDatas.get(0).getSensorUuid());
     humidMapper.insertAll(humidityDatas.stream().map(x -> new HumidData((Double)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
     sunshineMapper.insertAll(sunshineDatas.stream().map(x -> new SunshineData((Integer)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
     soilMoistureMapper.insertAll(soilMoistureDatas.stream().map(x -> new SoilMoistureData((Integer)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());

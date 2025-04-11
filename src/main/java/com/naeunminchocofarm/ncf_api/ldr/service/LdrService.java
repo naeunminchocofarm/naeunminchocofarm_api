@@ -18,8 +18,4 @@ public class LdrService {
     public List<LdrValueDTO> getAllLdrValue() {
         return ldrMapper.getAllLdrValue();
     }
-
-    public void insertSunshineValue(Integer sunshineValue, OffsetDateTime measuredAt, String sensorUuid) {
-        ldrMapper.insertSunshineValueV2(sunshineValue, measuredAt, sensorUuid);
-    }
 }

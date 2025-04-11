@@ -21,13 +21,6 @@ public class TemperatureController {
         this.temperatureService = temperatureService;
     }
 
-    @PostMapping("/air-temperatures/v3")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertAirTemp(@RequestParam("temperature-c") Double temperatureC, @RequestParam("measured-at") OffsetDateTime measuredAt, @RequestParam("sensor-uuid") String sensorUuid) {
-        log.info(String.format("Air temperature: %.2f'C, Measured at: %s, Sensor uuid: %s", temperatureC, measuredAt, sensorUuid));
-        temperatureService.insertAirTemperature(temperatureC, measuredAt, sensorUuid);
-    }
-
     //최신데이터 불러오는 중임
     @GetMapping("/temperatures")
     public List<AirTemperatureDTO> getTemperatures(@RequestParam(value = "interval", defaultValue = "") String rawInterval
