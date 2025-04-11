@@ -2,24 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.member.mapper.MemberMapper">
-    <resultMap id="member" type="MemberDTO">
-        <id column="ID" property="id"/>
-        <result column="LOGIN_ID" property="loginId"/>
-        <result column="ENCRYPTED_LOGIN_PW" property="encryptedLoginPw"/>
-        <result column="NAME" property="name"/>
-        <result column="EMAIL" property="email"/>
-        <result column="TELL" property="tell"/>
-        <result column="PRIVACY_POLICY" property="privacyPolicy"/>
-        <result column="CREATED_AT" property="createdAt"/>
-        <result column="DELETED_AT" property="deletedAt"/>
-        <result column="MEMO" property="memo"/>
-        <collection property="memberRole" resultMap="memberRole"/>
-    </resultMap>
+<!--    <resultMap id="member" type="MemberDTO">-->
+<!--        <id column="ID" property="id"/>-->
+<!--        <result column="LOGIN_ID" property="loginId"/>-->
+<!--        <result column="ENCRYPTED_LOGIN_PW" property="encryptedLoginPw"/>-->
+<!--        <result column="NAME" property="name"/>-->
+<!--        <result column="EMAIL" property="email"/>-->
+<!--        <result column="TELL" property="tell"/>-->
+<!--        <result column="PRIVACY_POLICY" property="privacyPolicy"/>-->
+<!--        <result column="CREATED_AT" property="createdAt"/>-->
+<!--        <result column="DELETED_AT" property="deletedAt"/>-->
+<!--        <result column="MEMO" property="memo"/>-->
+<!--        <collection property="memberRole" resultMap="memberRole"/>-->
+<!--    </resultMap>-->
 
-    <resultMap id="memberRole" type="MemberRoleDTO">
-        <id column="ID" property="id"/>
-        <result column="ROLE" property="role"/>
-    </resultMap>
+<!--    <resultMap id="memberRole" type="MemberRoleDTO">-->
+<!--        <id column="ID" property="id"/>-->
+<!--        <result column="ROLE" property="role"/>-->
+<!--    </resultMap>-->
 
     <!-- 필요한거 회원가입 insert-->
     <insert id = "signUp">
@@ -42,14 +42,14 @@
         )
     </insert>
     <!-- 필요한거 로그인 select-->
-    <select id="login" resultMap="member">
-        SELECT LOGIN_ID
-        , ENCRYPTED_LOGIN_PW
-        , MEMBER_ROLE
-        FROM members
-        WHERE USER_ID = #{loginId}
-        AND USER_PW = #{encryptedLoginPw}
-    </select>
+<!--    <select id="login" resultMap="member">-->
+<!--        SELECT LOGIN_ID-->
+<!--        , ENCRYPTED_LOGIN_PW-->
+<!--        , MEMBER_ROLE-->
+<!--        FROM members-->
+<!--        WHERE USER_ID = #{loginId}-->
+<!--        AND USER_PW = #{encryptedLoginPw}-->
+<!--    </select>-->
 
     <!-- 필요한거 web 마이페이지 select-->
     <!-- 필요한거 web 마이페이지수정 insert-->
