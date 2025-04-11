@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.service;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.ServiceStatusDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.ServiceStatus;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.ServiceStatusMapper;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class ServiceStatusService {
   }
 
   // 서비스 신청
-  public void insertServiceStatus(ServiceStatusDTO serviceStatusDTO) {
-    serviceStatusMapper.insertService(serviceStatusDTO);
+  public void insertServiceStatus(ServiceStatus serviceStatus) {
+    serviceStatusMapper.insertService(serviceStatus);
   }
 }

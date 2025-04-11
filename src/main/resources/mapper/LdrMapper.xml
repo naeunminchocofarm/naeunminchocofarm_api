@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.ldr.mapper.LdrMapper">
-    <insert id="insertSunshineValueV2">
-        CALL insert_sunshine_value(#{sunshineValue}, #{measuredAt}, #{sensorUuid});
+    <insert id="insertAll">
+        <foreach collection="datas" item="data">
+            CALL insert_sunshine_value(#{data.value}, #{data.measuredAt}, #{data.sensorUuid});
+        </foreach>
     </insert>
 
     <select id="getAllLdrValue" resultType="com.naeunminchocofarm.ncf_api.ldr.dto.LdrValueDTO">

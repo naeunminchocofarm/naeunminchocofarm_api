@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.ServiceStatusDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.ServiceStatus;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.ServiceStatusService;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class ServiceStatusController {
 
   // 서비스 신청 등록
   @PostMapping("/applySmartFarm")
-  public void createService(@RequestBody ServiceStatusDTO serviceStatusDTO) {
-    serviceStatusService.insertServiceStatus(serviceStatusDTO);
+  public void createService(@RequestBody ServiceStatus serviceStatus) {
+    serviceStatusService.insertServiceStatus(serviceStatus);
   }
 }

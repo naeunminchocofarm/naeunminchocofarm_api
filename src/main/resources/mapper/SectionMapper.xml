@@ -11,11 +11,11 @@
     </select>
 
     <!-- 구역 등록 -->
-    <insert id="insertSection" parameterType="com.naeunminchocofarm.ncf_api.smart_farm.dto.SectionDTO" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSection">
         INSERT INTO section (
             section_name
             , farm_id
-            , uuid
+            , uuid_id
         ) VALUES (
             #{sectionName}
             , #{farmId}

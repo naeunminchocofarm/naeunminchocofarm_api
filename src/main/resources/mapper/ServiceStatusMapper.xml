@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+>>>>>>> dev
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.smart_farm.mapper.ServiceStatusMapper">
 
@@ -11,13 +16,19 @@
     </select>
 
     <!-- 서비스 신청 -->
-    <insert id="insertService" parameterType="com.naeunminchocofarm.ncf_api.smart_farm.dto.ServiceStatusDTO">
+    <insert id="insertService">
         INSERT INTO service (
             member_id
             , status
+            , tell
+            , email
+            , content
         ) VALUES (
             #{memberId}
             , #{status}
+            , #{tell}
+            , #{email}
+            , {content}
         )
     </insert>
 

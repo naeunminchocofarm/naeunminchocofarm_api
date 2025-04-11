@@ -11,15 +11,17 @@
     </select>
 
     <!-- 센서 등록 -->
-    <insert id="insertSensor" parameterType="com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSensor">
         INSERT INTO sensor (
             sensor_name
             , section_id
-            , uuid
+            , uuid_id
+            , sensor_type
         ) VALUES (
             #{sensorName}
             , #{sectionId}
             , #{uuid_generate_v4()}
+            , #{sensorType}
         )
     </insert>
 

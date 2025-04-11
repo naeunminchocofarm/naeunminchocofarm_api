@@ -1,6 +1,6 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
+import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDataDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.SensorService;
 import org.springframework.web.bind.annotation.*;

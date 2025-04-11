@@ -19,17 +19,6 @@ public class HumidityController {
         this.humidityService = humidityService;
     }
 
-    @PostMapping("/humidities/v3")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertHumidity(
-            @RequestParam("humidity-percentage") Double humidityPercentage
-            , @RequestParam("measured-at") OffsetDateTime measuredAt
-            , @RequestParam("sensor-uuid") String sensorUuid
-    ){
-        log.info(String.format("Humidity: %.2f%%, Measured at: %s, Sensor uuid: %s", humidityPercentage, measuredAt, sensorUuid));
-        humidityService.insertHumidity(humidityPercentage, measuredAt, sensorUuid);
-    }
-
     @GetMapping("/humidities")
     public List<HumidityDTO> getAllHumidity() {
         return humidityService.getAllHumidity();

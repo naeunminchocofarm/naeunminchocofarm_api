@@ -1,6 +1,5 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.mapper;
 
-import com.naeunminchocofarm.ncf_api.smart_farm.dto.ServiceStatusDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.ServiceStatus;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +12,5 @@ public interface ServiceStatusMapper {
   List<ServiceStatus> getAllServices();
 
   // 서비스 신청
-  void insertService(ServiceStatusDTO serviceStatusDTO);
+  void insertService(ServiceStatus serviceStatus);
 }

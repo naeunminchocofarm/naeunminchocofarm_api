@@ -36,8 +36,4 @@ public class TemperatureService {
     public AirTemperature getRecentOneTemp() {
         return this.temperatureMapper.getRecentOneTemp();
     }
-
-    public void insertAirTemperature(Double temperatureC, OffsetDateTime measuredAt, String sensorUuid) {
-        temperatureMapper.insertAirTemperatureV2(temperatureC, measuredAt, sensorUuid);
-    }
 }
