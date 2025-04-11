@@ -22,7 +22,7 @@
         <result column="ROLE" property="role"/>
     </resultMap>
 
-    <!-- 필요한거 회원가입 insert-->
+    <!-- 필요한거 회원가입 insert -->
     <insert id = "signUp">
         INSERT INTO MEMBERS(
         LOGIN_ID
@@ -51,7 +51,7 @@
         AND USER_PW = #{encryptedLoginPw}
     </select>
 
-    <!-- 필요한거 admin 회원리스트 select-->
+    <!-- 필요한거 admin 회원리스트 s elect-->
     <select id="getMemberList" resultMap="member">
         SELECT m.ID
         , r.ROLE
