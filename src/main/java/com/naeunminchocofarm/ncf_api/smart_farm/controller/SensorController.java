@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
+import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDataDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.SensorService;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,19 @@ public class SensorController {
   }
 
   // 모든 센서 조회
-  @GetMapping("")
+  @GetMapping("/sensors")
   public List<Sensor> getAllSensors() {
     return sensorService.getAllSensors();
   }
 
   // 센서 등록
-  @PostMapping("")
+  @PostMapping("/sensors")
   public void createSensor(@RequestBody Sensor sensor) {
     sensorService.insertSensor(sensor);
+  }
+
+  @PostMapping("/sensors/datas")
+  public void insertSensorDatas(@RequestBody List<SensorDataDTO> sensorDataDTOs){
+    sensorService.insertSensorDatas(sensorDataDTOs);
   }
 }

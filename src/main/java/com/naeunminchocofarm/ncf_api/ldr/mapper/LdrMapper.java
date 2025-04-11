@@ -1,6 +1,7 @@
 package com.naeunminchocofarm.ncf_api.ldr.mapper;
 
 import com.naeunminchocofarm.ncf_api.ldr.dto.LdrValueDTO;
+import com.naeunminchocofarm.ncf_api.ldr.entity.SunshineData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,6 @@ public interface LdrMapper {
             , @Param("measuredAt") OffsetDateTime measuredAt
             , @Param("sensorUuid") String sensorUuid
     );
+
+    void insertAll(@Param("datas") List<SunshineData> list);
 }

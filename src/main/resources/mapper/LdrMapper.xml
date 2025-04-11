@@ -6,6 +6,12 @@
         CALL insert_sunshine_value(#{sunshineValue}, #{measuredAt}, #{sensorUuid});
     </insert>
 
+    <insert id="insertAll">
+        <foreach collection="datas" item="data">
+            CALL insert_sunshine_value(#{data.value}, #{data.measuredAt}, #{data.sensorUuid});
+        </foreach>
+    </insert>
+
     <select id="getAllLdrValue" resultType="com.naeunminchocofarm.ncf_api.ldr.dto.LdrValueDTO">
         SELECT id, ldr_value, measured_at
         FROM ldr_values

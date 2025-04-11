@@ -6,6 +6,12 @@
         CALL insert_air_temperature(#{temperatureC}, #{measuredAt}, #{sensorUuid});
     </insert>
 
+    <insert id="insertAll" parameterType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTempData">
+        <foreach collection="datas" item="data">
+            CALL insert_air_temperature(#{data.value}, #{data.measuredAt}, #{data.sensorUuid});
+        </foreach>
+    </insert>
+
     <!--TODAY의 시간당평균-->
     <select id="getRecentTemperaturesGroupedByHour" resultType="com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature">
         SELECT

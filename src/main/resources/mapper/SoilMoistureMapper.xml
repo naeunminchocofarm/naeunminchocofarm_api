@@ -6,6 +6,12 @@
         CALL insert_soil_moisture_value(#{soilMoistureValue}, #{measuredAt}, #{sensorUuid});
     </insert>
 
+    <insert id="insertAll">
+        <foreach collection="datas" item="data">
+            CALL insert_soil_moisture_value(#{data.value}, #{data.measuredAt}, #{data.sensorUuid});
+        </foreach>
+    </insert>
+
     <!-- 하나만있으면됨 일단-->
     <select id="getNowSoilValue" resultType="com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoisture">
         SELECT id, soil_moisture_value, measured_at

@@ -5,6 +5,12 @@
     <insert id="insertHumidityV2">
         CALL insert_humidity(#{humidityPercentage}, #{measuredAt}, #{sensorUuid});
     </insert>
+    
+    <insert id="insertAll">
+        <foreach collection="datas" item="data">
+            CALL insert_humidity(#{data.value}, #{data.measuredAt}, #{data.sensorUuid});
+        </foreach>
+    </insert>
 
     <select id="getAllHumidity" resultType="com.naeunminchocofarm.ncf_api.humidity.entity.Humidity">
         SELECT *
