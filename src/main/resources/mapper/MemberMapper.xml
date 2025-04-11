@@ -41,15 +41,15 @@
         )
     </insert>
     <!-- 필요한거 로그인 select-->
-    <select id="login" resultMap="member">
-        SELECT ID
-        , LOGIN_ID
-        , ENCRYPTED_LOGIN_PW
-        , MEMBER_ROLE
-        FROM members
-        WHERE USER_ID = #{loginId}
-        AND USER_PW = #{encryptedLoginPw}
-    </select>
+<!--    <select id="login" resultMap="member">-->
+<!--        SELECT ID-->
+<!--        , LOGIN_ID-->
+<!--        , ENCRYPTED_LOGIN_PW-->
+<!--        , MEMBER_ROLE-->
+<!--        FROM members-->
+<!--        WHERE USER_ID = #{loginId}-->
+<!--        AND USER_PW = #{encryptedLoginPw}-->
+<!--    </select>-->
 
     <!-- 필요한거 admin 회원리스트 s elect-->
     <select id="getMemberList" resultMap="member">
