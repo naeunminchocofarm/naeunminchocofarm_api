@@ -10,21 +10,21 @@ import java.util.List;
 @RestController
 public class SensorController {
 
-  private final SensorService sensorService;
-
-  public SensorController(SensorService sensorService) {
-    this.sensorService = sensorService;
-  }
-
-  // 모든 센서 조회
-  @GetMapping("")
-  public List<Sensor> getAllSensors() {
-    return sensorService.getAllSensors();
-  }
-
-  // 센서 등록
-  @PostMapping("")
-  public void createSensor(@RequestBody SensorDTO sensorDTO) {
-    sensorService.insertSensor(sensorDTO);
-  }
+//  private final SensorService sensorService;
+//
+//  public SensorController(SensorService sensorService) {
+//    this.sensorService = sensorService;
+//  }
+//
+//  // 모든 센서 조회
+//  @GetMapping("")
+//  public List<Sensor> getAllSensors() {
+//    return sensorService.getAllSensors();
+//  }
+//
+//  // 센서 등록
+//  @PostMapping("")
+//  public void createSensor(@RequestBody SensorDTO sensorDTO) {
+//    sensorService.insertSensor(sensorDTO);
+//  }
 }

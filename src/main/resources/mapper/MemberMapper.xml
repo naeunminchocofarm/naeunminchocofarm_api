@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.member.mapper.MemberMapper">
-    <resultMap id="member" type="MemberDTO">
+    <resultMap id="member" type="com.naeunminchocofarm.ncf_api.member.entity.Member">
         <id column="ID" property="id"/>
         <result column="LOGIN_ID" property="loginId"/>
         <result column="ENCRYPTED_LOGIN_PW" property="encryptedLoginPw"/>
@@ -16,7 +16,7 @@
         <collection property="memberRole" resultMap="memberRole"/>
     </resultMap>
 
-    <resultMap id="memberRole" type="MemberRoleDTO">
+    <resultMap id="memberRole" type="com.naeunminchocofarm.ncf_api.member.entity.MemberRole">
         <id column="ID" property="id"/>
         <result column="ROLE" property="role"/>
     </resultMap>
@@ -30,7 +30,6 @@
         ,EMAIL
         ,TELL
         ,PRIVACY_POLICY
-        ,CREATED_AT
         ) VALUES(
         #{loginId}
         ,#{encryptedLoginPw}
@@ -38,12 +37,12 @@
         ,#{email}
         ,#{tell}
         ,#{privacyPolicy}
-        ,#{createdAt}
         )
     </insert>
     <!-- 필요한거 로그인 select-->
     <select id="login" resultMap="member">
-        SELECT LOGIN_ID
+        SELECT ID
+        , LOGIN_ID
         , ENCRYPTED_LOGIN_PW
         , MEMBER_ROLE
         FROM members
@@ -51,9 +50,24 @@
         AND USER_PW = #{encryptedLoginPw}
     </select>
 
+    <!-- 필요한거 admin 회원리스트 select-->
+    <select id="getMemberList" resultMap="member">
+        SELECT m.ID
+        , r.ROLE
+        , m.NAME
+        , m.LOGIN_ID
+        , m.EMAIL
+        , m.TELL
+        , m.CREATED_AT
+        , m.DELETED_AT
+        FROM members m
+        left join member_role r
+        on r.id = m.MEMBER_ROLE
+        ORDER BY m.CREATED_AT DESC
+        LIMIT  #{pagination.size} OFFSET #{pagination.skip}
+    </select>
+
     <!-- 필요한거 web 마이페이지 select-->
     <!-- 필요한거 web 마이페이지수정 insert-->
     <!-- 필요한거 web 회원탈퇴 delete-->
-
-    <!-- 필요한거 admin 회원리스트 select-->
 </mapper>

@@ -1,23 +1,22 @@
 package com.naeunminchocofarm.ncf_api.member.dto;
 
+import com.naeunminchocofarm.ncf_api.member.entity.Member;
+
 import java.time.OffsetDateTime;
 
 public class MemberDTO {
-	private Integer id;
-	private String loginId;
-	private String encryptedLoginPw;
-	private String name;
-	private String email;
-	private String tell;
-	private Boolean privacyPolicy;
-	private OffsetDateTime createdAt;
-	private OffsetDateTime deletedAt;
-	private String memo;
+	private final Integer id;
+	private final String loginId;
+	private final String encryptedLoginPw;
+	private final String name;
+	private final String email;
+	private final String tell;
+	private final boolean privacyPolicy;
+	private final OffsetDateTime createdAt;
+	private final OffsetDateTime deletedAt;
+	private final String memo;
 
-	public MemberDTO() {
-	}
-
-	public MemberDTO(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, Boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo) {
+	public MemberDTO(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo) {
 		this.id = id;
 		this.loginId = loginId;
 		this.encryptedLoginPw = encryptedLoginPw;
@@ -54,7 +53,7 @@ public class MemberDTO {
 		return tell;
 	}
 
-	public Boolean getPrivacyPolicy() {
+	public boolean isPrivacyPolicy() {
 		return privacyPolicy;
 	}
 
@@ -69,4 +68,11 @@ public class MemberDTO {
 	public String getMemo() {
 		return memo;
 	}
+
+	public static MemberDTO from(Member member){
+		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo());
+		//아 순서대로여야하는구나 다~데려가야함
+	}
+
+
 }
