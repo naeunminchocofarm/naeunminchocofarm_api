@@ -9,6 +9,7 @@ public class SensorDataDTO {
     private final Object value;
     @JsonProperty("measured-at")
     private final OffsetDateTime measuredAt;
+    @JsonProperty("sensor-uuid")
     private final String sensorUuid;
 
     public SensorDataDTO(String name, Object value, OffsetDateTime measuredAt, String sensorUuid) {

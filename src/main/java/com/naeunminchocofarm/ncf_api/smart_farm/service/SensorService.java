@@ -15,6 +15,8 @@ import com.naeunminchocofarm.ncf_api.soil_moisture.mapper.SoilMoistureMapper;
 import com.naeunminchocofarm.ncf_api.temperature.entity.AirTempData;
 import com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature;
 import com.naeunminchocofarm.ncf_api.temperature.mapper.TemperatureMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @Service
 public class SensorService {
+  private static final Logger log = LogManager.getLogger(SensorService.class);
   private final SensorMapper sensorMapper;
   private final TemperatureMapper tempMapper;
   private final HumidityMapper humidMapper;
@@ -71,6 +74,11 @@ public class SensorService {
     });
 
     tempMapper.insertAll(airTempDatas.stream().map(x -> new AirTempData((Double)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
+    log.info("기온 데이터 삽입 완료 (" + airTempDatas.size() + ")");
+    log.info(airTempDatas.get(0).getName());
+    log.info(airTempDatas.get(0).getValue());
+    log.info(airTempDatas.get(0).getMeasuredAt());
+    log.info(airTempDatas.get(0).getSensorUuid());
     humidMapper.insertAll(humidityDatas.stream().map(x -> new HumidData((Double)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
     sunshineMapper.insertAll(sunshineDatas.stream().map(x -> new SunshineData((Integer)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
     soilMoistureMapper.insertAll(soilMoistureDatas.stream().map(x -> new SoilMoistureData((Integer)x.getValue(), x.getMeasuredAt(), x.getSensorUuid())).toList());
