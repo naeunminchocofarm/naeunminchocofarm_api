@@ -51,7 +51,6 @@ public class NcfFrameHandler {
         var destination = frame.getDestination();
         var subscribeHandler = findSubscribeHandler(destination);
         subscribeHandler.ifPresent(x -> {
-//            log.info("client send: " + frame.getBody() + ", destination: " + x.getDestination());
             x.broadcast(frame.getBody());
         });
     }
@@ -79,42 +78,18 @@ public class NcfFrameHandler {
         } catch (IOException e) {
             log.error(e.getMessage());
         }
-
-//        subscribeHandlerOptional.ifPresentOrElse(x -> {
-//                    x.subscribe(session);
-//                    var responseFrame = new NcfFrame("SUBSCRIBE_SUCCESS");
-//                    var responseMessage = new TextMessage(responseFrame.toString());
-//                    try {
-//                        session.sendMessage(responseMessage);
-//                    } catch (IOException e) {
-//                        log.error(e.getMessage());
-//                    }
-//                },
-//                () -> {
-//                    this.addSubscribeHandlers(
-//                            NcfSubscribeHandler.createDefault(frame.getDestination())
-//                    );
-//                    var responseFrame = new NcfFrame("SUBSCRIBE_FAILD");
-//                    var responseMessage = new TextMessage(responseFrame.toString());
-//                    try {
-//                        session.sendMessage(responseMessage);
-//                    } catch (IOException e) {
-//                        log.error(e.getMessage());
-//                    }
-//                });
     }
 
     public void disconnect(WebSocketSession session) {
-        var iterator = this.subscribeHandlers.iterator();
-        while(iterator.hasNext()) {
-            var subscribHandler = iterator.next();
-            subscribHandler.unsubscribe(session);
-            if (subscribHandler.isEmpty()) {
-                iterator.remove();
+        synchronized (this.subscribeHandlers) {
+            var iterator = this.subscribeHandlers.iterator();
+            while(iterator.hasNext()) {
+                var subscribHandler = iterator.next();
+                subscribHandler.unsubscribe(session);
+                if (subscribHandler.isEmpty()) {
+                    iterator.remove();
+                }
             }
         }
-//        this.subscribeHandlers.forEach(x ->{
-//            x.unsubscribe(session);
-//        });
     }
 }
