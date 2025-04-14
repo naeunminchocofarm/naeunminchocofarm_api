@@ -39,10 +39,11 @@ public class SecurityConfig {
                 .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers("/ws/**").permitAll()  // 웹소켓은 인증 없이 사용
+//												.requestMatchers("/sensors/datas").permitAll()  // 센서데이터 수집 api는 인증 없이 사용
 //                        .requestMatchers("/web/**").permitAll()  // 웹도 인증 없이 사용
 //                        .requestMatchers("/user/**").hasAnyRole("FAMMER","ADMIN")  // 어드민은 관리자만
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")  // 어드민은 관리자만
-                        .requestMatchers("/**").permitAll()  // 어드민은 관리자만
+													.requestMatchers("/**").permitAll()  // 어드민은 관리자만
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable);
