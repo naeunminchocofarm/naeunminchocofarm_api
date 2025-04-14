@@ -22,6 +22,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws/**").permitAll()  // 웹소켓은 인증 없이 사용
+                        .requestMatchers("/sensors/datas").permitAll()  // 센서데이터 수집 api는 인증 없이 사용
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable);
