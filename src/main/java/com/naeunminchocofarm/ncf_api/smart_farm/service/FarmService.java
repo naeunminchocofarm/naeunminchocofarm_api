@@ -52,7 +52,7 @@ public class FarmService {
     // UUID ID 얻기
     Integer uuidId = uuidMapper.getLastInsertId();
 
-    // farms 테이블에 스마트팜 삽입
+    // farms 테이블에 스마트팜 등록
     farmMapper.insertFarm(
             farmDTO.getMember().getId(),
             uuidId,

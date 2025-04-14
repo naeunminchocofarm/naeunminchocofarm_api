@@ -47,7 +47,7 @@ public class FarmController {
   }
 
   // 스마트팜 삭제
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/{}")
   public void deleteFarm(@PathVariable Integer id) {
     farmService.deleteFarm(id);
   }
