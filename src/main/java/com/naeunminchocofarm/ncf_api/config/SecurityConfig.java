@@ -43,8 +43,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/web/**").permitAll()  // 웹도 인증 없이 사용
 //                        .requestMatchers("/user/**").hasAnyRole("FAMMER","ADMIN")  // 어드민은 관리자만
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")  // 어드민은 관리자만
-													.requestMatchers("/**").permitAll()  // 어드민은 관리자만
-                        .anyRequest().authenticated()
+												.requestMatchers("/**").permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable);
 

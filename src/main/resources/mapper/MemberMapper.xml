@@ -14,7 +14,7 @@
         <result column="CREATED_AT" property="createdAt"/>
         <result column="DELETED_AT" property="deletedAt"/>
         <result column="MEMO" property="memo"/>
-        <collection property="memberRole" resultMap="memberRole"/>
+        <association property="memberRole" resultMap="memberRole"/>
     </resultMap>
 
     <resultMap id="memberRole" type="com.naeunminchocofarm.ncf_api.member.entity.MemberRole">
@@ -23,7 +23,7 @@
     </resultMap>
 
     <!-- 필요한거 회원가입 insert -->
-    <insert id = "signUp">
+    <insert id = "signUp" parameterType="com.naeunminchocofarm.ncf_api.member.entity.Member">
         INSERT INTO MEMBERS(
         LOGIN_ID
         ,ENCRYPTED_LOGIN_PW
@@ -40,28 +40,31 @@
         ,#{privacyPolicy}
         )
     </insert>
+
+
     <!-- 필요한거 로그인 select-->
     <select id="login" resultMap="member">
         SELECT ID
         , LOGIN_ID
         FROM members
-        WHERE USER_ID = #{loginId}
-        AND USER_PW = #{encryptedLoginPw}
+        WHERE LOGIN_ID = #{loginId}
+        AND ENCRYPTED_LOGIN_PW = #{encryptedLoginPw}
     </select>
 
     <!-- 필요한거 admin 회원리스트 s elect-->
-    <select id="getMemberList" resultMap="member">
-        SELECT m.ID
-        , r.ROLE
-        , m.NAME
-        , m.LOGIN_ID
-        , m.EMAIL
-        , m.TELL
-        , m.CREATED_AT
-        , m.DELETED_AT
+    <select id="getMemberList" resultMap="member" >
+        SELECT
+        m.ID,
+        m.NAME,
+        m.LOGIN_ID,
+        m.EMAIL,
+        m.TELL,
+        m.CREATED_AT,
+        m.DELETED_AT,
+        r.ID,
+        r.ROLE
         FROM members m
-        left join member_role r
-        on r.id = m.MEMBER_ROLE
+        JOIN member_role r ON r.id = m.MEMBER_ROLE
         ORDER BY m.CREATED_AT DESC
         LIMIT  #{pagination.size} OFFSET #{pagination.skip}
     </select>

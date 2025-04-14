@@ -13,21 +13,22 @@ import java.util.List;
 @Service
 public class MemberService {
 	private static final Logger log = LogManager.getLogger(MemberService.class);
+	private final MemberMapper memberMapper;
+
 	public MemberService(MemberMapper memberMapper) {
 		this.memberMapper = memberMapper;
 	}
-	private final MemberMapper memberMapper;
-
-	public void signUp(MemberDTO memberDTO) {
-		memberMapper.signUp(new Member());
-	};
-	public void login (MemberDTO memberDTO) {
-		this.memberMapper.login(new Member());
-	}
 
 	public List<MemberDTO> getMemberList (Pagination pagination) {
-		log.info("hello, page = {}, size = {}", pagination.getPage(), pagination.getSize());
 		return this.memberMapper.getMemberList(pagination).stream()
 						.map( MemberDTO::from ).toList();
-	}
+	};
+	public void signUp(Member member) {
+
+		System.out.println("회원가입 정보: " + member.getLoginId());
+		memberMapper.signUp(member);
+	};
+	public void login (Member member) {
+		this.memberMapper.login(member);
+	};
 }

@@ -2,6 +2,7 @@ package com.naeunminchocofarm.ncf_api.member.dto;
 
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.OffsetDateTime;
 
@@ -19,6 +20,7 @@ public class MemberDTO {
 	private final MemberRole memberRole;
 
 	public MemberDTO(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo, MemberRole memberRole) {
+
 		this.id = id;
 		this.loginId = loginId;
 		this.encryptedLoginPw = encryptedLoginPw;
@@ -31,8 +33,6 @@ public class MemberDTO {
 		this.memo = memo;
 		this.memberRole = memberRole;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -77,6 +77,25 @@ public class MemberDTO {
 	public MemberRole getMemberRole() {
 		return memberRole;
 	}
+
+	public MemberRole getRole() {
+		return memberRole;
+	}
+
+	public String getRoleNames() {
+		return memberRole.getRole();
+	}
+
+	public String getRoleFlags() {
+		return switch (memberRole.getRole()) {
+			case "ADMIN" -> "0";
+			case "FARMER" -> "1";
+			case "USER" -> "2";
+			default -> "2";
+		};
+	}
+
+
 
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo(), member.getMemberRole());

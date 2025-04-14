@@ -2,7 +2,7 @@ package com.naeunminchocofarm.ncf_api.member.entity;
 
 public class MemberRole {
 	private Integer id;
-	private String memberRole;
+	private String role;
 
 	public Integer getId() {
 		return id;
@@ -12,19 +12,19 @@ public class MemberRole {
 		this.id = id;
 	}
 
-	public String getMemberRole() {
-		return memberRole;
+	public String getRole() {
+		return role;
 	}
 
-	public void setMemberRole(String memberRole) {
-		this.memberRole = memberRole;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public MemberRole() {
 	}
 
-	public MemberRole(Integer id, String memberRole) {
+	public MemberRole(Integer id, String role) {
 		this.id = id;
-		this.memberRole = memberRole;
+		this.role = role;
 	}
 }
