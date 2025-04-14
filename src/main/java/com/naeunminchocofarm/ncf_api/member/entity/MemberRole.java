@@ -21,7 +21,6 @@ public class MemberRole {
 	}
 
 	public MemberRole() {
-
 	}
 
 	public MemberRole(Integer id, String memberRole) {

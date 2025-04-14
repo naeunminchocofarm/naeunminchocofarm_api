@@ -2,22 +2,22 @@ package com.naeunminchocofarm.ncf_api.member.entity;
 
 import java.time.OffsetDateTime;
 
+
 public class Member {
+
 	private Integer id;
 	private String loginId;
 	private String encryptedLoginPw;
 	private String name;
 	private String email;
 	private String tell;
-	private Boolean privacyPolicy;
+	private boolean privacyPolicy;
 	private OffsetDateTime createdAt;
 	private OffsetDateTime deletedAt;
 	private String memo;
+	private MemberRole memberRole;
 
-	public Member() {
-	}
-
-	public Member(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, Boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo) {
+	public Member(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo, MemberRole memberRole) {
 		this.id = id;
 		this.loginId = loginId;
 		this.encryptedLoginPw = encryptedLoginPw;
@@ -28,6 +28,10 @@ public class Member {
 		this.createdAt = createdAt;
 		this.deletedAt = deletedAt;
 		this.memo = memo;
+		this.memberRole = memberRole;
+	}
+
+	public Member() {
 	}
 
 	public Integer getId() {
@@ -78,11 +82,11 @@ public class Member {
 		this.tell = tell;
 	}
 
-	public Boolean getPrivacyPolicy() {
+	public boolean getPrivacyPolicy() {
 		return privacyPolicy;
 	}
 
-	public void setPrivacyPolicy(Boolean privacyPolicy) {
+	public void setPrivacyPolicy(boolean privacyPolicy) {
 		this.privacyPolicy = privacyPolicy;
 	}
 
@@ -108,5 +112,17 @@ public class Member {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public boolean isPrivacyPolicy() {
+		return privacyPolicy;
+	}
+
+	public MemberRole getMemberRole() {
+		return memberRole;
+	}
+
+	public void setMemberRole(MemberRole memberRole) {
+		this.memberRole = memberRole;
 	}
 }
