@@ -52,8 +52,8 @@ public class AuthorizationHeaderParserImpl implements AuthorizationHeaderParser 
         final var USER = new AuthInfo(USER_ID, ROLE_NAMES, ROLE_FLAGS);
 
         if (
-            !(expectedRoleFlags.isEmpty() || USER.containAnyRoleFlags(expectedRoleFlags)) ||
-            !(expectedRoleNames.isEmpty() || USER.containAnyRoleNames(expectedRoleNames))
+                !(expectedRoleFlags.isEmpty() || USER.containAnyRoleFlags(expectedRoleFlags)) ||
+                        !(expectedRoleNames.isEmpty() || USER.containAnyRoleNames(expectedRoleNames))
         ) {
             throw new InvalidRoleException("권한이 유효하지 않습니다.");
         }

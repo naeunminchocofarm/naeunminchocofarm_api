@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class MemberService {
-	//lombok기준으로 slq4
 	private static final Logger log = LogManager.getLogger(MemberService.class);
 	public MemberService(MemberMapper memberMapper) {
 		this.memberMapper = memberMapper;
@@ -20,14 +19,16 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 
 
-	public void signUp(Member member) {
-		memberMapper.signUp(member);
+
+	public void signUp(MemberDTO memberDTO) {
+		memberMapper.signUp(new Member());
 	};
-	public Member login (Member member) {
-		return memberMapper.login(member);
+	public void login (MemberDTO memberDTO) {
+		this.memberMapper.login(new Member());
 	}
+
 	public List<MemberDTO> getMemberList (Pagination pagination) {
-		log.info("hello, size = {}, page = {}", pagination.getPage(), pagination.getSize());
+		log.info("hello, page = {}, size = {}", pagination.getPage(), pagination.getSize());
 		return this.memberMapper.getMemberList(pagination).stream()
 						.map( MemberDTO::from ).toList();
 	}
