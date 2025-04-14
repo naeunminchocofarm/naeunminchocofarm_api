@@ -12,16 +12,15 @@ public class NcfFrame {
     public NcfFrame(String command, Map<String, String> headers, String body) {
         this.command = command;
         headers.put("content-length", String.valueOf(body.length()));
+        if (!headers.containsKey("content-type")) {
+            headers.put("content-type", "text");
+        }
         this.headers = headers;
         this.body = body;
     }
 
-    public NcfFrame(String command, String body) {
-        this(command, new HashMap<>(), body);
-    }
-
     public NcfFrame(String command) {
-        this(command, "");
+        this(command, new HashMap<>(), "");
     }
 
     public String getCommand() {

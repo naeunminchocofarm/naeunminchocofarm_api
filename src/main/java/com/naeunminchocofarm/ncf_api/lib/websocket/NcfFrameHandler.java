@@ -51,7 +51,7 @@ public class NcfFrameHandler {
         var destination = frame.getDestination();
         var subscribeHandler = findSubscribeHandler(destination);
         subscribeHandler.ifPresent(x -> {
-            x.broadcast(frame.getBody());
+            x.broadcast(frame);
         });
     }
 
