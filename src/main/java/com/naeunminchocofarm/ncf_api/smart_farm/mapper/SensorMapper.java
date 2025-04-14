@@ -12,10 +12,13 @@ public interface SensorMapper {
   // 센서 전체 조회
   List<Sensor> getAllSensors();
 
+  //특정 section 센서 조회
+  List<Sensor> getSensorBySectionId(@Param("sectionId") Integer sectionId);
+
   // 센서 등록
   void insertSensor(
-          @Param("sensorName") String sensorName,
-          @Param("section_id") Integer sectionId,
+          @Param("name") String name,
+          @Param("sectionId") Integer sectionId,
           @Param("uuidId") Integer uuidId,
           @Param("sensorType") String sensorType
   );
