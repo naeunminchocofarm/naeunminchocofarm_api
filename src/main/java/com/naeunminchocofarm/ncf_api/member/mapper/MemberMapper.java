@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface MemberMapper {
-	public Member signUp(Member member);
-	public Member login (Member member);
+	public void signUp(Member member);
+	public void login (Member member);
 	public List<Member> getMemberList (@Param("pagination")Pagination pagination);
 }
