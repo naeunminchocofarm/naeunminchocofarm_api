@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class MemberService {
-	//lombok기준으로 slq4
 	private static final Logger log = LogManager.getLogger(MemberService.class);
 	public MemberService(MemberMapper memberMapper) {
 		this.memberMapper = memberMapper;
@@ -20,8 +19,8 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 
 
-	public void signUp(Member member) {
-		memberMapper.signUp(member);
+	public Member signUp(Member member) {
+		return memberMapper.signUp(member);
 	};
 	public Member login (Member member) {
 		return memberMapper.login(member);

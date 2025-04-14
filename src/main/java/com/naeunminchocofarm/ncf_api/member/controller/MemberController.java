@@ -5,7 +5,7 @@ import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
-import org.apache.logging.log4j.jul.LogManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,23 +17,25 @@ import java.util.logging.Logger;
 @RestController
 public class MemberController {
 
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, PasswordEncoder passwordEncoder) {
 		this.memberService = memberService;
-	}
+        this.passwordEncoder = passwordEncoder;
+    }
 
 	private final MemberService memberService;
+	private final PasswordEncoder passwordEncoder;
+
 
 	//회원가입
-//	@PostMapping("/user/signUp")
-//	public ResponseEntity<?> signUp(@RequestBody Member member){
-//
-//		String encryptedLoginPw = Base64.getDecoder(member.getLoginId());
-//		member.setLoginId(encryptedLoginPw);
-//
-//		memberService.signUp(member);
-//
-//		return ResponseEntity.status(HttpStatus.OK).build();
-//	}
+	@PostMapping("/user/signup")
+	public ResponseEntity<?> signUp(Member member){
+		System.out.println("회원가입 작동중");
+
+		String encryptedLoginPw = passwordEncoder.encode(member.getEncryptedLoginPw());
+		member.setEncryptedLoginPw(encryptedLoginPw);
+		memberService.signUp(member);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 
 	@GetMapping("/admin/members")
 	public List<MemberDTO> getMemberList(@RequestParam(value = "interval", defaultValue = "") String rawInterval
