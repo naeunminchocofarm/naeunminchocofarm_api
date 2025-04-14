@@ -11,6 +11,7 @@
         <result column="use_date" property="useDate"/>
         <result column="crop" property="crop"/>
         <result column="uuid_id" property="uuidId"/>
+        <result column="status" property="status"/>
 
         <association property="member" javaType="com.naeunminchocofarm.ncf_api.member.entity.Member">
             <id column="id" property="id"/>
@@ -34,6 +35,7 @@
             farm_name,
             farm_addr,
             use_date,
+            status,
             crop,
             uuid_id,
             login_id,
@@ -50,6 +52,7 @@
             farm_name,
             farm_addr,
             use_date,
+            status,
             crop,
             uuid_id,
             login_id,
