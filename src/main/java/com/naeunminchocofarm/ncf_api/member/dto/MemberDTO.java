@@ -78,6 +78,25 @@ public class MemberDTO {
 		return memberRole;
 	}
 
+	public MemberRole getRole() {
+		return memberRole;
+	}
+
+	public String getRoleNames() {
+		return memberRole.getRole();
+	}
+
+	public String getRoleFlags() {
+		return switch (memberRole.getRole()) {
+			case "ADMIN" -> "0";
+			case "FARMER" -> "1";
+			case "USER" -> "2";
+			default -> "2";
+		};
+	}
+
+
+
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo(), member.getMemberRole());
 	}

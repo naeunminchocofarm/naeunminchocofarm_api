@@ -24,9 +24,11 @@ public class MemberService {
 						.map( MemberDTO::from ).toList();
 	};
 	public void signUp(Member member) {
-		memberMapper.signUp(new Member());
+
+		System.out.println("회원가입 정보: " + member.getLoginId());
+		memberMapper.signUp(member);
 	};
 	public void login (Member member) {
-		this.memberMapper.login(new Member());
+		this.memberMapper.login(member);
 	};
 }

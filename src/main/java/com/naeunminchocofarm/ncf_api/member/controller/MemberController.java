@@ -24,17 +24,6 @@ public class MemberController {
 		this.memberService = memberService;
 		this.passwordEncoder = passwordEncoder;
 	}
-
-	// 회원가입 처리
-	@PostMapping("/web/signup")
-	public ResponseEntity<?> signUp(@RequestBody MemberDTO memberDTO){
-		System.out.println("회원가입 작동중");
-
-		String password = passwordEncoder.encode(memberDTO.getEncryptedLoginPw());
-
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
-
 	// 회원 목록 조회
 	@GetMapping("/admin/members")
 	public List<MemberDTO> getMemberList(

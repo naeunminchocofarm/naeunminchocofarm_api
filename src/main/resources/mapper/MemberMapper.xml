@@ -23,7 +23,7 @@
     </resultMap>
 
     <!-- 필요한거 회원가입 insert -->
-    <insert id = "signUp">
+    <insert id = "signUp" parameterType="com.naeunminchocofarm.ncf_api.member.entity.Member">
         INSERT INTO MEMBERS(
         LOGIN_ID
         ,ENCRYPTED_LOGIN_PW
@@ -40,6 +40,8 @@
         ,#{privacyPolicy}
         )
     </insert>
+
+
     <!-- 필요한거 로그인 select-->
     <select id="login" resultMap="member">
         SELECT ID
@@ -50,7 +52,7 @@
     </select>
 
     <!-- 필요한거 admin 회원리스트 s elect-->
-    <select id="getMemberList" resultMap="member">
+    <select id="getMemberList" resultMap="member" >
         SELECT
         m.ID,
         m.NAME,
