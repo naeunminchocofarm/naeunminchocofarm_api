@@ -29,9 +29,9 @@ public class AuthController {
 //        response.setHeader("Authorization", "Bearer " + newAccessToken);
 //    }
 
-    @PostMapping("/user/login")
-    public String getToken(@RequestParam("id") Long id, @RequestParam("roleFlags") Set<Integer> roleFlags) {
-        log.info("id = {}, roleFlags = {}", id, roleFlags.toString());
-        return this.jwtHandler.generateToken(id, roleFlags);
+    @PostMapping("/login")
+    public String getToken(@RequestParam("id") Long id, @RequestParam("roleNames") Set<String> roleNames, @RequestParam("roleFlags") Set<Integer> roleFlags) {
+        log.info("id = {}, roleNames = {}, roleFlags = {}", id, roleNames.toString(), roleFlags.toString());
+        return this.jwtHandler.generateToken(id, roleNames, roleFlags);
     }
 }
