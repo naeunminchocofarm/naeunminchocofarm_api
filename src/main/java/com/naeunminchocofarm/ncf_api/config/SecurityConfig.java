@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .httpBasic( basic -> basic.disable())
                 .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/ws/**").permitAll()  // 웹소켓은 인증 없이 사용
+//                        .requestMatchers("/ws/**").permitAll()  // 웹소켓은 인증 없이 사용
 //                        .requestMatchers("/web/**").permitAll()  // 웹도 인증 없이 사용
 //                        .requestMatchers("/user/**").hasAnyRole("FAMMER","ADMIN")  // 어드민은 관리자만
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")  // 어드민은 관리자만
