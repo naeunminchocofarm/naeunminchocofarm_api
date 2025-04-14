@@ -18,8 +18,6 @@ public class MemberService {
 	}
 	private final MemberMapper memberMapper;
 
-
-
 	public void signUp(MemberDTO memberDTO) {
 		memberMapper.signUp(new Member());
 	};
