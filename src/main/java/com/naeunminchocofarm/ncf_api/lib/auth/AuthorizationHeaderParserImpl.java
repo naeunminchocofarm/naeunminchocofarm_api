@@ -47,11 +47,13 @@ public class AuthorizationHeaderParserImpl implements AuthorizationHeaderParser 
         assert claims != null;
 
         final Long USER_ID = claims.get("id", Long.class);
+        final var ROLE_NAMES = new HashSet<>((List<String>)claims.get("roleNames", List.class));
         final var ROLE_FLAGS = new HashSet<>((List<Integer>)claims.get("roleFlags", List.class));
-        final var USER = new AuthInfo(USER_ID, ROLE_FLAGS);
+        final var USER = new AuthInfo(USER_ID, ROLE_NAMES, ROLE_FLAGS);
 
         if (
-            !(expectedRoleFlags.isEmpty() || USER.containAnyRoleFlags(expectedRoleFlags))
+                !(expectedRoleFlags.isEmpty() || USER.containAnyRoleFlags(expectedRoleFlags)) ||
+                        !(expectedRoleNames.isEmpty() || USER.containAnyRoleNames(expectedRoleNames))
         ) {
             throw new InvalidRoleException("권한이 유효하지 않습니다.");
         }

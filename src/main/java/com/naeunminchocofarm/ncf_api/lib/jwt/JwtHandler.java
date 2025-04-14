@@ -29,13 +29,15 @@ public class JwtHandler {
     /**
      * jwt 토큰을 생성합니다.
      * @param id 사용자를 식별할 수 있는 아이디
+     * @param rollNames 사용자의 역할 이름 농장주/일반
      * @param roleFlags 사용자의 역할 번호
      * @return jwt 토큰
      */
-    public String generateToken(long id, Set<Integer> roleFlags) {
+    public String generateToken(long id, Set<String> rollNames, Set<Integer> roleFlags) {
         return Jwts.builder()
                 .claims()
                 .add("id", id)
+                .add("roleNames", rollNames)
                 .add("roleFlags", roleFlags)
                 .and()
                 .expiration(new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS))

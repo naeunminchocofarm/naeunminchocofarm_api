@@ -71,7 +71,6 @@ public class MemberDTO {
 
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo());
-		//아 순서대로여야하는구나 다~데려가야함
 	}
 
 
