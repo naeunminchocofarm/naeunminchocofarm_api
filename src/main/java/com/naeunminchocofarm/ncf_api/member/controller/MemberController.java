@@ -23,9 +23,17 @@ public class MemberController {
 
 	private final MemberService memberService;
 
+	//로그인
+	@PostMapping("/web/login")
+	public ResponseEntity<?> login(MemberDTO memberDTO){
+		System.out.println("로그인체크중");
+
+		memberService.login(memberDTO);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 
 	//회원가입
-	@PostMapping("/signup")
+	@PostMapping("/web/signup")
 	public ResponseEntity<?> signUp(MemberDTO memberDTO){
 		System.out.println("회원가입 작동중");
 
