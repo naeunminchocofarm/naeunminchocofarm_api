@@ -19,12 +19,14 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 
 
-	public Member signUp(Member member) {
-		return memberMapper.signUp(member);
+
+	public void signUp(MemberDTO memberDTO) {
+		memberMapper.signUp(new Member());
 	};
-	public Member login (Member member) {
-		return memberMapper.login(member);
+	public void login (MemberDTO memberDTO) {
+		this.memberMapper.login(new Member());
 	}
+
 	public List<MemberDTO> getMemberList (Pagination pagination) {
 		log.info("hello, page = {}, size = {}", pagination.getPage(), pagination.getSize());
 		return this.memberMapper.getMemberList(pagination).stream()

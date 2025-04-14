@@ -17,23 +17,19 @@ import java.util.logging.Logger;
 @RestController
 public class MemberController {
 
-	public MemberController(MemberService memberService, PasswordEncoder passwordEncoder) {
+	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
-        this.passwordEncoder = passwordEncoder;
     }
 
 	private final MemberService memberService;
-	private final PasswordEncoder passwordEncoder;
 
 
 	//회원가입
-	@PostMapping("/user/signup")
-	public ResponseEntity<?> signUp(Member member){
+	@PostMapping("/signup")
+	public ResponseEntity<?> signUp(MemberDTO memberDTO){
 		System.out.println("회원가입 작동중");
 
-		String encryptedLoginPw = passwordEncoder.encode(member.getEncryptedLoginPw());
-		member.setEncryptedLoginPw(encryptedLoginPw);
-		memberService.signUp(member);
+		memberService.signUp(memberDTO);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
