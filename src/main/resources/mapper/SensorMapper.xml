@@ -7,20 +7,32 @@
 
     <!-- 센서 전체 조회 -->
     <select id="getAllSensors" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor">
-        SELECT * FROM sensor
+        SELECT * FROM sensors
+    </select>
+
+    <!--  특정 구역의 센서 조회  -->
+    <select id="getSensorBySectionId" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor">
+        SELECT
+            id,
+            name,
+            section_id,
+            uuid_id AS uuidId,
+            sensor_type
+        FROM sensors
+        WHERE section_id = #{sectionId}
     </select>
 
     <!-- 센서 등록 -->
     <insert id="insertSensor">
-        INSERT INTO sensor (
-            sensor_name
+        INSERT INTO sensors (
+            name
             , section_id
             , uuid_id
             , sensor_type
         ) VALUES (
-            #{sensorName}
+            #{name}
             , #{sectionId}
-            , #{uuid_generate_v4()}
+            , #{uuidId}
             , #{sensorType}
         )
     </insert>

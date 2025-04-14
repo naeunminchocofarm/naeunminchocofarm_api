@@ -2,16 +2,16 @@ package com.naeunminchocofarm.ncf_api.smart_farm.entity;
 
 public class Section {
   private Integer id;
-  private String sectionName;
+  private String name;
   private Integer farmId;
   private Integer uuidId;
 
   public Section() {
   }
 
-  public Section(Integer id, String sectionName, Integer farmId, Integer uuidId) {
+  public Section(Integer id, String name, Integer farmId, Integer uuidId) {
     this.id = id;
-    this.sectionName = sectionName;
+    this.name = name;
     this.farmId = farmId;
     this.uuidId = uuidId;
   }
@@ -20,8 +20,8 @@ public class Section {
     return id;
   }
 
-  public String getSectionName() {
-    return sectionName;
+  public String getName() {
+    return name;
   }
 
   public Integer getFarmId() {

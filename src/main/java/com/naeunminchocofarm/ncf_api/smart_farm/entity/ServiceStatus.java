@@ -6,10 +6,10 @@ public class ServiceStatus {
   private Integer id;
   private Integer memberId;
   private String status;
-  private final String tell;
-  private final String email;
-  private final String content;
-  private final OffsetDateTime applicationDate;
+  private String tell;
+  private String email;
+  private String content;
+  private OffsetDateTime applicationDate;
 
   public ServiceStatus(String tell, String email, String content, OffsetDateTime applicationDate) {
       this.tell = tell;

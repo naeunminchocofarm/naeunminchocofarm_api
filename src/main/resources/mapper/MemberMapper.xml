@@ -41,6 +41,7 @@
         )
     </insert>
     <!-- 필요한거 로그인 select-->
+
     <select id="login" resultMap="member">
         SELECT ID
         , LOGIN_ID
