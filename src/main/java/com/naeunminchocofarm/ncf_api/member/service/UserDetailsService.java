@@ -26,6 +26,6 @@ public class UserDetailsService implements org.springframework.security.core.use
 		return new User(
 						member.getLoginId(),
 						member.getEncryptedLoginPw(),
-						List.of(new SimpleGrantedAuthority(member.getMemberRole().getMemberRole())) // 예: ROLE_USER
+						List.of(new SimpleGrantedAuthority(member.getMemberRole().getRole())) // 예: ROLE_USER
 		);	}
 }

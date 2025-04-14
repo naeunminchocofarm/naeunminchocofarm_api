@@ -31,15 +31,17 @@ public class MemberController {
 		System.out.println("회원가입 작동중");
 
 		String password = passwordEncoder.encode(memberDTO.getEncryptedLoginPw());
-		memberService.signUp(memberDTO);  // 회원가입 처리
+
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	// 회원 목록 조회
 	@GetMapping("/admin/members")
-	public List<MemberDTO> getMemberList(@RequestParam(value = "interval", defaultValue = "") String rawInterval,
-																			 @RequestParam(value = "size", defaultValue = "15") Integer page,
-																			 @RequestParam(value = "page", defaultValue = "1") Integer size){
+	public List<MemberDTO> getMemberList(
+					@RequestParam(value = "interval", defaultValue = "") String rawInterval,
+					@RequestParam(value = "page", defaultValue = "1") Integer page,
+					@RequestParam(value = "size", defaultValue = "10") Integer size
+	) {
 		Pagination pagination;
 		try {
 			pagination = new Pagination(size, page);

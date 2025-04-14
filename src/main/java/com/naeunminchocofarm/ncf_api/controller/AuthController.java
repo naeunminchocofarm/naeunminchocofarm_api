@@ -6,12 +6,14 @@ import com.naeunminchocofarm.ncf_api.lib.auth.AuthInfo;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
+import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -27,6 +29,8 @@ public class AuthController {
         this.jwtHandler = jwtHandler;
         this.memberService = memberService;
     }
+
+
 
 //    @PostMapping("/web/login")
 //    public ResponseEntity<?> login(@RequestBody MemberDTO memberDTO, HttpServletResponse response) throws Exception {
