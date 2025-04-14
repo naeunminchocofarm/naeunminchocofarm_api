@@ -4,29 +4,101 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.smart_farm.mapper.FarmMapper">
+    <resultMap id="FarmWithMemberResultMap" type="com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm">
+        <id column="id" property="id"/>
+        <result column="farm_name" property="farmName"/>
+        <result column="farm_addr" property="farmAddr"/>
+        <result column="use_date" property="useDate"/>
+        <result column="crop" property="crop"/>
+        <result column="uuid_id" property="uuidId"/>
+
+        <association property="member" javaType="com.naeunminchocofarm.ncf_api.member.entity.Member">
+            <id column="id" property="id"/>
+            <result column="login_id" property="loginId"/>
+            <result column="name" property="name"/>
+            <result column="email" property="email"/>
+            <result column="tell" property="tell"/>
+        </association>
+    </resultMap>
+
 
     <!-- 스마트팜 전체 조회 -->
     <select id="getAllFarms" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm">
-        SELECT * FROM farm
+        SELECT * FROM farms
     </select>
+
+    <!--  FarmsWithMember 조회   -->
+    <select id="getFarmWithMember" resultMap="FarmWithMemberResultMap">
+        SELECT
+            f.id,
+            farm_name,
+            farm_addr,
+            use_date,
+            crop,
+            uuid_id,
+            login_id,
+            name
+        FROM farms f
+        INNER JOIN members m ON f.member_id = m.id
+        ORDER BY f.id;
+    </select>
+
+    <!--  스마트팜 상세 정보 조회  -->
+    <select id="getFarmDetailById" resultMap="FarmWithMemberResultMap">
+        SELECT
+            f.id,
+            farm_name,
+            farm_addr,
+            use_date,
+            crop,
+            uuid_id,
+            login_id,
+            name,
+            email,
+            tell
+        FROM farms f
+        INNER JOIN members m ON f.member_id = m.id
+        WHERE f.id = #{id}
+    </select>
+
 
     <!-- 스마트팜 등록 -->
     <insert id="insertFarm">
-        INSERT INTO farm (
+        INSERT INTO farms (
             member_id
             , uuid_id
             , farm_name
-            , farm-addr
+            , farm_addr
             , use_date
             , crop
+            , status
         ) VALUES (
             #{memberId}
-            , #{uuid_generate_v4()}
+            , #{uuidId}
             , #{farmName}
             , #{farmAddr}
             , #{useDate}
             , #{crop}
+            , #{status}
         )
     </insert>
+
+    <!-- 스마트팜 수정 -->
+    <update id="updateFarm">
+        UPDATE farms
+        SET
+        farm_name = #{farmName},
+        farm_addr = #{farmAddr},
+        use_date = #{useDate},
+        crop = #{crop},
+        status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 스마트팜 삭제 -->
+    <delete id="deleteFarm">
+        DELETE FROM farms
+        WHERE id = #{id}
+    </delete>
 
 </mapper>

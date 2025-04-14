@@ -25,7 +25,11 @@ public class SensorController {
   // 센서 등록
   @PostMapping("/sensors")
   public void createSensor(@RequestBody Sensor sensor) {
-    sensorService.insertSensor(sensor);
+    sensorService.insertSensor(
+            sensor.getSensorName(),
+            sensor.getSectionId(),
+            sensor.getSensorType()
+    );
   }
 
   @PostMapping("/sensors/datas")

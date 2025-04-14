@@ -5,6 +5,7 @@ import com.naeunminchocofarm.ncf_api.smart_farm.mapper.SectionMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SectionService {
@@ -20,8 +21,15 @@ public class SectionService {
     return sectionMapper.getAllSections();
   }
 
+  // 특정 farm 구역 상세 조회
+  public List<Section> getSectionsByFarmId(Integer farmId) {
+    return sectionMapper.getSectionsByFarmId(farmId);
+  }
+
   // 구역 등록
-  public void insertSection(Section section) {
-    sectionMapper.insertSection(section);
+  public void insertSection(String sectionName, Integer farmId) {
+    Integer uuidId = UUID.randomUUID().hashCode();
+
+    sectionMapper.insertSection(sectionName, farmId, uuidId);
   }
 }

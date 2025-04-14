@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SensorService {
@@ -45,8 +46,10 @@ public class SensorService {
   }
 
   // 센서 등록
-  public void insertSensor(Sensor sensor) {
-    sensorMapper.insertSensor(sensor);
+  public void insertSensor(String sensorName, Integer sectionId, String sensorType) {
+    Integer uuidId = UUID.randomUUID().hashCode();
+
+    sensorMapper.insertSensor(sensorName, sectionId, uuidId, sensorType);
   }
 
   public void insertSensorDatas(List<SensorDataDTO> sensorDataDTOs) {

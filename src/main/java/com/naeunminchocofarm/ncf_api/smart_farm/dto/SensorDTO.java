@@ -1,5 +1,7 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.dto;
 
+import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
+
 public class SensorDTO {
   private final Integer  id;
   private final String sensorName;
@@ -33,6 +35,16 @@ public class SensorDTO {
 
   public String getSensorType() {
     return sensorType;
+  }
+
+  public static SensorDTO from(Sensor sensor) {
+    return new SensorDTO(
+            sensor.getId(),
+            sensor.getSensorName(),
+            sensor.getSectionId(),
+            sensor.getUuidId(),
+            sensor.getSensorType()
+    );
   }
 
 }

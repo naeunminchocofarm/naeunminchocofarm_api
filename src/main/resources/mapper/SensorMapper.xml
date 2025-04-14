@@ -7,7 +7,7 @@
 
     <!-- 센서 전체 조회 -->
     <select id="getAllSensors" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor">
-        SELECT * FROM sensor
+        SELECT * FROM sensors
     </select>
 
     <!-- 센서 등록 -->
@@ -20,7 +20,7 @@
         ) VALUES (
             #{sensorName}
             , #{sectionId}
-            , #{uuid_generate_v4()}
+            , #{uuid}
             , #{sensorType}
         )
     </insert>
