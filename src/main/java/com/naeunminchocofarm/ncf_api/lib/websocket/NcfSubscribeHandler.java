@@ -29,8 +29,8 @@ public abstract class NcfSubscribeHandler {
         this.sessions.put(session.getId(), session);
     }
 
-    public void broadcast(String body) {
-        var responseFrame = new NcfFrame("MESSAGE", body);
+    public void broadcast(NcfFrame frame) {
+        var responseFrame = new NcfFrame("MESSAGE", frame.getHeaders(), frame.getBody());
         var responseMessage = new TextMessage(responseFrame.toString());
         this.sessions.values().forEach(x -> {
             try {
