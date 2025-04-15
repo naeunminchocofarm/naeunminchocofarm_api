@@ -1,7 +1,7 @@
 package com.naeunminchocofarm.ncf_api.member.entity;
 
-import com.naeunminchocofarm.ncf_api.member.dto.LoginResponeDTO;
-import com.naeunminchocofarm.ncf_api.member.dto.SignupRequestDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.LoginRespone;
+import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.OffsetDateTime;
@@ -130,7 +130,7 @@ public class Member {
 		this.memberRole = memberRole;
 	}
 
-	public static Member from(SignupRequestDTO request, PasswordEncoder passwordEncoder) {
+	public static Member from(SignupRequest request, PasswordEncoder passwordEncoder) {
 		Member member = new Member();// 각각에 넣어주는
 		member.setLoginId(request.getLoginId());
 		member.setEncryptedLoginPw(passwordEncoder.encode(request.getEncryptedLoginPw()));
@@ -142,7 +142,7 @@ public class Member {
 		return member;
 	}
 
-	public static Member from(LoginResponeDTO loginRespone, PasswordEncoder passwordEncoder) {
+	public static Member from(LoginRespone loginRespone, PasswordEncoder passwordEncoder) {
 		Member member = new Member();// 로그인시 비교를 위해 넣어주는
 		member.setLoginId(loginRespone.getLoginId());
 		member.setEncryptedLoginPw(loginRespone.getEncryptedLoginPw());

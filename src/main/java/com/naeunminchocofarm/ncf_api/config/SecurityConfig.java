@@ -1,6 +1,7 @@
 package com.naeunminchocofarm.ncf_api.config;
 
 import com.naeunminchocofarm.ncf_api.lib.auth.AuthInfo;
+import com.naeunminchocofarm.ncf_api.lib.jwt.JwtAuthenticationFilter;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
 import io.jsonwebtoken.Jwts;
 import jakarta.security.auth.message.config.AuthConfig;
@@ -28,45 +29,46 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    private JwtHandler jwtHandler;
+    private final JwtHandler jwtHandler;
+
+    public SecurityConfig(JwtHandler jwtHandler) {
+        this.jwtHandler = jwtHandler;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults())
-                .csrf((csrf) -> csrf.disable())
-                .formLogin(form->form.disable())
-                .httpBasic( basic -> basic.disable())
-                .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http
+                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/ws/**").permitAll()  // 웹소켓은 인증 없이 사용
-                .requestMatchers("/sensors/datas").permitAll()  // 센서데이터 수집 api는 인증 없이 사용
-                .requestMatchers("/web/**").permitAll()  // 웹도 인증 없이 사용
-                .requestMatchers("/web/**").permitAll()  // 웹도 인증 없이 사용
-                .requestMatchers("/user/**").hasAnyRole("FAMMER","ADMIN")  // 파머랑관리자는 user접근가능
-                .requestMatchers("/admin/**").hasRole("ADMIN")  // 어드민은 관리자만
-                .anyRequest().authenticated()
+                        .requestMatchers("/ws/**", "/sensors/datas", "/web/**").permitAll()
+                        .requestMatchers("/user/**").hasAnyRole("FAMMER", "ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .csrf(AbstractHttpConfigurer::disable);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtHandler), UsernamePasswordAuthenticationFilter.class);
 
-        //토큰을 검증
         return http.build();
     }
 
+    @Bean
+    public PasswordEncoder getPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); //REACT에서 스프링으로 접근허용하게따!!
+        config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",config);
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
-
-    @Bean   //비밀번호 암호화 기능을 제공하는 객체 생성 메서드
-    public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 }
+

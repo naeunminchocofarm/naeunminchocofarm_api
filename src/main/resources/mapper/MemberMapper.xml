@@ -18,8 +18,8 @@
     </resultMap>
 
     <resultMap id="memberRole" type="com.naeunminchocofarm.ncf_api.member.entity.MemberRole">
-        <id column="ID" property="id"/>
-        <result column="ROLE" property="role"/>
+        <id column="ROLE_ID" property="id"/>
+        <result column="ROLE_NAME" property="roleName"/>
     </resultMap>
 
     <insert id = "signUp" parameterType="com.naeunminchocofarm.ncf_api.member.entity.Member">
@@ -42,11 +42,15 @@
 
     <!-- 필요한거 로그인시 있는지 없는지 여부 select-->
     <select id="login" resultMap="member"> <!--login respone용임-->
-        SELECT ID
-        , LOGIN_ID
-        , ENCRYPTED_LOGIN_PW
-        FROM members
-        WHERE LOGIN_ID = #{loginId}
+        SELECT
+        m.ID
+        , m.LOGIN_ID
+        , m.ENCRYPTED_LOGIN_PW
+        , r.ID AS ROLE_ID
+        , r.ROLE AS ROLE_NAME  <!-- 여기! -->
+        FROM members m
+        JOIN member_role r ON r.ID = m.MEMBER_ROLE
+        WHERE m.login_id = #{loginId}
     </select>
 
     <!-- 필요한거 admin 회원리스트 s elect-->
