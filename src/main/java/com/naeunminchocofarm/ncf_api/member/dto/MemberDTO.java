@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 public class MemberDTO {
 	private final Integer id;
 	private final String loginId;
-	private final String encryptedLoginPw;
+	private final String encryptedLoginPw; //스프링에서 암호화합니다 내가 헷갈려서 적어둠
 	private final String name;
 	private final String email;
 	private final String tell;
@@ -83,19 +83,16 @@ public class MemberDTO {
 	}
 
 	public String getRoleNames() {
-		return memberRole.getRole();
+		return memberRole.getRoleName();
 	}
 
 	public String getRoleFlags() {
-		return switch (memberRole.getRole()) {
+		return switch (memberRole.getRoleName()) {
 			case "ADMIN" -> "0";
-			case "FARMER" -> "1";
-			case "USER" -> "2";
-			default -> "2";
+			case "FARMER" -> "2";
+			default -> "1";
 		};
 	}
-
-
 
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo(), member.getMemberRole());

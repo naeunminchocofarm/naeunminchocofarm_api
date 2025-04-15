@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.member.entity;
 
+import com.naeunminchocofarm.ncf_api.member.dto.LoginResponeDTO;
 import com.naeunminchocofarm.ncf_api.member.dto.SignupRequestDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -130,15 +131,21 @@ public class Member {
 	}
 
 	public static Member from(SignupRequestDTO request, PasswordEncoder passwordEncoder) {
-		Member member = new Member();
-		System.out.println("🔑 받은 로그인 ID: " + request.getLoginId());  // 확인용 로그
-		member.setLoginId(request.getLoginId());  // 로그인 ID 설정
+		Member member = new Member();// 각각에 넣어주는
+		member.setLoginId(request.getLoginId());
 		member.setEncryptedLoginPw(passwordEncoder.encode(request.getEncryptedLoginPw()));
 		member.setName(request.getName());
 		member.setEmail(request.getEmail());
 		member.setTell(request.getTell());
 		member.setPrivacyPolicy(request.isPrivacyPolicy());
 		member.setMemberRole(new MemberRole(1, "USER"));
+		return member;
+	}
+
+	public static Member from(LoginResponeDTO loginRespone, PasswordEncoder passwordEncoder) {
+		Member member = new Member();// 로그인시 비교를 위해 넣어주는
+		member.setLoginId(loginRespone.getLoginId());
+		member.setEncryptedLoginPw(loginRespone.getEncryptedLoginPw());
 		return member;
 	}
 
