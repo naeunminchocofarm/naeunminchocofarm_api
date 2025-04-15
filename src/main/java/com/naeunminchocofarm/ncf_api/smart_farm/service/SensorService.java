@@ -62,7 +62,7 @@ public class SensorService {
         case "humidity":
           humidityDatas.add(data);
           break;
-        case "sunshine":
+        case "ldr":
           sunshineDatas.add(data);
           break;
         case "soil_moisture":
