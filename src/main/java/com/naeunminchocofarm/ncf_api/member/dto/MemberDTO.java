@@ -2,13 +2,14 @@ package com.naeunminchocofarm.ncf_api.member.dto;
 
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.OffsetDateTime;
 
 public class MemberDTO {
 	private final Integer id;
 	private final String loginId;
-	private final String encryptedLoginPw;
+	private final String encryptedLoginPw; //스프링에서 암호화합니다 내가 헷갈려서 적어둠
 	private final String name;
 	private final String email;
 	private final String tell;
@@ -19,6 +20,7 @@ public class MemberDTO {
 	private final MemberRole memberRole;
 
 	public MemberDTO(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo, MemberRole memberRole) {
+
 		this.id = id;
 		this.loginId = loginId;
 		this.encryptedLoginPw = encryptedLoginPw;
@@ -31,8 +33,6 @@ public class MemberDTO {
 		this.memo = memo;
 		this.memberRole = memberRole;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -76,6 +76,22 @@ public class MemberDTO {
 
 	public MemberRole getMemberRole() {
 		return memberRole;
+	}
+
+	public MemberRole getRole() {
+		return memberRole;
+	}
+
+	public String getRoleNames() {
+		return memberRole.getRoleName();
+	}
+
+	public String getRoleFlags() {
+		return switch (memberRole.getRoleFlag()) {
+			case 0 -> "관리자";
+			case 2 -> "농장주";
+			default -> "유저";
+		};
 	}
 
 	public static MemberDTO from(Member member){

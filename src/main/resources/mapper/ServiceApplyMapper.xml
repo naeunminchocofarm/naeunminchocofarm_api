@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.naeunminchocofarm.ncf_api.serviceApply.mapper.ServiceApplyMapper">
+
+    <resultMap id="ServiceApplyResultMap" type="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
+        <id property="id" column="id" />
+        <result property="type" column="type" />
+        <result property="contactTell" column="contact_tell" />
+        <result property="content" column="content" />
+        <result property="memo" column="memo" />
+        <result property="applicationDate" column="application_date" />
+        <!--        <association property="member" javaType="com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO">-->
+        <!--            <id property="id" column="member.id" />-->
+        <!--            <result property="name" column="member.name" />-->
+        <!--            <result property="email" column="member.email" />-->
+        <!--            <result property="tell" column="member.tell" />-->
+        <!--        </association>-->
+        <!--        <association property="serviceStatus" javaType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceStatus">-->
+        <!--            <id property="id" column="service_status_id" />-->
+        <!--            <result property="status" column="status" />-->
+        <!--        </association>-->
+    </resultMap>
+
+    <!-- 서비스 신청 목록 조회 -->
+    <select id="selectServiceApplyList" resultType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
+        SELECT
+        s.id,
+        m.name AS memberName,
+        m.email AS memberEmail,
+        s.type,
+        s.contact_tell,
+        ss.service_status,
+        s.application_date
+        FROM service s
+        JOIN members m ON s.member_id = m.id
+        JOIN service_status ss ON s.service_status = ss.id
+        ORDER BY s.application_date DESC
+    </select>
+
+    <select id="selectServiceApplyDetail" resultType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
+        SELECT
+        s.id,
+        m.id AS "member.id",
+        m.name AS "member.name",
+        m.email AS "member.email",
+        m.tell AS "member.tell",
+        s.type,
+        s.contact_tell,
+        s.content,
+        ss.service_status,
+        s.memo,
+        s.application_date
+        FROM service s
+        JOIN members m ON s.member_id = m.id
+        JOIN service_status ss ON s.service_status = ss.id
+        WHERE s.id = #{id}
+    </select>
+
+    <!-- 서비스 신청 -->
+    <insert id="serviceApplication" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
+        INSERT INTO service_apply (
+        member_id,
+        type,
+        contact_tell,
+        content
+        ) VALUES (
+        #{memberId},
+        #{type},
+        #{contactTell},
+        #{content}
+        )
+    </insert>
+
+</mapper>
