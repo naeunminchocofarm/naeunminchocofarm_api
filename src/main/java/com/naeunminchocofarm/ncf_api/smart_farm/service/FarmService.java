@@ -44,9 +44,13 @@ public class FarmService {
     // UUID 문자열 생성
     String generatedUuid = UUID.randomUUID().toString();
 
+    // loginId로 memberId 조회
+    String loginId = farmDTO.getMember().getLoginId();
+    int memberId = farmMapper.getMemberIdByLoginId(loginId);
+
     // FarmDTO → Farm 엔티티 생성
     Farm farm = new Farm();
-    farm.setMemberId(farmDTO.getMember().getId());
+    farm.setMemberId(memberId);
     farm.setUuid(generatedUuid);
     farm.setFarmName(farmDTO.getFarmName());
     farm.setFarmAddr(farmDTO.getFarmAddr());

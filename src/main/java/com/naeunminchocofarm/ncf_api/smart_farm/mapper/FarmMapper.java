@@ -19,6 +19,9 @@ public interface FarmMapper {
   // 스마트팜 상세 조회
   Farm getFarmDetailById(@Param("id") Integer id);
 
+  //LoginId로 member_id 조회
+  int getMemberIdByLoginId(@Param("loginId") String loginId);
+
   // 스마트팜 등록
   void insertFarm(Farm farm);
 

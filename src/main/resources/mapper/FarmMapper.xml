@@ -72,6 +72,10 @@
         WHERE f.id = #{id}
     </select>
 
+    <!-- login_id로 member_id 조회 -->
+    <select id="getMemberIdByLoginId" resultType="int">
+        SELECT id FROM members WHERE login_id = #{loginId}
+    </select>
 
     <!-- 스마트팜 등록 -->
     <insert id="insertFarm">
