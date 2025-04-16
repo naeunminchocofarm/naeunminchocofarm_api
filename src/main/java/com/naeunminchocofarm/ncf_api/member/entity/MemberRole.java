@@ -1,27 +1,30 @@
 package com.naeunminchocofarm.ncf_api.member.entity;
 
 public class MemberRole {
-	private Integer roleFlag;
-	private String roleName;
+	private Integer id;
+	private String role;
 
-	public MemberRole(Integer roleFlag, String roleName) {
-		this.roleFlag = roleFlag;
-		this.roleName = roleName;
+	public Integer getId() {
+		return id;
 	}
 
-	public Integer getRoleFlag() {
-		return roleFlag;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setRoleFlag(Integer roleFlag) {
-		this.roleFlag = roleFlag;
+	public String getRole() {
+		return role;
 	}
 
-	public String getRoleName() {
-		return roleName;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public MemberRole() {
+	}
+
+	public MemberRole(Integer id, String role) {
+		this.id = id;
+		this.role = role;
 	}
 }

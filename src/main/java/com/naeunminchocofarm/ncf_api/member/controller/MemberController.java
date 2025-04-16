@@ -27,6 +27,7 @@ public class MemberController {
 	// 회원 목록 조회
 	@GetMapping("/admin/members")
 	public List<MemberDTO> getMemberList(
+					@RequestParam(value = "interval", defaultValue = "") String rawInterval,
 					@RequestParam(value = "page", defaultValue = "1") Integer page,
 					@RequestParam(value = "size", defaultValue = "10") Integer size
 	) {

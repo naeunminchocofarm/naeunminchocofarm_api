@@ -1,6 +1,6 @@
 package com.naeunminchocofarm.ncf_api.member.dto;
 
-public class SignupRequest {
+public class SignupRequestDTO {
 	private String loginId;
 	private String encryptedLoginPw;
 	private String name;

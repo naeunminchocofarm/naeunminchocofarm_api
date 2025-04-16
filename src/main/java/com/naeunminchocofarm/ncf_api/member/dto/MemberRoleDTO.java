@@ -1,20 +1,20 @@
 package com.naeunminchocofarm.ncf_api.member.dto;
 
 public class MemberRoleDTO {
-	private final Integer roleFlage;
-	private final String roleName;
+	private final Integer id;
+	private final String role;
 
-	public MemberRoleDTO(Integer roleFlage, String roleName) {
-		this.roleFlage = roleFlage;
-		this.roleName = roleName;
+	public MemberRoleDTO(Integer id, String role) {
+		this.id = id;
+		this.role = role;
 	}
 
-	public Integer getRoleFlage() {
-		return roleFlage;
+	public Integer getId() {
+		return id;
 	}
 
-	public String getRoleName() {
-		return roleName;
+	public String getRole() {
+		return role;
 	}
 }
 
