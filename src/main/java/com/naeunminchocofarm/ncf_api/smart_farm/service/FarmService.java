@@ -1,9 +1,9 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.service;
 
 import com.naeunminchocofarm.ncf_api.smart_farm.dto.FarmDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.FarmMapper;
-import com.naeunminchocofarm.ncf_api.smart_farm.mapper.UuidMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,31 +14,29 @@ import java.util.stream.Collectors;
 public class FarmService {
 
   private final FarmMapper farmMapper;
-  private final UuidMapper uuidMapper;
 
-  public FarmService(FarmMapper farmMapper, UuidMapper uuidMapper) {
+  public FarmService(FarmMapper farmMapper) {
     this.farmMapper = farmMapper;
-    this.uuidMapper = uuidMapper;
   }
 
   // 스마트팜 전체 조회
   public List<FarmDTO> getAllFarms() {
     return farmMapper.getAllFarms().stream()
-            .map(farm -> FarmDTO.from(farm, farm.getMember()))
+            .map(farm -> FarmDTO.from(farm, MemberDTO.from(farm.getMember())))
             .collect(Collectors.toList());
   }
 
   //FarmWithMember 조회
   public List<FarmDTO> getFarmWithMember() {
     return farmMapper.getFarmWithMember().stream()
-            .map(farm -> FarmDTO.from(farm, farm.getMember()))
+            .map(farm -> FarmDTO.from(farm, MemberDTO.from(farm.getMember())))
             .collect(Collectors.toList());
   }
 
   // 스마트팜 상세 조회
   public FarmDTO getFarmDetailById(Integer id) {
     Farm farm = farmMapper.getFarmDetailById(id);
-    return FarmDTO.from(farm, farm.getMember());
+    return FarmDTO.from(farm, MemberDTO.from(farm.getMember()));
   }
 
   // 스마트팜 등록 (UUID 자동 등록 포함)
@@ -46,22 +44,18 @@ public class FarmService {
     // UUID 문자열 생성
     String generatedUuid = UUID.randomUUID().toString();
 
-    // UUID 테이블에 삽입
-    uuidMapper.insertUuid(generatedUuid);
+    // FarmDTO → Farm 엔티티 생성
+    Farm farm = new Farm();
+    farm.setMemberId(farmDTO.getMember().getId());
+    farm.setUuid(generatedUuid);
+    farm.setFarmName(farmDTO.getFarmName());
+    farm.setFarmAddr(farmDTO.getFarmAddr());
+    farm.setUseDate(farmDTO.getUseDate());
+    farm.setCrop(farmDTO.getCrop());
+    farm.setStatus(farmDTO.getStatus());
 
-    // UUID ID 얻기
-    Integer uuidId = uuidMapper.getLastInsertId();
-
-    // farms 테이블에 스마트팜 등록
-    farmMapper.insertFarm(
-            farmDTO.getMember().getId(),
-            uuidId,
-            farmDTO.getFarmName(),
-            farmDTO.getFarmAddr(),
-            farmDTO.getUseDate(),
-            farmDTO.getCrop(),
-            farmDTO.getStatus()
-    );
+    // Mapper 호출 → selectKey로 uuid_id 반환되고 farms 삽입
+    farmMapper.insertFarm(farm);
   }
 
   // 스마트팜 수정

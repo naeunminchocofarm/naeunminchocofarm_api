@@ -35,8 +35,19 @@ public class SectionController {
             sectionDTO.getId(),
             sectionDTO.getName(),
             farmId,
-            sectionDTO.getUuidId()
+            sectionDTO.getUuidId(),
+            sectionDTO.getUuid()
     );
     sectionService.insertSection(dtoWithFarmId);
+  }
+
+  @PutMapping("/{id}")
+  public void updateSection(@PathVariable Integer id, @RequestBody SectionDTO dto) {
+    sectionService.updateSection(id, dto.getName());
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteSection(@PathVariable Integer id) {
+    sectionService.deleteSection(id);
   }
 }

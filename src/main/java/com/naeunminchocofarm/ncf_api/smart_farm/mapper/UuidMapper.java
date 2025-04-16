@@ -9,6 +9,4 @@ public interface UuidMapper {
   // UUID 삽입
   void insertUuid(@Param("uuid") String uuid);
 
-  // 마지막 삽입된 UUID의 id 가져오기
-  Integer getLastInsertId();
 }

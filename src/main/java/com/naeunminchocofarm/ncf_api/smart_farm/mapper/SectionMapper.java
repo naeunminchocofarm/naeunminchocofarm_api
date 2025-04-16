@@ -16,9 +16,11 @@ public interface SectionMapper {
   List<Section> getSectionsByFarmId(@Param("farmId") Integer farmId);
 
   // 구역 등록
-  void insertSection(
-          @Param("name") String name,
-          @Param("farmId") Integer farmId,
-          @Param("uuidId") Integer uuidId
-  );
+  void insertSection(Section section);
+
+  // 구역 수정
+  void updateSection(@Param("id") Integer id, @Param("name") String name);
+
+  // 구역 삭제
+  void deleteSection(@Param("id") Integer id);
 }
