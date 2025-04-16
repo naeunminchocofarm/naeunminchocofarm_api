@@ -10,11 +10,12 @@ import java.util.List;
 public class ServiceApplyService {
     private final ServiceApplyMapper serviceApplyMapper;
 
-    public ServiceApplyService(ServiceApplyMapper serviceApplyMapper) {
-        this.serviceApplyMapper = serviceApplyMapper;
-    }
+	public ServiceApplyService(ServiceApplyMapper serviceApplyMapper) {
+		this.serviceApplyMapper = serviceApplyMapper;
+	}
 
-    public List<ServiceApply> getAllServiceApplies() {
+
+	public List<ServiceApply> getAllServiceApplies() {
         return serviceApplyMapper.selectServiceApplyList();
     }
 

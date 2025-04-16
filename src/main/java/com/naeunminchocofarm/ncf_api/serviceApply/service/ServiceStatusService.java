@@ -14,7 +14,7 @@ public class ServiceStatusService {
 
     private final ServiceStatusMapper statusMapper;
 
-    public List<ServiceStatus> getAllStatus() {
-        return statusMapper.selectAllStatus();
+    public List<ServiceStatus> getServiceStatus() {
+        return statusMapper.getServiceStatus();
     }
 }

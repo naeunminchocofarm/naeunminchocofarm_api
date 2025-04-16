@@ -5,23 +5,21 @@
 
     <resultMap id="ServiceApplyResultMap" type="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
         <id property="id" column="id" />
-<!--        <association property="member" javaType="com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO">-->
-<!--            <id property="id" column="member.id" />-->
-<!--            <result property="name" column="member.name" />-->
-<!--            <result property="email" column="member.email" />-->
-<!--            <result property="tell" column="member.tell" />-->
-<!--        </association>-->
         <result property="type" column="type" />
         <result property="contactTell" column="contact_tell" />
         <result property="content" column="content" />
-
-<!--        <association property="serviceStatus" javaType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceStatus">-->
-<!--            <id property="id" column="service_status_id" />-->
-<!--            <result property="status" column="status" />-->
-<!--        </association>-->
-
         <result property="memo" column="memo" />
         <result property="applicationDate" column="application_date" />
+        <!--        <association property="member" javaType="com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO">-->
+        <!--            <id property="id" column="member.id" />-->
+        <!--            <result property="name" column="member.name" />-->
+        <!--            <result property="email" column="member.email" />-->
+        <!--            <result property="tell" column="member.tell" />-->
+        <!--        </association>-->
+        <!--        <association property="serviceStatus" javaType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceStatus">-->
+        <!--            <id property="id" column="service_status_id" />-->
+        <!--            <result property="status" column="status" />-->
+        <!--        </association>-->
     </resultMap>
 
     <!-- 서비스 신청 목록 조회 -->
@@ -31,9 +29,8 @@
         m.name AS memberName,
         m.email AS memberEmail,
         s.type,
-        s.is_operating,
         s.contact_tell,
-        ss.status,
+        ss.service_status,
         s.application_date
         FROM service s
         JOIN members m ON s.member_id = m.id
@@ -49,10 +46,9 @@
         m.email AS "member.email",
         m.tell AS "member.tell",
         s.type,
-        s.is_operating,
         s.contact_tell,
         s.content,
-        ss.status,
+        ss.service_status,
         s.memo,
         s.application_date
         FROM service s

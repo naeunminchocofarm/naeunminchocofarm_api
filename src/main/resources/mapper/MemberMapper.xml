@@ -18,11 +18,10 @@
     </resultMap>
 
     <resultMap id="memberRole" type="com.naeunminchocofarm.ncf_api.member.entity.MemberRole">
-        <id column="ID" property="id"/>
-        <result column="ROLE" property="role"/>
+        <id column="ROLE_FLAG" property="roleFlag"/>
+        <result column="ROLE_NAME" property="roleName"/>
     </resultMap>
 
-    <!-- 필요한거 회원가입 insert -->
     <insert id = "signUp" parameterType="com.naeunminchocofarm.ncf_api.member.entity.Member">
         INSERT INTO MEMBERS(
         LOGIN_ID
@@ -41,14 +40,17 @@
         )
     </insert>
 
-
-    <!-- 필요한거 로그인 select-->
-    <select id="login" resultMap="member">
-        SELECT ID
-        , LOGIN_ID
-        FROM members
-        WHERE LOGIN_ID = #{loginId}
-        AND ENCRYPTED_LOGIN_PW = #{encryptedLoginPw}
+    <!-- 필요한거 로그인시 있는지 없는지 여부 select-->
+    <select id="login" resultMap="member"> <!--login respone용임-->
+        SELECT
+        m.ID
+        , m.LOGIN_ID
+        , m.ENCRYPTED_LOGIN_PW
+        , r.ROLE_FLAG
+        , r.ROLE_NAME
+        FROM members m
+        JOIN member_role r ON r.ROLE_FLAG = m.MEMBER_ROLE
+        WHERE m.login_id = #{loginId}
     </select>
 
     <!-- 필요한거 admin 회원리스트 s elect-->
@@ -61,15 +63,26 @@
         m.TELL,
         m.CREATED_AT,
         m.DELETED_AT,
-        r.ID,
-        r.ROLE
+        r.ROLE_FLAG,
+        r.ROLE_NAME
         FROM members m
-        JOIN member_role r ON r.id = m.MEMBER_ROLE
+        JOIN member_role r ON r.ROLE_FLAG = m.MEMBER_ROLE
         ORDER BY m.CREATED_AT DESC
         LIMIT  #{pagination.size} OFFSET #{pagination.skip}
     </select>
 
     <!-- 필요한거 web 마이페이지 select-->
+    <!--login info용임-->
+<!--    <select id="loginInfo" resultMap="member">-->
+<!--        SELECT ID-->
+<!--        , LOGIN_ID-->
+<!--        , TELL-->
+<!--        , EMAIL-->
+<!--        , CREATED_AT-->
+<!--        , MEMBER_ROLE-->
+<!--        FROM members-->
+<!--        WHERE LOGIN_ID = #{loginId}-->
+<!--    </select>-->
     <!-- 필요한거 web 마이페이지수정 insert-->
     <!-- 필요한거 web 회원탈퇴 delete-->
 </mapper>

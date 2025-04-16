@@ -1,11 +1,10 @@
 package com.naeunminchocofarm.ncf_api.controller;
 
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
-import com.naeunminchocofarm.ncf_api.member.dto.LoginRequestDTO;
-import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
-import com.naeunminchocofarm.ncf_api.member.dto.SignupRequestDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.LoginInfoDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.LoginRespone;
+import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
-import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,10 +12,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("")
@@ -28,36 +31,59 @@ public class AuthController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
+
     public AuthController(JwtHandler jwtHandler, MemberService memberService, PasswordEncoder passwordEncoder) {
         this.jwtHandler = jwtHandler;
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
     }
 
-//    @PostMapping("/web/login")
-//    public ResponseEntity<?> login(@RequestBody LoginRequestDTO request, HttpServletResponse response) {
-//        log.info("로그인: {}", request.getLoginId());
-//
-//        MemberDTO authenticatedMember = memberService.login(request.getLoginId(), request.getEncryptedLoginPw());
-//
-//        if (authenticatedMember != null) {
-//            String token = jwtHandler.generateToken(
-//                    authenticatedMember.getId(),
-//                    authenticatedMember.getRoleNames(),
-//                    authenticatedMember.getRoleFlags()
-//            );
-//            response.setHeader("Authorization", "Bearer " + token);
-//            return ResponseEntity.ok("Bearer " + token);
-//        } else {
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid credentials");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-//        }
-//
-//    }
+    @PostMapping("/member/login")
+    public ResponseEntity<?> login(@RequestBody LoginRespone loginRespone, HttpServletResponse response) throws IOException {
+        log.info("로그인ID: {}", loginRespone.getLoginId());
+        log.info("로그인PW: {}", loginRespone.getEncryptedLoginPw());
+        Member loginMember = Member.from(loginRespone, passwordEncoder);
+        Member authenticatedMember = memberService.login(loginMember);
 
-    @PostMapping("/web/signup")
-    public ResponseEntity<?> signUp(@RequestBody SignupRequestDTO request) {
-        log.info("회원가입 요청: {}", request.getLoginId());
+        if (authenticatedMember != null && authenticatedMember.getMemberRole() != null) {
+            String roleName = authenticatedMember.getMemberRole().getRoleName();
+
+            Integer roleFlag = authenticatedMember.getMemberRole().getRoleFlag();
+
+            String token = jwtHandler.generateToken(
+                    authenticatedMember.getId(), roleName, roleFlag
+            );
+
+            response.setHeader("Access-Control-Expose-Headers", "Authorization");
+            response.setHeader("Authorization", "Bearer " + token);
+            log.info("발급 토큰: {}", token);
+            log.info("로그인5: {}", roleName);
+            log.info("로그인6: {}", roleFlag);
+            log.info("권한 이름: {}", authenticatedMember.getMemberRole().getRoleName());
+            log.info("권한 플래그: {}", authenticatedMember.getMemberRole().getRoleFlag());
+
+            //마이페이지를 위해 미리
+            LoginInfoDTO loginInfo = new LoginInfoDTO(
+                    token,
+                    authenticatedMember.getName(),
+                    authenticatedMember.getLoginId(),
+                    authenticatedMember.getEmail(),
+                    authenticatedMember.getTell(),
+                    roleName,
+                    roleFlag
+            );
+
+            return ResponseEntity.ok(loginInfo);
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+
+
+    @PostMapping("/member/signup")
+    public ResponseEntity<?> signUp(@RequestBody SignupRequest request) {
+        log.info("회원가입 : {}", request.getLoginId());
 
         Member member = Member.from(request, passwordEncoder);
         memberService.signUp(member);

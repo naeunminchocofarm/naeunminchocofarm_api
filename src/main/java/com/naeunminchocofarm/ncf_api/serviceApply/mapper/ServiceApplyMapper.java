@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface ServiceApplyMapper {
+public interface
+ServiceApplyMapper {
     List<ServiceApply> selectServiceApplyList();
     ServiceApply selectServiceApplyDetail(Integer id);
     public void serviceApplication(ServiceApply serviceApply);

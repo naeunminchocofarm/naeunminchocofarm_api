@@ -2,11 +2,11 @@ package com.naeunminchocofarm.ncf_api.serviceApply.entity;
 
 public class ServiceStatus {
     private Integer id;
-    private String status;
+    private String serviceStatus;
 
-    public ServiceStatus(Integer id, String status) {
+    public ServiceStatus(Integer id, String serviceStatus) {
         this.id = id;
-        this.status = status;
+        this.serviceStatus = serviceStatus;
     }
 
     public Integer getId() {
@@ -17,11 +17,11 @@ public class ServiceStatus {
         this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public String getServiceStatus() {
+        return serviceStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setServiceStatus(String serviceStatus) {
+        this.serviceStatus = serviceStatus;
     }
 }

@@ -2,18 +2,18 @@ package com.naeunminchocofarm.ncf_api.serviceApply.dto;
 
 public class ServiceStatusDTO {
     private final Integer id;
-    private final String status;
+    private final String serviceStatus;
+
+    public ServiceStatusDTO(Integer id, String serviceStatus) {
+        this.id = id;
+        this.serviceStatus = serviceStatus;
+    }
 
     public Integer getId() {
         return id;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public ServiceStatusDTO(Integer id, String status) {
-        this.id = id;
-        this.status = status;
+    public String getServiceStatus() {
+        return serviceStatus;
     }
 }

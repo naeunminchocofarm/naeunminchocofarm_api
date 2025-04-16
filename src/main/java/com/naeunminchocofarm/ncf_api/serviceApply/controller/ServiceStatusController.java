@@ -16,8 +16,8 @@ public class ServiceStatusController {
         this.serviceStatusService = serviceStatusService;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<ServiceStatus>> getAllStatus() {
-        return ResponseEntity.ok(serviceStatusService.getAllStatus());
+    @GetMapping("ggg")
+    public ResponseEntity<List<ServiceStatus>> getServiceStatus() {
+        return ResponseEntity.ok(serviceStatusService.getServiceStatus());
     }
 }
