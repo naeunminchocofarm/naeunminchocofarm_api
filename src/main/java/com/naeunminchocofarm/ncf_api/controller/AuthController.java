@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,13 +31,14 @@ public class AuthController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
+
     public AuthController(JwtHandler jwtHandler, MemberService memberService, PasswordEncoder passwordEncoder) {
         this.jwtHandler = jwtHandler;
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/web/login")
+    @PostMapping("/member/login")
     public ResponseEntity<?> login(@RequestBody LoginRespone loginRespone, HttpServletResponse response) throws IOException {
         log.info("로그인ID: {}", loginRespone.getLoginId());
         log.info("로그인PW: {}", loginRespone.getEncryptedLoginPw());
@@ -45,21 +47,20 @@ public class AuthController {
 
         if (authenticatedMember != null && authenticatedMember.getMemberRole() != null) {
             String roleName = authenticatedMember.getMemberRole().getRoleName();
-            if (!roleName.startsWith("ROLE_")) {
-                roleName = "ROLE_" + roleName;
-            }
-            Integer roleFlag = authenticatedMember.getMemberRole().getId();
+
+            Integer roleFlag = authenticatedMember.getMemberRole().getRoleFlag();
 
             String token = jwtHandler.generateToken(
                     authenticatedMember.getId(), roleName, roleFlag
             );
 
+            response.setHeader("Access-Control-Expose-Headers", "Authorization");
             response.setHeader("Authorization", "Bearer " + token);
             log.info("발급 토큰: {}", token);
             log.info("로그인5: {}", roleName);
             log.info("로그인6: {}", roleFlag);
             log.info("권한 이름: {}", authenticatedMember.getMemberRole().getRoleName());
-            log.info("권한 플래그: {}", authenticatedMember.getMemberRole().getId());
+            log.info("권한 플래그: {}", authenticatedMember.getMemberRole().getRoleFlag());
 
             //마이페이지를 위해 미리
             LoginInfoDTO loginInfo = new LoginInfoDTO(
@@ -80,7 +81,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/web/signup")
+    @PostMapping("/member/signup")
     public ResponseEntity<?> signUp(@RequestBody SignupRequest request) {
         log.info("회원가입 : {}", request.getLoginId());
 

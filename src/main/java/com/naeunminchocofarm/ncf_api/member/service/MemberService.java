@@ -1,11 +1,13 @@
 package com.naeunminchocofarm.ncf_api.member.service;
 
+import com.naeunminchocofarm.ncf_api.lib.exception.ApiException;
 import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.mapper.MemberMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +38,13 @@ public class MemberService {
 		Member checkMember = memberMapper.login(member);
 
 		if (!passwordEncoder.matches(member.getEncryptedLoginPw(), checkMember.getEncryptedLoginPw())) {
-			throw new RuntimeException("아이디 혹은 비밀번호를 다시 확인해 주세요.");
+//			throw new RuntimeException("아이디 혹은 비밀번호를 다시 확인해 주세요.");
+			throw new ApiException("아이디 혹은 비밀번호를 다시 확인해 주세요.", "INVALID_ID_OR_PW", HttpStatus.UNAUTHORIZED);
 		}
 
 		if (checkMember == null){
-			throw new RuntimeException("아이디 혹은 비밀번호를 다시 확인해 주세요.");
+			throw new ApiException("회원가입이나하셈", "NOT_FOUND_MEMBER", HttpStatus.NOT_FOUND);
+//			throw new RuntimeException("아이디 혹은 비밀번호를 다시 확인해 주세요.");
 		}
 		log.info("로그인 성공: {}", member.getLoginId());
 		return checkMember;

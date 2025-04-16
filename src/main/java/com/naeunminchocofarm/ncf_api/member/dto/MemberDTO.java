@@ -87,10 +87,10 @@ public class MemberDTO {
 	}
 
 	public String getRoleFlags() {
-		return switch (memberRole.getRoleName()) {
-			case "ADMIN" -> "0";
-			case "FARMER" -> "2";
-			default -> "1";
+		return switch (memberRole.getRoleFlag()) {
+			case 0 -> "관리자";
+			case 2 -> "농장주";
+			default -> "유저";
 		};
 	}
 
