@@ -17,7 +17,7 @@ public class ServiceApplyController {
         this.serviceApplyService = serviceApplyService;
     }
 
-    // 신청
+    // 신청합니다
     @PostMapping("/web/apply")
     public ResponseEntity<Void> apply(@RequestBody ServiceApply serviceApply) {
         serviceApplyService.serviceApplication(serviceApply); // 내부에서 status, date 자동처리
