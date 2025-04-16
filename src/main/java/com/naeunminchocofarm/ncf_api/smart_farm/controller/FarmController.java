@@ -17,7 +17,7 @@ public class FarmController {
   }
 
   // 모든 스마트팜 조회
-  @GetMapping
+  @GetMapping("")
   public List<FarmDTO> getAllFarms() {
     return farmService.getAllFarms();
   }
@@ -35,19 +35,30 @@ public class FarmController {
   }
 
   // 스마트팜 등록
-  @PostMapping
+  @PostMapping("")
   public void insertFarm(@RequestBody FarmDTO farmDTO) {
     farmService.insertFarm(farmDTO);
   }
 
   // 스마트팜 수정
-  @PutMapping
-  public void updateFarm(@RequestBody FarmDTO farmDTO) {
-    farmService.updateFarm(farmDTO);
+  @PutMapping("/{id}")
+  public void updateFarm(@PathVariable Integer id, @RequestBody FarmDTO farmDTO) {
+    FarmDTO dtoWithId = new FarmDTO(
+            id,
+            farmDTO.getFarmName(),
+            farmDTO.getUuidId(),
+            farmDTO.getUuid(),
+            farmDTO.getFarmAddr(),
+            farmDTO.getUseDate(),
+            farmDTO.getCrop(),
+            farmDTO.getStatus(),
+            farmDTO.getMember()
+    );
+    farmService.updateFarm(dtoWithId);
   }
 
   // 스마트팜 삭제
-  @DeleteMapping("/{}")
+  @DeleteMapping("/{id}")
   public void deleteFarm(@PathVariable Integer id) {
     farmService.deleteFarm(id);
   }

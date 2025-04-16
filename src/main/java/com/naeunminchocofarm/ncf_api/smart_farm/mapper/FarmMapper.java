@@ -19,17 +19,11 @@ public interface FarmMapper {
   // 스마트팜 상세 조회
   Farm getFarmDetailById(@Param("id") Integer id);
 
-  // 스마트팜 등록
-  void insertFarm(
-          @Param("memberId") Integer memberId,
-          @Param("uuidId") Integer uuidId,
-          @Param("farmName") String farmName,
-          @Param("farmAddr") String farmAddr,
-          @Param("useDate") OffsetDateTime useDate,
-          @Param("crop") String crop,
-          @Param("status") String status
-  );
+  //LoginId로 member_id 조회
+  int getMemberIdByLoginId(@Param("loginId") String loginId);
 
+  // 스마트팜 등록
+  void insertFarm(Farm farm);
 
   // 스마트팜 수정
   void updateFarm(Farm farm);

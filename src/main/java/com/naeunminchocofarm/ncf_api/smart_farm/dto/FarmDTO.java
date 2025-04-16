@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.dto;
 
+import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm;
 
@@ -8,17 +9,19 @@ import java.time.OffsetDateTime;
 public class FarmDTO {
   private final Integer id;
   private final Integer uuidId;
+  private final String uuid;
   private final String farmName;
   private final String farmAddr;
   private final OffsetDateTime useDate;
   private final String crop;
   private final String status;
-  private final Member member;
+  private final MemberDTO member;
 
-  public FarmDTO(Integer id, String farmName, Integer uuidId, String farmAddr, OffsetDateTime useDate, String crop, String status, Member member) {
+  public FarmDTO(Integer id, String farmName, Integer uuidId,String uuid, String farmAddr, OffsetDateTime useDate, String crop, String status, MemberDTO member) {
     this.id = id;
     this.farmName = farmName;
     this.uuidId = uuidId;
+    this.uuid = uuid;
     this.farmAddr = farmAddr;
     this.useDate = useDate;
     this.crop = crop;
@@ -54,15 +57,20 @@ public class FarmDTO {
     return status;
   }
 
-  public Member getMember() {
+  public MemberDTO getMember() {
     return member;
   }
 
-  public static FarmDTO from(Farm farm, Member member) {
+  public String getUuid() {
+    return uuid;
+  }
+
+  public static FarmDTO from(Farm farm, MemberDTO member) {
     return new FarmDTO(
             farm.getId(),
             farm.getFarmName(),
             farm.getUuidId(),
+            farm.getUuid(),
             farm.getFarmAddr(),
             farm.getUseDate(),
             farm.getCrop(),

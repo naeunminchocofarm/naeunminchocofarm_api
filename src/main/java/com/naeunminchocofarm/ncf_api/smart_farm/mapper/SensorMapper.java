@@ -16,10 +16,13 @@ public interface SensorMapper {
   List<Sensor> getSensorBySectionId(@Param("sectionId") Integer sectionId);
 
   // 센서 등록
-  void insertSensor(
-          @Param("name") String name,
-          @Param("sectionId") Integer sectionId,
-          @Param("uuidId") Integer uuidId,
-          @Param("sensorType") String sensorType
-  );
+  void insertSensor(Sensor sensor);
+
+  // 센서 수정
+  void updateSensor(@Param("id") Integer id,
+                    @Param("name") String name,
+                    @Param("sensorType") String sensorType);
+
+  // 센서 삭제
+  void deleteSensor(@Param("id") Integer id);
 }

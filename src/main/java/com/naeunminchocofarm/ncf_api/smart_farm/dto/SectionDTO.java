@@ -7,12 +7,17 @@ public class SectionDTO {
   private final String name;
   private final Integer farmId;
   private final Integer uuidId;
+  private final String uuid;
 
-  public SectionDTO(Integer  id, String name, Integer farmId, Integer uuidId) {
+
+  public SectionDTO(Integer  id, String name, Integer farmId, Integer uuidId, String uuid
+) {
     this.id = id;
     this.name = name;
     this.farmId = farmId;
     this.uuidId = uuidId;
+    this.uuid = uuid;
+
   }
 
   public Integer  getId() {
@@ -34,12 +39,17 @@ public class SectionDTO {
     return uuidId;
   }
 
+  public String getUuid() {
+    return uuid;
+  }
+
   public static SectionDTO from(Section section) {
     return new SectionDTO(
             section.getId(),
             section.getName(),
             section.getFarmId(),
-            section.getUuidId()
+            section.getUuidId(),
+            section.getUuid()
     );
   }
 

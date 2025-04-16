@@ -40,9 +40,20 @@ public class SensorController {
             sensorDTO.getName(),
             sectionId,
             sensorDTO.getUuidId(),
-            sensorDTO.getSensorType()
+            sensorDTO.getSensorType(),
+            sensorDTO.getUuid()
     );
     sensorService.insertSensor(dtoWhitSectionId);
+  }
+
+  @PutMapping("/{id}")
+  public void updateSensor(@PathVariable Integer id, @RequestBody SensorDTO dto) {
+    sensorService.updateSensor(id, dto.getName(), dto.getSensorType());
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteSensor(@PathVariable Integer id) {
+    sensorService.deleteSensor(id);
   }
 
   @PostMapping("/datas")

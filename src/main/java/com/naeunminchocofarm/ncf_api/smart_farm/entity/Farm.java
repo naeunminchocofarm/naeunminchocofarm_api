@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 
 import java.time.OffsetDateTime;
@@ -9,7 +10,9 @@ public class Farm {
   private Integer memberId;
   private String farmName;
   private Integer uuidId;
+  private String uuid;
   private String farmAddr;
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
   private OffsetDateTime useDate;
   private String crop;
   private String status;
@@ -19,11 +22,12 @@ public class Farm {
 
   }
 
-  public Farm(Integer id, Integer memberId, String farmName, Integer uuidId, String farmAddr, OffsetDateTime useDate, String crop, Member member) {
+  public Farm(Integer id, Integer memberId, String farmName, Integer uuidId, String uuid, String farmAddr, OffsetDateTime useDate, String crop, Member member) {
     this.id = id;
     this.memberId = memberId;
     this.farmName = farmName;
     this.uuidId = uuidId;
+    this.uuid = uuid;
     this.farmAddr = farmAddr;
     this.useDate = useDate;
     this.crop = crop;
@@ -100,5 +104,13 @@ public class Farm {
 
   public void setMember(Member member) {
     this.member = member;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 }
