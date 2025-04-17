@@ -12,20 +12,19 @@ public class ServiceApplyDTO {
     private final String type; // 신청자 유형 (법인, 개인사업자, 개인)
     private final String contactTell; // 실무자 연락처
     private final String content; // 상담 내용
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    private final OffsetDateTime applicationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private final OffsetDateTime applicationAt;
     private final String memo;
     private final ServiceStatus serviceStatus;
     private final LoginInfo loginInfo;
 
-    public ServiceApplyDTO(Integer id, Integer memberId, String type, String contactTell, String content, OffsetDateTime applicationDate, String memo, ServiceStatus serviceStatus, LoginInfo loginInfo) {
+    public ServiceApplyDTO(Integer id, Integer memberId, String type, String contactTell, String content, OffsetDateTime applicationAt, String memo, ServiceStatus serviceStatus, LoginInfo loginInfo) {
         this.id = id;
         this.memberId = memberId;
         this.type = type;
         this.contactTell = contactTell;
         this.content = content;
-        this.applicationDate = applicationDate;
+        this.applicationAt = applicationAt;
         this.memo = memo;
         this.serviceStatus = serviceStatus;
         this.loginInfo = loginInfo;
@@ -51,8 +50,8 @@ public class ServiceApplyDTO {
         return content;
     }
 
-    public OffsetDateTime getApplicationDate() {
-        return applicationDate;
+    public OffsetDateTime getApplicationAt() {
+        return applicationAt;
     }
 
     public String getMemo() {

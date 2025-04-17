@@ -12,8 +12,8 @@ public class ServiceApply {
     private String type; // 신청자 유형 (법인, 개인사업자, 개인)
     private String contactTell; // 실무자 연락처
     private String content; // 상담 내용
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    private OffsetDateTime applicationDate; // 신청 일시 (관리자 직접 지정 가능)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private OffsetDateTime applicationAt; // 신청 일시 (관리자 직접 지정 가능)
     private String memo; // 관리자 메모 (선택)
     private ServiceStatus serviceStatus;
     private LoginInfo loginInfo; // 로그인된 회원 정보
@@ -21,13 +21,13 @@ public class ServiceApply {
     public ServiceApply() {
     }
 
-    public ServiceApply(Integer id, Integer memberId, String type, String contactTell, String content, OffsetDateTime applicationDate, String memo, ServiceStatus serviceStatus, LoginInfo loginInfo) {
+    public ServiceApply(Integer id, Integer memberId, String type, String contactTell, String content, OffsetDateTime applicationAt, String memo, ServiceStatus serviceStatus, LoginInfo loginInfo) {
         this.id = id;
         this.memberId = memberId;
         this.type = type;
         this.contactTell = contactTell;
         this.content = content;
-        this.applicationDate = applicationDate;
+        this.applicationAt = applicationAt;
         this.memo = memo;
         this.serviceStatus = serviceStatus;
         this.loginInfo = loginInfo;
@@ -73,12 +73,12 @@ public class ServiceApply {
         this.content = content;
     }
 
-    public OffsetDateTime getApplicationDate() {
-        return applicationDate;
+    public OffsetDateTime getApplicationAt() {
+        return applicationAt;
     }
 
-    public void setApplicationDate(OffsetDateTime applicationDate) {
-        this.applicationDate = applicationDate;
+    public void setApplicationAt(OffsetDateTime applicationAt) {
+        this.applicationAt = applicationAt;
     }
 
     public String getMemo() {

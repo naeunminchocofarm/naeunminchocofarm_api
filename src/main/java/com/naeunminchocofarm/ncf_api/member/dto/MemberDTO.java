@@ -1,5 +1,7 @@
 package com.naeunminchocofarm.ncf_api.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ public class MemberDTO {
 	private final String email;
 	private final String tell;
 	private final boolean privacyPolicy;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private final OffsetDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private final OffsetDateTime deletedAt;
 	private final String memo;
 	private final MemberRole memberRole;

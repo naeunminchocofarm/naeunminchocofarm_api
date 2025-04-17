@@ -9,7 +9,7 @@
         <result property="contactTell" column="contact_tell" />
         <result property="content" column="content" />
         <result property="memo" column="memo" />
-        <result property="applicationDate" column="application_date" />
+        <result property="applicationAt" column="application_at" />
 
         <association property="loginInfo" javaType="com.naeunminchocofarm.ncf_api.member.entity.LoginInfo">
             <id property="id" column="member_id" />
@@ -23,7 +23,7 @@
 
         <association property="serviceStatus" javaType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceStatus">
             <id property="id" column="service_status_id" />
-            <result property="service_status" column="service_status" />
+            <result property="serviceStatus" column="service_status" />
         </association>
     </resultMap>
 
@@ -34,7 +34,7 @@
         sa.contact_tell,
         sa.content,
         sa.memo,
-        sa.application_date,
+        sa.application_at,
         m.id AS member_id,
         m.login_id,
         m.name,
@@ -43,8 +43,8 @@
         r.role_name,
         r.role_flag,
         s.id AS service_status_id,
-        s.service_status AS status
-        FROM service sa
+        s.service_status
+        FROM services sa
         JOIN members m ON sa.member_id = m.id
         JOIN member_role r ON m.member_role = r.role_flag
         JOIN service_status s ON sa.service_status = s.id
@@ -57,7 +57,7 @@
         s.contact_tell,
         s.content,
         s.memo,
-        s.application_date,
+        s.application_at,
         m.id AS member_id,
         m.login_id,
         m.name,
@@ -66,8 +66,8 @@
         r.role_name,
         r.role_flag,
         ss.id AS service_status_id,
-        ss.service_status AS status
-        FROM service s
+        ss.service_status
+        FROM services s
         JOIN members m ON s.member_id = m.id
         JOIN member_role r ON m.member_role = r.role_flag
         JOIN service_status ss ON s.service_status = ss.id
@@ -75,7 +75,7 @@
     </select>
 
     <insert id="insertServiceApply" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
-        INSERT INTO service (
+        INSERT INTO services (
         member_id,
         type,
         contact_tell,
@@ -98,7 +98,7 @@
         sa.contact_tell,
         sa.content,
         sa.memo,
-        sa.application_date,
+        sa.application_at,
         m.id AS member_id,
         m.login_id,
         m.name,
@@ -107,8 +107,8 @@
         r.role_name,
         r.role_flag,
         s.id AS service_status_id,
-        s.service_status AS status
-        FROM service sa
+        s.service_status
+        FROM services sa
         JOIN members m ON sa.member_id = m.id
         JOIN member_role r ON m.member_role = r.role_flag
         JOIN service_status s ON sa.service_status = s.id
@@ -116,7 +116,7 @@
     </select>
 
     <update id="updateServiceApply" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
-        UPDATE service
+        UPDATE services
         SET
         member_id = #{memberId},
         type = #{type},
@@ -128,7 +128,7 @@
     </update>
 
     <delete id="deleteServiceApply" parameterType="int">
-        DELETE FROM service
+        DELETE FROM services
         WHERE id = #{id}
     </delete>
 
