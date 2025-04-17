@@ -20,6 +20,10 @@
             <result column="name" property="name"/>
             <result column="email" property="email"/>
             <result column="tell" property="tell"/>
+            <association property="memberRole" javaType="com.naeunminchocofarm.ncf_api.member.entity.MemberRole">
+                <id column="role_flag" property="roleFlag"/>
+                <result column="role_name" property="roleName"/>
+            </association>
         </association>
     </resultMap>
 
