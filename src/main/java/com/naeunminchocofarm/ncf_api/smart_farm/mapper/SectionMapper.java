@@ -19,7 +19,7 @@ public interface SectionMapper {
   void insertSection(Section section);
 
   // 구역 수정
-  void updateSection(@Param("id") Integer id, @Param("name") String name);
+  void updateSection(Section section);
 
   // 구역 삭제
   void deleteSection(@Param("id") Integer id);

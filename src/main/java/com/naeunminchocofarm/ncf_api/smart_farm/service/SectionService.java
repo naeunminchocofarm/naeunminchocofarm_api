@@ -48,8 +48,11 @@ public class SectionService {
   }
 
   //구역 수정
-  public void updateSection(Integer id, String name) {
-    sectionMapper.updateSection(id, name);
+  public void updateSection(SectionDTO dto) {
+    Section section = new Section();
+    section.setId(dto.getId());
+    section.setName(dto.getName());
+    sectionMapper.updateSection(section);
   }
 
   //구역 삭제
