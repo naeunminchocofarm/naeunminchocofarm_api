@@ -64,16 +64,17 @@ public class FarmService {
 
   // 스마트팜 수정
   public void updateFarm(FarmDTO farmDTO) {
-    Farm farm = new Farm();
-    farm.setId(farmDTO.getId());
-    farm.setMemberId(farmDTO.getMember().getId());
-    farm.setFarmName(farmDTO.getFarmName());
-    farm.setUuidId(farmDTO.getUuidId());
-    farm.setFarmAddr(farmDTO.getFarmAddr());
-    farm.setUseDate(farmDTO.getUseDate());
-    farm.setCrop(farmDTO.getCrop());
-    farm.setStatus(farmDTO.getStatus());
-    farmMapper.updateFarm(farm);
+    Farm existingFarm = farmMapper.getFarmDetailById(farmDTO.getId());
+    if (existingFarm == null) {
+      throw new IllegalArgumentException("존재하지 않는 스마트팜 ID: " + farmDTO.getId());
+    }
+    existingFarm.setFarmName(farmDTO.getFarmName());
+    existingFarm.setFarmAddr(farmDTO.getFarmAddr());
+    existingFarm.setUseDate(farmDTO.getUseDate());
+    existingFarm.setCrop(farmDTO.getCrop());
+    existingFarm.setStatus(farmDTO.getStatus());
+
+    farmMapper.updateFarm(existingFarm);
   }
   //스마트팜 삭제
   public void deleteFarm(Integer id) {
