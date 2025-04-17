@@ -2,29 +2,29 @@ package com.naeunminchocofarm.ncf_api.smart_farm.entity;
 
 public class Sensor {
   private Integer id;
-  private String sensorName;
+  private String name;
   private Integer sectionId;
   private Integer uuidId;
-  private final String sensorType;
+  private String sensorType;
+  private String uuid; // uuid 문자열
 
-  public Sensor(String sensorType) {
-      this.sensorType = sensorType;
-  }
+  public Sensor() {}
 
-  public Sensor(Integer id, String sensorName, Integer sectionId, Integer uuidId, String sensorType) {
+  public Sensor(Integer id, String name, Integer sectionId, Integer uuidId, String sensorType, String uuid) {
     this.id = id;
-    this.sensorName = sensorName;
+    this.name = name;
     this.sectionId = sectionId;
     this.uuidId = uuidId;
     this.sensorType = sensorType;
+    this.uuid = uuid;
   }
 
   public Integer getId() {
     return id;
   }
 
-  public String getSensorName() {
-    return sensorName;
+  public String getName() {
+    return name;
   }
 
   public Integer getSectionId() {
@@ -37,5 +37,33 @@ public class Sensor {
 
   public String getSensorType() {
     return sensorType;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setSectionId(Integer sectionId) {
+    this.sectionId = sectionId;
+  }
+
+  public void setUuidId(Integer uuidId) {
+    this.uuidId = uuidId;
+  }
+
+  public void setSensorType(String sensorType) {
+    this.sensorType = sensorType;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 }

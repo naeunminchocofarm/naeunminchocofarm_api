@@ -1,19 +1,16 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.service;
 
 import com.naeunminchocofarm.ncf_api.humidity.entity.HumidData;
-import com.naeunminchocofarm.ncf_api.humidity.entity.Humidity;
 import com.naeunminchocofarm.ncf_api.humidity.mapper.HumidityMapper;
-import com.naeunminchocofarm.ncf_api.ldr.entity.LdrValue;
 import com.naeunminchocofarm.ncf_api.ldr.entity.SunshineData;
 import com.naeunminchocofarm.ncf_api.ldr.mapper.LdrMapper;
+import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDataDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.SensorMapper;
-import com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoisture;
 import com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoistureData;
 import com.naeunminchocofarm.ncf_api.soil_moisture.mapper.SoilMoistureMapper;
 import com.naeunminchocofarm.ncf_api.temperature.entity.AirTempData;
-import com.naeunminchocofarm.ncf_api.temperature.entity.AirTemperature;
 import com.naeunminchocofarm.ncf_api.temperature.mapper.TemperatureMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SensorService {
@@ -37,16 +36,44 @@ public class SensorService {
       this.humidMapper = humidMapper;
       this.sunshineMapper = sunshineMapper;
       this.soilMoistureMapper = soilMoistureMapper;
+
   }
 
   // 전체 센서 조회
-  public List<Sensor> getAllSensors() {
-    return sensorMapper.getAllSensors();
+  public List<SensorDTO> getAllSensors() {
+    return sensorMapper.getAllSensors().stream()
+            .map(SensorDTO::from)
+            .collect(Collectors.toList());
+  }
+
+  //특정 section 센서 조회
+  public List<SensorDTO> getSensorBySectionId(Integer sectionId) {
+    return sensorMapper.getSensorBySectionId(sectionId).stream()
+            .map(SensorDTO::from)
+            .collect(Collectors.toList());
   }
 
   // 센서 등록
-  public void insertSensor(Sensor sensor) {
+  public void insertSensor(SensorDTO sensorDTO) {
+    // UUID 문자열 생성
+    String generatedUuid = UUID.randomUUID().toString();
+
+    Sensor sensor = new Sensor();
+    sensor.setName(sensorDTO.getName());
+    sensor.setSectionId(sensorDTO.getSectionId());
+    sensor.setUuid(generatedUuid);
+    sensor.setSensorType(sensorDTO.getSensorType());
+
+    // Mapper 호출 → selectKey로 uuid_id 반환되고 farms 삽입
     sensorMapper.insertSensor(sensor);
+  }
+
+  public void updateSensor(Integer id, String name, String sensorType) {
+    sensorMapper.updateSensor(id, name, sensorType);
+  }
+
+  public void deleteSensor(Integer id) {
+    sensorMapper.deleteSensor(id);
   }
 
   public void insertSensorDatas(List<SensorDataDTO> sensorDataDTOs) {

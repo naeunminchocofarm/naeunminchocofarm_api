@@ -1,7 +1,7 @@
 package com.naeunminchocofarm.ncf_api.smart_farm.controller;
 
+import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDataDTO;
-import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.service.SensorService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/sensors")
 public class SensorController {
 
   private static final Logger log = LogManager.getLogger(SensorController.class);
@@ -19,21 +20,44 @@ public class SensorController {
     this.sensorService = sensorService;
   }
 
-//  // 모든 센서 조회
-//  @GetMapping("")
-//  public List<Sensor> getAllSensors() {
-//    return sensorService.getAllSensors();
-//  }
-//
-//  // 센서 등록
-//  @PostMapping("")
-//  public void createSensor(@RequestBody SensorDTO sensorDTO) {
-//    sensorService.insertSensor(sensorDTO);
-//  }
+  // 모든 센서 조회
+  @GetMapping
+  public List<SensorDTO> getAllSensors() {
+    return sensorService.getAllSensors();
+  }
 
-    @PostMapping("/sensors/datas")
-    public void insertSensorDatas(@RequestBody List<SensorDataDTO> sensorDataDTOs){
-        log.info("센서 데이터 수집!");
-        sensorService.insertSensorDatas(sensorDataDTOs);
-    }
+  // 특정 section 센서 조회
+  @GetMapping("/section/{sectionId}")
+  public  List<SensorDTO> getSensorBySectionId(@PathVariable Integer sectionId) {
+    return sensorService.getSensorBySectionId(sectionId);
+  }
+
+  // 센서 등록
+  @PostMapping("/section/{sectionId}")
+  public void insertSensor(@PathVariable Integer sectionId ,@RequestBody SensorDTO sensorDTO) {
+    SensorDTO dtoWhitSectionId = new SensorDTO(
+            sensorDTO.getId(),
+            sensorDTO.getName(),
+            sectionId,
+            sensorDTO.getUuidId(),
+            sensorDTO.getSensorType(),
+            sensorDTO.getUuid()
+    );
+    sensorService.insertSensor(dtoWhitSectionId);
+  }
+
+  @PutMapping("/{id}")
+  public void updateSensor(@PathVariable Integer id, @RequestBody SensorDTO dto) {
+    sensorService.updateSensor(id, dto.getName(), dto.getSensorType());
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteSensor(@PathVariable Integer id) {
+    sensorService.deleteSensor(id);
+  }
+
+  @PostMapping("/datas")
+  public void insertSensorDatas(@RequestBody List<SensorDataDTO> sensorDataDTOs){
+    sensorService.insertSensorDatas(sensorDataDTOs);
+  }
 }
