@@ -1,31 +1,34 @@
 package com.naeunminchocofarm.ncf_api.serviceApply.dto;
 
-import com.naeunminchocofarm.ncf_api.member.dto.LoginInfoDTO;
-import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
+import com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceStatus;
 
 import java.time.OffsetDateTime;
 
 public class ServiceApplyDTO {
-    private final Integer id; // ID
-    private final Integer memberId; // 사용자 ID
-    private final String type;
-    private final String contactTell;
-    private final String content;
-    private final String memo;
-    private final OffsetDateTime applicationDate;
-    private final ServiceStatusDTO serviceStatus;
-    private final LoginInfoDTO loginInfoDTO;
+    private final Integer id;
+    private final Integer memberId; // 일반 유저는 서버에서, 관리자일 경우 직접 지정 가능
+    private final String type; // 신청자 유형 (법인, 개인사업자, 개인)
+    private final String contactTell; // 실무자 연락처
+    private final String content; // 상담 내용
 
-    public ServiceApplyDTO(Integer id, Integer memberId, String type, String contactTell, String content, String memo, OffsetDateTime applicationDate, ServiceStatusDTO serviceStatus, LoginInfoDTO loginInfoDTO) {
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private final OffsetDateTime applicationDate;
+    private final String memo;
+    private final ServiceStatus serviceStatus;
+    private final LoginInfo loginInfo;
+
+    public ServiceApplyDTO(Integer id, Integer memberId, String type, String contactTell, String content, OffsetDateTime applicationDate, String memo, ServiceStatus serviceStatus, LoginInfo loginInfo) {
         this.id = id;
         this.memberId = memberId;
         this.type = type;
         this.contactTell = contactTell;
         this.content = content;
-        this.memo = memo;
         this.applicationDate = applicationDate;
+        this.memo = memo;
         this.serviceStatus = serviceStatus;
-        this.loginInfoDTO = loginInfoDTO;
+        this.loginInfo = loginInfo;
     }
 
     public Integer getId() {
@@ -48,19 +51,19 @@ public class ServiceApplyDTO {
         return content;
     }
 
-    public String getMemo() {
-        return memo;
-    }
-
     public OffsetDateTime getApplicationDate() {
         return applicationDate;
     }
 
-    public ServiceStatusDTO getServiceStatus() {
+    public String getMemo() {
+        return memo;
+    }
+
+    public ServiceStatus getServiceStatus() {
         return serviceStatus;
     }
 
-    public LoginInfoDTO getLoginInfoDTO() {
-        return loginInfoDTO;
+    public LoginInfo getLoginInfo() {
+        return loginInfo;
     }
 }

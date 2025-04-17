@@ -3,6 +3,7 @@ package com.naeunminchocofarm.ncf_api.member.service;
 import com.naeunminchocofarm.ncf_api.lib.exception.ApiException;
 import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
+import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.mapper.MemberMapper;
 import org.apache.logging.log4j.LogManager;
@@ -49,4 +50,8 @@ public class MemberService {
 		log.info("로그인 성공: {}", member.getLoginId());
 		return checkMember;
 	};
+
+	public LoginInfo getMemInfo(Integer id) {
+		return memberMapper.getMemInfo(id);
+	}
 }

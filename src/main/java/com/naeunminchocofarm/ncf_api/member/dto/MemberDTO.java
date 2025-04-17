@@ -85,14 +85,9 @@ public class MemberDTO {
 	public String getRoleNames() {
 		return memberRole.getRoleName();
 	}
+	public Integer getRoleFlags() { return memberRole.getRoleFlag();}
 
-	public String getRoleFlags() {
-		return switch (memberRole.getRoleFlag()) {
-			case 0 -> "관리자";
-			case 2 -> "농장주";
-			default -> "유저";
-		};
-	}
+
 
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo(), member.getMemberRole());

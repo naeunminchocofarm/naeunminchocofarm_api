@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.lib.jwt;
 
+import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -30,11 +31,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					throws ServletException, IOException {
 
 		String header = request.getHeader("Authorization");
-		System.out.println("헤더 Authorization: " + header); // 🔥 찍어봐
+		System.out.println("헤더 Authorization: " + header);
 
 		if (header != null && header.startsWith("Bearer ")) {
 			String token = header.replace("Bearer ", "");
-			System.out.println("JWT 추출됨: " + token); // 🔥 찍어봐
+			System.out.println("JWT 추출됨: " + token);
 
 			String roleName = null;
 			try {
@@ -46,13 +47,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				List<SimpleGrantedAuthority> authorities =
 								List.of(new SimpleGrantedAuthority(roleName));
 
-				Authentication auth =
-								new UsernamePasswordAuthenticationToken(userId, null, authorities);
+				// 💡 로그인 정보 객체 생성
+				LoginInfo loginMember = new LoginInfo(
+								userId.intValue(),
+								claims.get("loginId", String.class),
+								claims.get("name", String.class),
+								claims.get("email", String.class),
+								claims.get("tell", String.class),
+								roleName,
+								claims.get("roleFlag", Integer.class)
+				);
 
+				Authentication auth =
+								new UsernamePasswordAuthenticationToken(loginMember, null, authorities);
 				SecurityContextHolder.getContext().setAuthentication(auth);
 
+				// ✅ 핵심: requestAttribute 등록
+				request.setAttribute("loginMember", loginMember);
+
 			} catch (Exception e) {
-//				logger.warn("JWT 필터 오류: {}", e.getMessage());
 				System.out.println("필터오류");
 				System.out.println("권한 from JWT: " + roleName);
 				System.out.println("SecurityContext 인증 객체: " + SecurityContextHolder.getContext().getAuthentication());

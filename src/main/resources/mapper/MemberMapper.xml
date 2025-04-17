@@ -41,13 +41,16 @@
     </insert>
 
     <!-- 필요한거 로그인시 있는지 없는지 여부 select-->
-    <select id="login" resultMap="member"> <!--login respone용임-->
+    <select id="login" resultMap="member">
         SELECT
-        m.ID
-        , m.LOGIN_ID
-        , m.ENCRYPTED_LOGIN_PW
-        , r.ROLE_FLAG
-        , r.ROLE_NAME
+        m.ID,
+        m.LOGIN_ID,
+        m.ENCRYPTED_LOGIN_PW,
+        m.NAME,
+        m.EMAIL,
+        m.TELL,
+        r.ROLE_FLAG,
+        r.ROLE_NAME
         FROM members m
         JOIN member_role r ON r.ROLE_FLAG = m.MEMBER_ROLE
         WHERE m.login_id = #{loginId}
@@ -73,16 +76,19 @@
 
     <!-- 필요한거 web 마이페이지 select-->
     <!--login info용임-->
-<!--    <select id="loginInfo" resultMap="member">-->
-<!--        SELECT ID-->
-<!--        , LOGIN_ID-->
-<!--        , TELL-->
-<!--        , EMAIL-->
-<!--        , CREATED_AT-->
-<!--        , MEMBER_ROLE-->
-<!--        FROM members-->
-<!--        WHERE LOGIN_ID = #{loginId}-->
-<!--    </select>-->
+    <select id="getMemInfo" resultType="com.naeunminchocofarm.ncf_api.member.entity.LoginInfo">
+        SELECT
+        m.ID,
+        m.LOGIN_ID,
+        m.NAME,
+        m.EMAIL,
+        m.TELL,
+        r.ROLE_NAME,
+        r.ROLE_FLAG
+        FROM members m
+        JOIN member_role r ON m.member_role = r.ROLE_FLAG
+        WHERE m.id = #{id}
+    </select>
     <!-- 필요한거 web 마이페이지수정 insert-->
     <!-- 필요한거 web 회원탈퇴 delete-->
 </mapper>
