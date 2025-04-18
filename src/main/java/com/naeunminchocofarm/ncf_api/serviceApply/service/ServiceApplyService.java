@@ -14,17 +14,22 @@ public class ServiceApplyService {
 		this.serviceApplyMapper = serviceApplyMapper;
 	}
 
-
-	public List<ServiceApply> getAllServiceApplies() {
-        return serviceApplyMapper.selectServiceApplyList();
-    }
-
-    public ServiceApply selectServiceApplyDetail(Integer id){
-        return serviceApplyMapper.selectServiceApplyDetail(id);
-    }
-
-    // 서비스 신청
-    public void serviceApplication(ServiceApply serviceApply) {
-        serviceApplyMapper.serviceApplication(serviceApply);
-    }
+	public List<ServiceApply> selectServiceApplyList(){
+		return serviceApplyMapper.selectServiceApplyList();
+	};
+	public ServiceApply selectServiceApplyDetail(Integer id){
+		return serviceApplyMapper.selectServiceApplyDetail(id);
+	};
+	public void insertServiceApply(ServiceApply serviceApply){
+		serviceApplyMapper.insertServiceApply(serviceApply);
+	};
+	public List<ServiceApply> showMyServiceApplyList(int memberId){
+		return serviceApplyMapper.showMyServiceApplyList(memberId);
+	};
+	public void updateServiceApply(ServiceApply serviceApply){
+		serviceApplyMapper.updateServiceApply(serviceApply);
+	};
+	public void deleteServiceApply(int id){
+		serviceApplyMapper.deleteServiceApply(id);
+	};
 }

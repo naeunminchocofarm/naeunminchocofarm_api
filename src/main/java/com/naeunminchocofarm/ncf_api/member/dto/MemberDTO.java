@@ -1,5 +1,7 @@
 package com.naeunminchocofarm.ncf_api.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.entity.MemberRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ public class MemberDTO {
 	private final String email;
 	private final String tell;
 	private final boolean privacyPolicy;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private final OffsetDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private final OffsetDateTime deletedAt;
 	private final String memo;
 	private final MemberRole memberRole;
@@ -85,14 +89,9 @@ public class MemberDTO {
 	public String getRoleNames() {
 		return memberRole.getRoleName();
 	}
+	public Integer getRoleFlags() { return memberRole.getRoleFlag();}
 
-	public String getRoleFlags() {
-		return switch (memberRole.getRoleFlag()) {
-			case 0 -> "관리자";
-			case 2 -> "농장주";
-			default -> "유저";
-		};
-	}
+
 
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo(), member.getMemberRole());

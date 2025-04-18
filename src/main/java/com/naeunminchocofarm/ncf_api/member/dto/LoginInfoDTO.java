@@ -1,35 +1,34 @@
 package com.naeunminchocofarm.ncf_api.member.dto;
 
 public class LoginInfoDTO {
-	private String token;
-	private String id;
-	private String loginId;
-	private String name;
-	private String email;
-	private String tell;
-	private String roleName;
-	private Integer roleFlag;
+	private final Integer id;
+	private final String loginId;
+	private final String name;
+	private final String email;
+	private final String tell;
+	private final String roleName;
+	private final Integer roleFlag;
 
-	public LoginInfoDTO(String token, String name, String loginId, String email, String tell, String roleName, Integer roleFlag) {
-		this.token = token;
-		this.name = name;
+	public LoginInfoDTO(Integer id, String loginId, String name, String email, String tell, String roleName, Integer roleFlag) {
+		this.id = id;
 		this.loginId = loginId;
+		this.name = name;
 		this.email = email;
 		this.tell = tell;
 		this.roleName = roleName;
 		this.roleFlag = roleFlag;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public String getName() {
-		return name;
+	public Integer getId() {
+		return id;
 	}
 
 	public String getLoginId() {
 		return loginId;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getEmail() {
