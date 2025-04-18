@@ -46,6 +46,7 @@ public class SensorController {
     sensorService.insertSensor(dtoWhitSectionId);
   }
 
+  //센서 수정
   @PutMapping("/{id}")
   public void updateSensor(@PathVariable Integer id, @RequestBody SensorDTO sensorDTO) {
     SensorDTO dto = new SensorDTO(
@@ -59,6 +60,7 @@ public class SensorController {
     sensorService.updateSensor(dto);
   }
 
+  //센서 삭제
   @DeleteMapping("/{id}")
   public void deleteSensor(@PathVariable Integer id) {
     sensorService.deleteSensor(id);
