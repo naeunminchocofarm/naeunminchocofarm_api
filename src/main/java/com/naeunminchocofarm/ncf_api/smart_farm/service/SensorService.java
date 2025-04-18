@@ -4,8 +4,10 @@ import com.naeunminchocofarm.ncf_api.humidity.entity.HumidData;
 import com.naeunminchocofarm.ncf_api.humidity.mapper.HumidityMapper;
 import com.naeunminchocofarm.ncf_api.ldr.entity.SunshineData;
 import com.naeunminchocofarm.ncf_api.ldr.mapper.LdrMapper;
+import com.naeunminchocofarm.ncf_api.smart_farm.dto.SectionDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDTO;
 import com.naeunminchocofarm.ncf_api.smart_farm.dto.SensorDataDTO;
+import com.naeunminchocofarm.ncf_api.smart_farm.entity.Section;
 import com.naeunminchocofarm.ncf_api.smart_farm.entity.Sensor;
 import com.naeunminchocofarm.ncf_api.smart_farm.mapper.SensorMapper;
 import com.naeunminchocofarm.ncf_api.soil_moisture.entity.SoilMoistureData;
@@ -68,10 +70,17 @@ public class SensorService {
     sensorMapper.insertSensor(sensor);
   }
 
-  public void updateSensor(Integer id, String name, String sensorType) {
-    sensorMapper.updateSensor(id, name, sensorType);
+  //센서 수정
+  public void updateSensor(SensorDTO dto) {
+    Sensor sensor =new Sensor();
+    sensor.setId(dto.getId());
+    sensor.setName(dto.getName());
+    sensor.setSensorType(dto.getSensorType());
+    sensor.setUuidId(dto.getUuidId());
+    sensorMapper.updateSensor(sensor);
   }
 
+  //센서 삭제
   public void deleteSensor(Integer id) {
     sensorMapper.deleteSensor(id);
   }

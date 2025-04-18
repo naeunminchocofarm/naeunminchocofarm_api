@@ -47,8 +47,16 @@ public class SensorController {
   }
 
   @PutMapping("/{id}")
-  public void updateSensor(@PathVariable Integer id, @RequestBody SensorDTO dto) {
-    sensorService.updateSensor(id, dto.getName(), dto.getSensorType());
+  public void updateSensor(@PathVariable Integer id, @RequestBody SensorDTO sensorDTO) {
+    SensorDTO dto = new SensorDTO(
+            id,
+            sensorDTO.getName(),
+            sensorDTO.getSectionId(),
+            sensorDTO.getUuidId(),
+            sensorDTO.getSensorType(),
+            sensorDTO.getUuid()
+    );
+    sensorService.updateSensor(dto);
   }
 
   @DeleteMapping("/{id}")
