@@ -1,4 +1,4 @@
-package com.naeunminchocofarm.ncf_api.lib.auth;
+package com.naeunminchocofarm.ncf_api.lib.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

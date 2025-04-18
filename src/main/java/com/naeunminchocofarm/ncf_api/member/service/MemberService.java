@@ -2,6 +2,8 @@ package com.naeunminchocofarm.ncf_api.member.service;
 
 import com.naeunminchocofarm.ncf_api.lib.exception.ApiException;
 import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
+import com.naeunminchocofarm.ncf_api.member.dto.LoginInfoDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.LoginRequest;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
@@ -35,20 +37,15 @@ public class MemberService {
 		memberMapper.signUp(member);
 	};
 
-	public Member login (Member member) {
-		Member checkMember = memberMapper.login(member);
+	public LoginInfoDTO login (LoginRequest request) {
+		Member member = memberMapper.findByLoginId(request.getLoginId())
+				.orElseThrow(() -> new ApiException("회원정보를 찾을 수 없습니다.", "NOT_FOUND_MEMBER", HttpStatus.NOT_FOUND));
 
-		if (!passwordEncoder.matches(member.getEncryptedLoginPw(), checkMember.getEncryptedLoginPw())) {
-//			throw new RuntimeException("아이디 혹은 비밀번호를 다시 확인해 주세요.");
-			throw new ApiException("아이디 혹은 비밀번호를 다시 확인해 주세요.", "INVALID_ID_OR_PW", HttpStatus.UNAUTHORIZED);
+		if (!passwordEncoder.matches(request.getPassword(), member.getEncryptedLoginPw())) {
+			throw new ApiException("비밀번호를 확인해주세요", "INVALID_PW", HttpStatus.UNAUTHORIZED);
 		}
 
-		if (checkMember == null){
-			throw new ApiException("회원가입이나하셈", "NOT_FOUND_MEMBER", HttpStatus.NOT_FOUND);
-//			throw new RuntimeException("아이디 혹은 비밀번호를 다시 확인해 주세요.");
-		}
-		log.info("로그인 성공: {}", member.getLoginId());
-		return checkMember;
+		return new LoginInfoDTO(member.getId(), member.getMemberRole().getRoleName());
 	};
 
 	public LoginInfo getMemInfo(Integer id) {

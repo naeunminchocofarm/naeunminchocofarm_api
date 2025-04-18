@@ -1,9 +1,5 @@
 package com.naeunminchocofarm.ncf_api.lib.exception;
 
-import com.naeunminchocofarm.ncf_api.lib.auth.EmptyAuthorizationFieldException;
-import com.naeunminchocofarm.ncf_api.lib.auth.ExpiredAuthorizationDataException;
-import com.naeunminchocofarm.ncf_api.lib.auth.InvalidAuthorizationDataException;
-import com.naeunminchocofarm.ncf_api.lib.auth.InvalidRoleException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,9 +31,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleInvalidRoleException(InvalidRoleException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("INVALID_ROLE", ex.getMessage()));
     }
-
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ApiErrorResponse> handleInvalidRoleException(Exception ex) {
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiErrorResponse("INTERNAL_SERVER_ERROR", ex.getMessage()));
-//    }
 }

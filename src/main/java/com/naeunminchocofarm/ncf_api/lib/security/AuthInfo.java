@@ -1,4 +1,4 @@
-package com.naeunminchocofarm.ncf_api.lib.auth;
+package com.naeunminchocofarm.ncf_api.lib.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,5 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestAuth {
-    String[] expectedRoleNames() default {};
-    int[] expectedRoleFlags() default {};
+public @interface AuthInfo {
 }
