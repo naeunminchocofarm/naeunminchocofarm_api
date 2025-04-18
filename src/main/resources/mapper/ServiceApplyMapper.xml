@@ -20,11 +20,12 @@
             <result property="roleName" column="role_name" />
             <result property="roleFlag" column="role_flag" />
         </association>
+        <association property="serviceStatus" resultMap="serviceStatus"/>
+    </resultMap>
 
-        <association property="serviceStatus" javaType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceStatus">
-            <id property="id" column="service_status_id" />
-            <result property="serviceStatus" column="service_status" />
-        </association>
+    <resultMap id="serviceStatus" type="com.naeunminchocofarm.ncf_api.member.entity.MemberRole">
+        <id property="id" column="service_status_id" />
+        <result property="serviceStatus" column="service_status" />
     </resultMap>
 
     <select id="selectServiceApplyList" resultMap="ServiceApplyResultMap">
@@ -32,25 +33,20 @@
         sa.id,
         sa.type,
         sa.contact_tell,
-        sa.content,
-        sa.memo,
         sa.application_at,
         m.id AS member_id,
         m.login_id,
         m.name,
         m.email,
         m.tell,
-        r.role_name,
-        r.role_flag,
         s.id AS service_status_id,
         s.service_status
         FROM services sa
         JOIN members m ON sa.member_id = m.id
-        JOIN member_role r ON m.member_role = r.role_flag
         JOIN service_status s ON sa.service_status = s.id
     </select>
 
-    <select id="selectServiceApplyDetail" resultMap="ServiceApplyResultMap">
+    <select id="selectServiceApplyDetail" resultMap="ServiceApplyResultMap" >
         SELECT
         s.id,
         s.type,
