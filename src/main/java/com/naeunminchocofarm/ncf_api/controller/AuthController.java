@@ -41,8 +41,6 @@ public class AuthController {
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) throws IOException {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
         String jwt = jwtHandler.generateToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), null);
-//        response.setHeader("Access-Control-Expose-Headers", "Authorization");
-//        response.setHeader("Authorization", "Bearer " + jwt);
         return ResponseEntity.noContent().headers(httpHeaders -> {
             httpHeaders.set("Access-Control-Expose-Headers", "Authorization");
             httpHeaders.set("Authorization", "Bearer " + jwt);
@@ -58,6 +56,11 @@ public class AuthController {
     @GetMapping("/admin/test-auth-request")
     public void testAdminAuthRequest() {
         log.info("여길 어디라고 들어와");
+    }
+
+    @GetMapping("/test/test-auth-request")
+    public void testAdminAuthRequest(@AuthInfo() AuthUser authUser) {
+        log.info("여길 어디라고 들어와!!!");
     }
 
     @PostMapping("/member/signup")

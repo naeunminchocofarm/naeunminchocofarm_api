@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.lib.jwt;
 
+import com.naeunminchocofarm.ncf_api.lib.exception.EmptyAuthorizationFieldException;
 import com.naeunminchocofarm.ncf_api.lib.exception.ExpiredAuthorizationDataException;
 import com.naeunminchocofarm.ncf_api.lib.exception.InvalidAuthorizationDataException;
 import io.jsonwebtoken.Claims;
