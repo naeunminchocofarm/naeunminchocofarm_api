@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .httpBasic(basic -> basic.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers("/ws/**", "/sensors/datas", "/web/**").permitAll()
+                        .requestMatchers("/service/**").hasAnyRole("USER", "FAMMER", "ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("FAMMER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()

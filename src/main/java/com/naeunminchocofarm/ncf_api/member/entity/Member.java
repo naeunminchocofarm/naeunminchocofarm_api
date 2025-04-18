@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.naeunminchocofarm.ncf_api.member.dto.LoginRespone;
 import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +17,9 @@ public class Member {
 	private String email;
 	private String tell;
 	private boolean privacyPolicy;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private OffsetDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private OffsetDateTime deletedAt;
 	private String memo;
 	private MemberRole memberRole;

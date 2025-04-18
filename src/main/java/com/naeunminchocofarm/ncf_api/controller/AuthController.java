@@ -1,9 +1,9 @@
 package com.naeunminchocofarm.ncf_api.controller;
 
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
-import com.naeunminchocofarm.ncf_api.member.dto.LoginInfoDTO;
 import com.naeunminchocofarm.ncf_api.member.dto.LoginRespone;
 import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
+import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 
@@ -57,20 +57,21 @@ public class AuthController {
             response.setHeader("Access-Control-Expose-Headers", "Authorization");
             response.setHeader("Authorization", "Bearer " + token);
             log.info("발급 토큰: {}", token);
+            log.info("회원넘: {}", authenticatedMember.getId());
             log.info("로그인5: {}", roleName);
             log.info("로그인6: {}", roleFlag);
             log.info("권한 이름: {}", authenticatedMember.getMemberRole().getRoleName());
             log.info("권한 플래그: {}", authenticatedMember.getMemberRole().getRoleFlag());
 
             //마이페이지를 위해 미리
-            LoginInfoDTO loginInfo = new LoginInfoDTO(
-                    token,
-                    authenticatedMember.getName(),
-                    authenticatedMember.getLoginId(),
-                    authenticatedMember.getEmail(),
-                    authenticatedMember.getTell(),
-                    roleName,
-                    roleFlag
+            LoginInfo loginInfo = new LoginInfo(
+                authenticatedMember.getId(), // id
+                authenticatedMember.getLoginId(),
+                authenticatedMember.getName(),
+                authenticatedMember.getEmail(),
+                authenticatedMember.getTell(),
+                roleName,
+                roleFlag
             );
 
             return ResponseEntity.ok(loginInfo);

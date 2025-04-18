@@ -3,6 +3,7 @@ package com.naeunminchocofarm.ncf_api.member.controller;
 import com.naeunminchocofarm.ncf_api.lib.exception.ApiException;
 import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
+import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,4 +40,10 @@ public class MemberController {
 
 		return memberService.getMemberList(pagination);
 	}
+
+//	@GetMapping("/member/memberInfo/{id}")
+//	public ResponseEntity<LoginInfo> getMemInfo(@PathVariable Integer id) {
+//		LoginInfo loginInfo = memberService.getMemInfo(id);
+//		return ResponseEntity.ok(loginInfo);
+//	}
 }
