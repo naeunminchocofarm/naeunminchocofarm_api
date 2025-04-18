@@ -23,13 +23,13 @@ public class ServiceApplyService {
 	public void insertServiceApply(ServiceApply serviceApply){
 		serviceApplyMapper.insertServiceApply(serviceApply);
 	};
-	public List<ServiceApply> showMyServiceApplyList(int memberId){
+	public List<ServiceApply> showMyServiceApplyList(Integer memberId){
 		return serviceApplyMapper.showMyServiceApplyList(memberId);
 	};
 	public void updateServiceApply(ServiceApply serviceApply){
 		serviceApplyMapper.updateServiceApply(serviceApply);
 	};
-	public void deleteServiceApply(int id){
+	public void deleteServiceApply(Integer id){
 		serviceApplyMapper.deleteServiceApply(id);
 	};
 }
