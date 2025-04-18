@@ -24,7 +24,6 @@ public class MemberDTO {
 	private final MemberRole memberRole;
 
 	public MemberDTO(Integer id, String loginId, String encryptedLoginPw, String name, String email, String tell, boolean privacyPolicy, OffsetDateTime createdAt, OffsetDateTime deletedAt, String memo, MemberRole memberRole) {
-
 		this.id = id;
 		this.loginId = loginId;
 		this.encryptedLoginPw = encryptedLoginPw;
@@ -91,11 +90,7 @@ public class MemberDTO {
 	}
 	public Integer getRoleFlags() { return memberRole.getRoleFlag();}
 
-
-
 	public static MemberDTO from(Member member){
 		return new MemberDTO(member.getId(), member.getLoginId(), member.getEncryptedLoginPw(),member.getName(),member.getEmail(),member.getTell(), member.getPrivacyPolicy() , member.getCreatedAt(), member.getDeletedAt(), member.getMemo(), member.getMemberRole());
 	}
-
-
 }

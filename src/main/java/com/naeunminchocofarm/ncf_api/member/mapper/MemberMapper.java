@@ -7,11 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface MemberMapper {
 	public void signUp(Member member);
-	public Member login (Member member);
+	public Optional<Member> findByLoginId(@Param("loginId") String loginId);
 	public List<Member> getMemberList (@Param("pagination")Pagination pagination);
 	public LoginInfo getMemInfo(@Param("id")Integer id);
 }

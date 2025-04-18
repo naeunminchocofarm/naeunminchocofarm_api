@@ -1,4 +1,4 @@
-package com.naeunminchocofarm.ncf_api.lib.auth;
+package com.naeunminchocofarm.ncf_api.lib.exception;
 
 public class InvalidRoleException extends RuntimeException {
     public InvalidRoleException(String message) {

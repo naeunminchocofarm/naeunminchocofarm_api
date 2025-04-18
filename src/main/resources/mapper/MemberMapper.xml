@@ -41,7 +41,7 @@
     </insert>
 
     <!-- 필요한거 로그인시 있는지 없는지 여부 select-->
-    <select id="login" resultMap="member">
+    <select id="findByLoginId" resultMap="member">
         SELECT
         m.ID,
         m.LOGIN_ID,

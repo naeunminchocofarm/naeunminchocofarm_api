@@ -1,7 +1,7 @@
 package com.naeunminchocofarm.ncf_api.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.naeunminchocofarm.ncf_api.member.dto.LoginRespone;
+import com.naeunminchocofarm.ncf_api.member.dto.LoginRequest;
 import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -145,10 +145,10 @@ public class Member {
 		return member;
 	}
 
-	public static Member from(LoginRespone loginRespone, PasswordEncoder passwordEncoder) {
+	public static Member from(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
 		Member member = new Member();// 로그인시 비교를 위해 넣어주는
-		member.setLoginId(loginRespone.getLoginId());
-		member.setEncryptedLoginPw(loginRespone.getEncryptedLoginPw());
+		member.setLoginId(loginRequest.getLoginId());
+		member.setEncryptedLoginPw(loginRequest.getPassword());
 		return member;
 	}
 
