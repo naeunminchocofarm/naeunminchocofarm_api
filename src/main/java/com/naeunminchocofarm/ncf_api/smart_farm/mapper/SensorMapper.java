@@ -19,9 +19,7 @@ public interface SensorMapper {
   void insertSensor(Sensor sensor);
 
   // 센서 수정
-  void updateSensor(@Param("id") Integer id,
-                    @Param("name") String name,
-                    @Param("sensorType") String sensorType);
+  void updateSensor(Sensor sensor);
 
   // 센서 삭제
   void deleteSensor(@Param("id") Integer id);

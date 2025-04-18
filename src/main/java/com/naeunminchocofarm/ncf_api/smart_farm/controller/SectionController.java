@@ -42,8 +42,15 @@ public class SectionController {
   }
 
   @PutMapping("/{id}")
-  public void updateSection(@PathVariable Integer id, @RequestBody SectionDTO dto) {
-    sectionService.updateSection(id, dto.getName());
+  public void updateSection(@PathVariable Integer id, @RequestBody SectionDTO sectionDTO) {
+    SectionDTO dto = new SectionDTO(
+            id,
+            sectionDTO.getName(),
+            sectionDTO.getFarmId(),
+            sectionDTO.getUuidId(),
+            sectionDTO.getUuid()
+    );
+    sectionService.updateSection(dto);
   }
 
   @DeleteMapping("/{id}")
