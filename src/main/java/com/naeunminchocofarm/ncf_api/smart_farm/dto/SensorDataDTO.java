@@ -17,6 +17,7 @@ public class SensorDataDTO {
         this.value = value;
         this.measuredAt = measuredAt;
         this.sensorUuid = sensorUuid;
+
     }
 
     public String getName() {
