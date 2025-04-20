@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.lib.security;
 
+import com.naeunminchocofarm.ncf_api.lib.exception.GlobalExceptionFilter;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtAuthenticationFilter;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtHandler), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtHandler), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new GlobalExceptionFilter(), JwtAuthenticationFilter.class);
 
         return http.build();
     }
