@@ -37,7 +37,7 @@ public class AuthController {
 
     @PostMapping("/member/login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
         String jwt = jwtHandler.generateToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), null);
         return ResponseEntity.noContent().headers(httpHeaders -> {
