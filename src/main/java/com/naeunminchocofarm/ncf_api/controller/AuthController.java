@@ -9,17 +9,18 @@ import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 
-import jakarta.servlet.http.HttpServletResponse;
-
+import org.apache.coyote.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.time.Duration;
 
 @RestController
 public class AuthController {
@@ -39,11 +40,22 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<LoginInfoDTO> login(@RequestBody LoginRequest loginRequest) {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
-        String jwt = jwtHandler.generateToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), null);
+        String accessToken = jwtHandler.generateAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
+        String refreshToken = jwtHandler.generateRefreshToken(loginInfoDTO.getId());
+
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .path("/member")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("None")
+                .secure(true)
+                .build();
+
         return ResponseEntity.ok()
                 .headers(httpHeaders -> {
-                    httpHeaders.set("Access-Control-Expose-Headers", "Authorization");
-                    httpHeaders.set("Authorization", jwt);
+                    httpHeaders.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization");
+                    httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
+                    httpHeaders.set(HttpHeaders.SET_COOKIE, refreshCookie.toString());
                 })
                 .body(loginInfoDTO);
     }

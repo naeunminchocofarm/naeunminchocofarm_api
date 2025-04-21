@@ -1,6 +1,7 @@
 package com.naeunminchocofarm.ncf_api.lib.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,13 +28,13 @@ public class JwtHandler {
     }
 
     /**
-     * jwt 토큰을 생성합니다.
+     * 액세스 토큰을 생성합니다.
      * @param id 사용자를 식별할 수 있는 아이디
-     * @param roleName 사용자의 역할 이름 농장주/일반
+     * @param roleName 사용자의 역할 이름
      * @param roleFlag 사용자의 역할 번호
-     * @return jwt 토큰
+     * @return 액세스 토큰
      */
-    public String generateToken(long id, String roleName, Integer roleFlag) {
+    public String generateAccessToken(Integer id, String roleName, Integer roleFlag) {
         return Jwts.builder()
                 .claims()
                 .add("id", id)
@@ -41,6 +42,23 @@ public class JwtHandler {
                 .add("roleFlag", roleFlag)
                 .and()
                 .expiration(new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS))
+                .signWith(this.PRIVATE_KEY)
+                .compact();
+    }
+
+    /**
+     * 리프레쉬 토큰을 생성합니다.
+     * @param id 사용자를 식별할 수 있는 식별자
+     * @param roleName 역할 이름
+     * @param roleFlag 역할 번호
+     * @return 리프레쉬 토큰
+     */
+    public String generateRefreshToken(Integer id) {
+        return Jwts.builder()
+                .claims()
+                .add("id", id)
+                .and()
+                .expiration(new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS * 10))
                 .signWith(this.PRIVATE_KEY)
                 .compact();
     }
@@ -57,4 +75,6 @@ public class JwtHandler {
                 .parseSignedClaims(jwt)
                 .getPayload();
     }
+
+
 }
