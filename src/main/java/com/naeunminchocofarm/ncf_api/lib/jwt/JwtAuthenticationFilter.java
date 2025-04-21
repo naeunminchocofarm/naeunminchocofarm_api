@@ -35,15 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		if (header != null && header.startsWith(AUTHORIZATION_PREFIX)) {
 			final String jwt = header.substring(AUTHORIZATION_PREFIX.length());
-			try {
-				Claims claims = this.jwtHandler.parseToken(jwt);
-				var authenticationToken = getAuthenticationToken(claims);
-				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-			} catch(ExpiredJwtException ex) {
-				throw new ExpiredAuthorizationDataException("인증정보가 만료되었습니다.");
-			} catch (MalformedJwtException | SignatureException ex) {
-				throw new InvalidAuthorizationDataException("인증정보가 유효하지 않습니다.");
-			}
+			Claims claims = this.jwtHandler.parseToken(jwt);
+			var authenticationToken = getAuthenticationToken(claims);
+			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		}
 
 		filterChain.doFilter(request, response);

@@ -1,5 +1,7 @@
 package com.naeunminchocofarm.ncf_api.controller;
 
+import com.naeunminchocofarm.ncf_api.lib.exception.ExpiredAuthorizationDataException;
+import com.naeunminchocofarm.ncf_api.lib.exception.InvalidAuthorizationDataException;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthInfo;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthUser;
@@ -9,6 +11,10 @@ import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import org.apache.coyote.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +23,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,11 +60,25 @@ public class AuthController {
 
         return ResponseEntity.ok()
                 .headers(httpHeaders -> {
-                    httpHeaders.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization");
+                    httpHeaders.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
                     httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
                     httpHeaders.set(HttpHeaders.SET_COOKIE, refreshCookie.toString());
                 })
                 .body(loginInfoDTO);
+    }
+
+    @PostMapping("/member/refresh")
+    public ResponseEntity<LoginInfoDTO> refresh(@CookieValue("refreshToken") String refreshToken) {
+        Claims claims = this.jwtHandler.parseToken(refreshToken);
+        Integer memberId = claims.get("id", Integer.class);
+        var loginInfoDto = memberService.loginById(memberId);
+        var accessToken = jwtHandler.generateAccessToken(loginInfoDto.getId(), loginInfoDto.getRoleName(), loginInfoDto.getRoleFlag());
+        return ResponseEntity.ok()
+                .headers(httpHeaders -> {
+                    httpHeaders.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
+                    httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
+                })
+                .body(loginInfoDto);
     }
 
     @GetMapping("/user/test-auth-request")

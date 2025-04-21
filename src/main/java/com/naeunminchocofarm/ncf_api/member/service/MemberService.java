@@ -48,7 +48,10 @@ public class MemberService {
 		return LoginInfoDTO.from(member);
 	};
 
-	public LoginInfo getMemInfo(Integer id) {
-		return memberMapper.getMemInfo(id);
+	public LoginInfoDTO loginById(Integer id) {
+		var member = memberMapper.findById(id)
+				.orElseThrow(() -> new ApiException("회원정보를 찾을 수 없습니다.", "NOT_FOUND_MEMBER", HttpStatus.NOT_FOUND));
+
+		return LoginInfoDTO.from(member);
 	}
 }

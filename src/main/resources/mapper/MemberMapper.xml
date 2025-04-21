@@ -56,6 +56,21 @@
         WHERE m.login_id = #{loginId}
     </select>
 
+    <select id="findById" resultMap="member">
+        SELECT
+        m.ID,
+        m.LOGIN_ID,
+        m.ENCRYPTED_LOGIN_PW,
+        m.NAME,
+        m.EMAIL,
+        m.TELL,
+        r.ROLE_FLAG,
+        r.ROLE_NAME
+        FROM members m
+        JOIN member_role r ON r.ROLE_FLAG = m.MEMBER_ROLE
+        WHERE m.id = #{id}
+    </select>
+
     <!-- 필요한거 admin 회원리스트 s elect-->
     <select id="getMemberList" resultMap="member" >
         SELECT
@@ -74,21 +89,6 @@
         LIMIT  #{pagination.size} OFFSET #{pagination.skip}
     </select>
 
-    <!-- 필요한거 web 마이페이지 select-->
-    <!--login info용임-->
-    <select id="getMemInfo" resultType="com.naeunminchocofarm.ncf_api.member.entity.LoginInfo">
-        SELECT
-        m.ID,
-        m.LOGIN_ID,
-        m.NAME,
-        m.EMAIL,
-        m.TELL,
-        r.ROLE_NAME,
-        r.ROLE_FLAG
-        FROM members m
-        JOIN member_role r ON m.member_role = r.ROLE_FLAG
-        WHERE m.id = #{id}
-    </select>
     <!-- 필요한거 web 마이페이지수정 insert-->
     <!-- 필요한거 web 회원탈퇴 delete-->
 </mapper>
