@@ -45,7 +45,7 @@ public class MemberService {
 			throw new ApiException("비밀번호를 확인해주세요", "INVALID_PW", HttpStatus.UNAUTHORIZED);
 		}
 
-		return new LoginInfoDTO(member.getId(), member.getMemberRole().getRoleName());
+		return LoginInfoDTO.from(member);
 	};
 
 	public LoginInfo getMemInfo(Integer id) {

@@ -37,13 +37,15 @@ public class AuthController {
 
     @PostMapping("/member/login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginInfoDTO> login(@RequestBody LoginRequest loginRequest) {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
         String jwt = jwtHandler.generateToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), null);
-        return ResponseEntity.noContent().headers(httpHeaders -> {
-            httpHeaders.set("Access-Control-Expose-Headers", "Authorization");
-            httpHeaders.set("Authorization", jwt);
-        }).build();
+        return ResponseEntity.ok()
+                .headers(httpHeaders -> {
+                    httpHeaders.set("Access-Control-Expose-Headers", "Authorization");
+                    httpHeaders.set("Authorization", jwt);
+                })
+                .body(loginInfoDTO);
     }
 
     @GetMapping("/user/test-auth-request")
