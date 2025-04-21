@@ -1,5 +1,8 @@
 package com.naeunminchocofarm.ncf_api.lib.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ApiErrorResponse {
     private final String code;
     private final String message;
@@ -15,5 +18,9 @@ public class ApiErrorResponse {
 
     public String getMessage() {
         return message;
+    }
+
+    public String toJson() throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(this);
     }
 }
