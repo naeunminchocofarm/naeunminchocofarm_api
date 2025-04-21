@@ -42,7 +42,7 @@ public class AuthController {
         String jwt = jwtHandler.generateToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), null);
         return ResponseEntity.noContent().headers(httpHeaders -> {
             httpHeaders.set("Access-Control-Expose-Headers", "Authorization");
-            httpHeaders.set("Authorization", "Bearer " + jwt);
+            httpHeaders.set("Authorization", jwt);
         }).build();
     }
 
