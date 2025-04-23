@@ -28,5 +28,5 @@ jwt:
 
 logging:
   level:
-    org.mybatis: DEBUG
-    com.naeunminchocofarm: DEBUG
+    org.mybatis: INFO
+    com.naeunminchocofarm: INFO

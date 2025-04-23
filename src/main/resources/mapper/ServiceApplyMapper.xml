@@ -70,21 +70,26 @@
         WHERE s.id = #{id}
     </select>
 
-    <insert id="insertServiceApply" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
-        INSERT INTO services (
-        member_id,
-        type,
-        contact_tell,
-        content,
-        memo
-        )
-        VALUES (
-        #{memberId},
-        #{type},
-        #{contactTell},
-        #{content},
-        #{memo}
-        )
+<!--    <insert id="insertServiceApply" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">-->
+<!--        INSERT INTO services (-->
+<!--        member_id,-->
+<!--        type,-->
+<!--        contact_tell,-->
+<!--        content,-->
+<!--        memo-->
+<!--        )-->
+<!--        VALUES (-->
+<!--        #{memberId},-->
+<!--        #{type},-->
+<!--        #{contactTell},-->
+<!--        #{content},-->
+<!--        #{memo}-->
+<!--        )-->
+<!--    </insert>-->
+
+    <insert id="insertServiceApplyV2">
+        INSERT INTO services (member_id, type, contact_tell, content)
+        VALUES (#{memberId}, #{data.type}, #{data.contactTell}, #{data.content});
     </insert>
 
     <select id="showMyServiceApplyList" parameterType="int" resultMap="ServiceApplyResultMap">

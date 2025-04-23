@@ -1,7 +1,10 @@
 package com.naeunminchocofarm.ncf_api.serviceApply.controller;
 
+import com.naeunminchocofarm.ncf_api.lib.security.AuthInfo;
+import com.naeunminchocofarm.ncf_api.lib.security.AuthUser;
 import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
+import com.naeunminchocofarm.ncf_api.serviceApply.dto.SimpleServiceApplyDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply;
 import com.naeunminchocofarm.ncf_api.serviceApply.service.ServiceApplyService;
 import org.springframework.http.HttpStatus;
@@ -21,22 +24,26 @@ public class ServiceApplyController {
     }
 
     // 신청합니다
+//    @PostMapping("/apply")
+//    public ResponseEntity<?> applyService(@AuthInfo AuthUser authUser, @RequestBody ServiceApply serviceApply) {
+//        try {
+//            if (serviceApply.getMemberId() == null) {
+//                serviceApply.setMemberId(authUser.getId());
+//            }
+//            serviceApplyService.insertServiceApply(serviceApply);
+//
+//            return ResponseEntity.ok("신청이 완료되었습니다.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("신청에 실패했습니다.");
+//        }
+//    }
+
     @PostMapping("/apply")
-    public ResponseEntity<?> applyService(@RequestBody ServiceApply serviceApply,
-                                          @RequestAttribute("loginMember")LoginInfo loginInfo) {
-        try {
-            if (serviceApply.getMemberId() == null) {
-                serviceApply.setMemberId(loginInfo.getId());
-            }
-            serviceApplyService.insertServiceApply(serviceApply);
-
-            return ResponseEntity.ok("신청이 완료되었습니다.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("신청에 실패했습니다.");
-        }
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void applyService(@AuthInfo AuthUser authUser, @RequestBody SimpleServiceApplyDTO serviceApplyDto) {
+        serviceApplyService.insertServiceApply(authUser.getId(), serviceApplyDto);
     }
 
     @GetMapping("/list")
