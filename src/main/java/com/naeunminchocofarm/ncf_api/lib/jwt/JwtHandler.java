@@ -50,8 +50,6 @@ public class JwtHandler {
     /**
      * 리프레쉬 토큰을 생성합니다.
      * @param id 사용자를 식별할 수 있는 식별자
-     * @param roleName 역할 이름
-     * @param roleFlag 역할 번호
      * @return 리프레쉬 토큰
      */
     public String generateRefreshToken(Integer id) {
@@ -59,7 +57,7 @@ public class JwtHandler {
                 .claims()
                 .add("id", id)
                 .and()
-                .expiration(new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS * 10))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 3600 * 24 * 7))
                 .signWith(this.PRIVATE_KEY)
                 .compact();
     }

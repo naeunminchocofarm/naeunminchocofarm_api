@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.controller;
 
+import com.naeunminchocofarm.ncf_api.lib.exception.ApiException;
 import com.naeunminchocofarm.ncf_api.lib.exception.ExpiredAuthorizationDataException;
 import com.naeunminchocofarm.ncf_api.lib.exception.InvalidAuthorizationDataException;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
@@ -28,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @RestController
 public class AuthController {
@@ -44,7 +46,6 @@ public class AuthController {
     }
 
     @PostMapping("/member/login")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<LoginInfoDTO> login(@RequestBody LoginRequest loginRequest) {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
         String accessToken = jwtHandler.generateAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
@@ -52,9 +53,9 @@ public class AuthController {
 
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .path("/member")
+                .path("/member/refresh")
                 .maxAge(Duration.ofDays(7))
-                .sameSite("None")
+                .sameSite("Strict")
                 .secure(true)
                 .build();
 
@@ -68,7 +69,9 @@ public class AuthController {
     }
 
     @PostMapping("/member/refresh")
-    public ResponseEntity<LoginInfoDTO> refresh(@CookieValue("refreshToken") String refreshToken) {
+    public ResponseEntity<LoginInfoDTO> refresh(@CookieValue("refreshToken") Optional<String> refreshTokenOptional) {
+        log.info("리프레쉬!!!!!");
+        var refreshToken = refreshTokenOptional.orElseThrow(() -> new ApiException("리프레쉬 토큰이 존재하지 않습니다.", "EMPTY_REFRESH", HttpStatus.BAD_REQUEST));
         Claims claims = this.jwtHandler.parseToken(refreshToken);
         Integer memberId = claims.get("id", Integer.class);
         var loginInfoDto = memberService.loginById(memberId);
@@ -79,6 +82,23 @@ public class AuthController {
                     httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
                 })
                 .body(loginInfoDto);
+    }
+
+    @DeleteMapping("/member/refresh")
+    public ResponseEntity<LoginInfoDTO> logout(@CookieValue("refreshToken") Optional<String> refreshTokenOptional) {
+        var refreshToken = refreshTokenOptional.orElseThrow(() -> new ApiException("리프레쉬 토큰이 존재하지 않습니다.", "EMPTY_REFRESH", HttpStatus.BAD_REQUEST));
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .path("/member/refresh")
+                .maxAge(0)
+                .sameSite("Strict")
+                .secure(true)
+                .build();
+        return ResponseEntity.noContent()
+                .headers(httpHeaders -> {
+                    httpHeaders.set(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+                })
+                .build();
     }
 
     @GetMapping("/user/test-auth-request")

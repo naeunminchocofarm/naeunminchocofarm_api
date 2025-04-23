@@ -27,6 +27,18 @@
         </association>
     </resultMap>
 
+    <resultMap id="simpleFarmMap" type="com.naeunminchocofarm.ncf_api.smart_farm.dto.SimpleFarmDTO">
+        <constructor>
+            <idArg column="id" javaType="Integer" />
+            <arg column="member_id" javaType="Integer" />
+            <arg column="farm_name" javaType="String" />
+            <arg column="uuid" javaType="String" />
+            <arg column="use_date" javaType="java.time.OffsetDateTime" />
+            <arg column="crop" javaType="String" />
+            <arg column="farm_addr" javaType="String" />
+            <arg column="status" javaType="String" />
+        </constructor>
+    </resultMap>
 
     <!-- 스마트팜 전체 조회 -->
     <select id="getAllFarms" resultType="com.naeunminchocofarm.ncf_api.smart_farm.entity.Farm">
@@ -79,6 +91,22 @@
     <!-- login_id로 member_id 조회 -->
     <select id="getMemberIdByLoginId" resultType="int">
         SELECT id FROM members WHERE login_id = #{loginId}
+    </select>
+
+    <select id="findByMemberId" resultMap="simpleFarmMap">
+        SELECT
+            f.id
+            , f.member_id
+            , f.farm_name
+            , u.uuid
+            , f.use_date
+            , f.crop
+            , f.farm_addr
+            , f.status
+        FROM farms f
+        JOIN uuids u ON u.id = f.uuid_id
+        WHERE member_id = #{memberId}
+        ORDER BY id DESC;
     </select>
 
     <!-- 스마트팜 등록 -->

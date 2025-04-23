@@ -17,6 +17,7 @@ public class Farm {
   private String crop;
   private String status;
   private Member member;
+
   public Farm() {
 
   }

@@ -1,7 +1,5 @@
 package com.naeunminchocofarm.ncf_api.lib.security;
 
-//import com.naeunminchocofarm.ncf_api.lib.auth.AuthorizationHeaderParser;
-//import com.naeunminchocofarm.ncf_api.lib.auth.RequestAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.core.MethodParameter;

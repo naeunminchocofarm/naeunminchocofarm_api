@@ -12,23 +12,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatus()).body(new ApiErrorResponse(ex.getCode(), ex.getMessage()));
     }
 
-//    @ExceptionHandler(EmptyAuthorizationFieldException.class)
-//    public ResponseEntity<ApiErrorResponse> handleEmptyAuthorizationFieldException(EmptyAuthorizationFieldException ex) {
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("EMPTY_TOKEN", ex.getMessage()));
-//    }
-//
-//    @ExceptionHandler(ExpiredAuthorizationDataException.class)
-//    public ResponseEntity<ApiErrorResponse> handleExpiredAuthorizationDataException(ExpiredAuthorizationDataException ex) {
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("EXPIRED_TOKEN", ex.getMessage()));
-//    }
-//
-//    @ExceptionHandler(InvalidAuthorizationDataException.class)
-//    public ResponseEntity<ApiErrorResponse> handleInvalidAuthorizationDataException(InvalidAuthorizationDataException ex) {
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("INVALID_TOKEN", ex.getMessage()));
-//    }
-//
-//    @ExceptionHandler(InvalidRoleException.class)
-//    public ResponseEntity<ApiErrorResponse> handleInvalidRoleException(InvalidRoleException ex) {
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("INVALID_ROLE", ex.getMessage()));
-//    }
+    @ExceptionHandler(EmptyAuthorizationFieldException.class)
+    public ResponseEntity<ApiErrorResponse> handleEmptyAuthorizationFieldException(EmptyAuthorizationFieldException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("EMPTY_TOKEN", ex.getMessage()));
+    }
+
+    @ExceptionHandler(ExpiredAuthorizationDataException.class)
+    public ResponseEntity<ApiErrorResponse> handleExpiredAuthorizationDataException(ExpiredAuthorizationDataException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("EXPIRED_TOKEN", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidAuthorizationDataException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidAuthorizationDataException(InvalidAuthorizationDataException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("INVALID_TOKEN", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidRoleException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidRoleException(InvalidRoleException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorResponse("INVALID_ROLE", ex.getMessage()));
+    }
 }
