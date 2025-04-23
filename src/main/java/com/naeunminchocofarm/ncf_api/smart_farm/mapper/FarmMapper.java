@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface FarmMapper {
@@ -32,6 +33,6 @@ public interface FarmMapper {
 
     // 스마트팜 삭제
     void deleteFarm(@Param("id") Integer id);
-
     List<SimpleFarmDTO> findByMemberId(@Param("memberId") Integer id);
+    Optional<SimpleFarmDTO> findByIdAndMemberId(@Param("farmId") Integer farmId, @Param("memberId") Integer memberId);
 }

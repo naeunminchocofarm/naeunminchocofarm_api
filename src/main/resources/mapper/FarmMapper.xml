@@ -109,6 +109,23 @@
         ORDER BY id DESC;
     </select>
 
+    <select id="findByIdAndMemberId" resultMap="simpleFarmMap">
+        SELECT
+            f.id
+            , f.member_id
+            , f.farm_name
+            , u.uuid
+            , f.use_date
+            , f.crop
+            , f.farm_addr
+            , f.status
+        FROM farms f
+        JOIN uuids u ON u.id = f.uuid_id
+        WHERE f.member_id = #{memberId}
+            AND f.id = #{farmId}
+        ORDER BY f.id DESC;
+    </select>
+
     <!-- 스마트팜 등록 -->
     <insert id="insertFarm">
         <selectKey keyProperty="uuidId" resultType="int" order="BEFORE">

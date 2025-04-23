@@ -8,6 +8,7 @@ import com.naeunminchocofarm.ncf_api.smart_farm.mapper.FarmMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -84,5 +85,9 @@ public class FarmService {
 
     public List<SimpleFarmDTO> getFarmsByMemberId(Integer id) {
         return farmMapper.findByMemberId(id);
+    }
+
+    public Optional<SimpleFarmDTO> getFarmByIdAndMemberId(Integer farmId, Integer memberId) {
+        return farmMapper.findByIdAndMemberId(farmId, memberId);
     }
 }

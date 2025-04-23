@@ -70,7 +70,6 @@ public class AuthController {
 
     @PostMapping("/member/refresh")
     public ResponseEntity<LoginInfoDTO> refresh(@CookieValue("refreshToken") Optional<String> refreshTokenOptional) {
-        log.info("리프레쉬!!!!!");
         var refreshToken = refreshTokenOptional.orElseThrow(() -> new ApiException("리프레쉬 토큰이 존재하지 않습니다.", "EMPTY_REFRESH", HttpStatus.BAD_REQUEST));
         Claims claims = this.jwtHandler.parseToken(refreshToken);
         Integer memberId = claims.get("id", Integer.class);
@@ -86,7 +85,7 @@ public class AuthController {
 
     @DeleteMapping("/member/refresh")
     public ResponseEntity<LoginInfoDTO> logout(@CookieValue("refreshToken") Optional<String> refreshTokenOptional) {
-        var refreshToken = refreshTokenOptional.orElseThrow(() -> new ApiException("리프레쉬 토큰이 존재하지 않습니다.", "EMPTY_REFRESH", HttpStatus.BAD_REQUEST));
+        var refreshToken = refreshTokenOptional.orElse("");
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
                 .path("/member/refresh")

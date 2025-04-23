@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
@@ -52,6 +53,11 @@ public class MemberController {
 	@GetMapping("/member/farms")
 	public List<SimpleFarmDTO> getMemberFarms(@AuthInfo() AuthUser authUser) {
 		return farmService.getFarmsByMemberId(authUser.getId());
+	}
+
+	@GetMapping("/member/farms/{id}")
+	public Optional<SimpleFarmDTO> getMemberFarms(@AuthInfo() AuthUser authUser, @PathVariable("id") Integer farmId) {
+		return farmService.getFarmByIdAndMemberId(farmId, authUser.getId());
 	}
 
 //	@GetMapping("/member/memberInfo/{id}")
