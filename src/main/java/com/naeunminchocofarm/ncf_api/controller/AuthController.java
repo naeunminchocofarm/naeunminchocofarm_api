@@ -53,7 +53,7 @@ public class AuthController {
 
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .path("/member/refresh")
+                .path("/")
                 .maxAge(Duration.ofDays(7))
                 .sameSite("Strict")
                 .secure(true)
@@ -88,7 +88,7 @@ public class AuthController {
         var refreshToken = refreshTokenOptional.orElse("");
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .path("/member/refresh")
+                .path("/")
                 .maxAge(0)
                 .sameSite("Strict")
                 .secure(true)
