@@ -19,16 +19,17 @@ public class ServiceApplyService {
 	}
 
 	public List<ServiceApplyListItemDTO> selectServiceApplyList(){
-		return serviceApplyMapper.selectServiceApplyListV2();
+		return serviceApplyMapper.selectServiceApplyList();
 	};
 
 	public Optional<ServiceApplyDetailDTO> selectServiceApplyDetail(Integer id){
 		return serviceApplyMapper.selectServiceApplyDetail(id);
 	};
 
-	public List<ServiceApply> showMyServiceApplyList(Integer memberId){
-		return serviceApplyMapper.showMyServiceApplyList(memberId);
+	public List<ServiceApplyDetailDTO> getMyServiceApplies(Integer memberId) {
+		return serviceApplyMapper.findByMemberId(memberId);
 	};
+
 	public void updateServiceApply(ServiceApply serviceApply){
 		serviceApplyMapper.updateServiceApply(serviceApply);
 	};

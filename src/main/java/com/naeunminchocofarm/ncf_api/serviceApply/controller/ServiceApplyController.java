@@ -2,7 +2,6 @@ package com.naeunminchocofarm.ncf_api.serviceApply.controller;
 
 import com.naeunminchocofarm.ncf_api.lib.security.AuthInfo;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthUser;
-import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyDetailDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyListItemDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.SimpleServiceApplyDTO;
@@ -44,10 +43,9 @@ public class ServiceApplyController {
         return serviceApplyService.selectServiceApplyDetail(id);
     }
 
-    // 내 신청 목록 조회 (사용자)
-    @GetMapping("/my")
-    public ResponseEntity<List<ServiceApply>> getMyApplies(@RequestAttribute("loginMember") LoginInfo loginInfo) {
-        return ResponseEntity.ok(serviceApplyService.showMyServiceApplyList(loginInfo.getId()));
+    @GetMapping("/mylist")
+    public List<ServiceApplyDetailDTO> getMyServiceApplies(@AuthInfo() AuthUser authUser) {
+        return serviceApplyService.getMyServiceApplies(authUser.getId());
     }
 
     // 신청 수정

@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.naeunminchocofarm.ncf_api.serviceApply.mapper.ServiceApplyMapper">
-
     <resultMap id="ServiceApplyResultMap" type="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">
         <id property="id" column="id" />
         <result property="type" column="type" />
@@ -34,26 +33,12 @@
             <arg column="name" javaType="String" />
             <arg column="email" javaType="String" />
             <arg column="tell" javaType="String" />
+            <arg column="contact_tell" javaType="String" />
             <arg column="type" javaType="String" />
             <arg column="service_status" javaType="String" />
             <arg column="application_at" javaType="String" />
         </constructor>
     </resultMap>
-    <select id="selectServiceApplyListV2" resultMap="ServiceApplyListItemMap">
-        SELECT
-            s.id,
-            s.type,
-            s.application_at,
-            m.login_id,
-            m.name,
-            m.email,
-            m.tell,
-            ss.service_status
-        FROM services s
-        JOIN members m ON s.member_id = m.id
-        JOIN service_status ss ON s.service_status = ss.id
-        ORDER BY s.id DESC;
-    </select>
 
     <resultMap id="ServiceApplyDetailMap" type="com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyDetailDTO">
         <constructor>
@@ -70,6 +55,24 @@
             <arg column="memo" javaType="String" />
         </constructor>
     </resultMap>
+
+    <select id="selectServiceApplyList" resultMap="ServiceApplyListItemMap">
+        SELECT
+            s.id,
+            s.type,
+            s.application_at,
+            m.login_id,
+            s.contact_tell,
+            m.name,
+            m.email,
+            m.tell,
+            ss.service_status
+        FROM services s
+        JOIN members m ON s.member_id = m.id
+        JOIN service_status ss ON s.service_status = ss.id
+        ORDER BY s.id DESC;
+    </select>
+
     <select id="selectServiceApplyDetail" resultMap="ServiceApplyDetailMap" >
         SELECT
             s.id,
@@ -94,28 +97,24 @@
         VALUES (#{memberId}, #{data.type}, #{data.contactTell}, #{data.content});
     </insert>
 
-    <select id="showMyServiceApplyList" parameterType="int" resultMap="ServiceApplyResultMap">
+    <select id="findByMemberId" resultMap="ServiceApplyDetailMap">
         SELECT
-        sa.id,
-        sa.type,
-        sa.contact_tell,
-        sa.content,
-        sa.memo,
-        sa.application_at,
-        m.id AS member_id,
-        m.login_id,
-        m.name,
-        m.email,
-        m.tell,
-        r.role_name,
-        r.role_flag,
-        s.id AS service_status_id,
-        s.service_status
-        FROM services sa
-        JOIN members m ON sa.member_id = m.id
-        JOIN member_role r ON m.member_role = r.role_flag
-        JOIN service_status s ON sa.service_status = s.id
-        WHERE sa.member_id = #{memberId}
+            s.id,
+            s.type,
+            s.contact_tell,
+            s.content,
+            s.memo,
+            s.application_at,
+            s.member_id,
+            m.name,
+            m.email,
+            m.tell,
+            ss.service_status
+        FROM services s
+        JOIN members m ON s.member_id = m.id
+        JOIN service_status ss ON s.service_status = ss.id
+        WHERE m.id = #{memberId}
+        ORDER BY s.id DESC;
     </select>
 
     <update id="updateServiceApply" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">

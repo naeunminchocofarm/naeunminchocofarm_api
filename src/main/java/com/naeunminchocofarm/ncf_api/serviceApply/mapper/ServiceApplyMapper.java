@@ -13,9 +13,9 @@ import java.util.Optional;
 @Mapper
 public interface ServiceApplyMapper {
     Optional<ServiceApplyDetailDTO> selectServiceApplyDetail(@Param("id") Integer id); // 관리자 상세
-    List<ServiceApply> showMyServiceApplyList(Integer memberId); // 사용자 마이페이지 목록
+    List<ServiceApplyDetailDTO> findByMemberId(@Param("memberId") Integer memberId); // 사용자 마이페이지 목록
     void updateServiceApply(ServiceApply serviceApply); // 관리자  수정
     void deleteServiceApply(Integer id); //
     void insertServiceApplyV2(@Param("memberId") Integer memberId, @Param("data") SimpleServiceApplyDTO serviceApplyDto);
-    List<ServiceApplyListItemDTO> selectServiceApplyListV2();
+    List<ServiceApplyListItemDTO> selectServiceApplyList();
 }
