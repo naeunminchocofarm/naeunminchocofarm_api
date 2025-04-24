@@ -5,6 +5,7 @@ import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthInfo;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthUser;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
@@ -60,9 +61,8 @@ public class MemberController {
 		return farmService.getFarmByIdAndMemberId(farmId, authUser.getId());
 	}
 
-//	@GetMapping("/member/memberInfo/{id}")
-//	public ResponseEntity<LoginInfo> getMemInfo(@PathVariable Integer id) {
-//		LoginInfo loginInfo = memberService.getMemInfo(id);
-//		return ResponseEntity.ok(loginInfo);
-//	}
+	@GetMapping("/member/memberInfo")
+	public Optional<MemberInfoDTO> getMemberInfo(@AuthInfo() AuthUser authUser) {
+		return memberService.getMemberInfo(authUser.getId());
+	}
 }

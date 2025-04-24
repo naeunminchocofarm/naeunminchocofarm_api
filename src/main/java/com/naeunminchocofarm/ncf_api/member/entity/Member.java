@@ -9,7 +9,6 @@ import java.time.OffsetDateTime;
 
 
 public class Member {
-
 	private Integer id;
 	private String loginId;
 	private String encryptedLoginPw;

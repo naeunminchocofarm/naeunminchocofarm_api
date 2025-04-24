@@ -22,6 +22,16 @@
         <result column="ROLE_NAME" property="roleName"/>
     </resultMap>
 
+    <resultMap id="memberInfoMap" type="com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO">
+        <constructor>
+            <idArg column="id" javaType="Integer" />
+            <arg column="login_id" javaType="String" />
+            <arg column="name" javaType="String" />
+            <arg column="email" javaType="String" />
+            <arg column="tell" javaType="String" />
+        </constructor>
+    </resultMap>
+
     <insert id = "signUp" parameterType="com.naeunminchocofarm.ncf_api.member.entity.Member">
         INSERT INTO MEMBERS(
         LOGIN_ID
@@ -87,6 +97,17 @@
         JOIN member_role r ON r.ROLE_FLAG = m.MEMBER_ROLE
         ORDER BY m.CREATED_AT DESC
         LIMIT  #{pagination.size} OFFSET #{pagination.skip}
+    </select>
+
+    <select id="getMemberInfo" resultMap="memberInfoMap">
+        SELECT
+            id,
+            login_id,
+            name,
+            email,
+            tell
+        FROM members
+        WHERE id = #{id};
     </select>
 
     <!-- 필요한거 web 마이페이지수정 insert-->

@@ -5,6 +5,7 @@ import com.naeunminchocofarm.ncf_api.lib.pagination.Pagination;
 import com.naeunminchocofarm.ncf_api.member.dto.LoginInfoDTO;
 import com.naeunminchocofarm.ncf_api.member.dto.LoginRequest;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
+import com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.mapper.MemberMapper;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -54,4 +56,8 @@ public class MemberService {
 
 		return LoginInfoDTO.from(member);
 	}
+
+    public Optional<MemberInfoDTO> getMemberInfo(Integer id) {
+		return memberMapper.getMemberInfo(id);
+    }
 }
