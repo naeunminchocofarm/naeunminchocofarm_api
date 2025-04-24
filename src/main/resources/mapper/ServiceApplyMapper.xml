@@ -10,7 +10,6 @@
         <result property="content" column="content" />
         <result property="memo" column="memo" />
         <result property="applicationAt" column="application_at" />
-
         <association property="loginInfo" javaType="com.naeunminchocofarm.ncf_api.member.entity.LoginInfo">
             <id property="id" column="member_id" />
             <result property="loginId" column="login_id" />
@@ -28,22 +27,32 @@
         <result property="serviceStatus" column="service_status" />
     </resultMap>
 
-    <select id="selectServiceApplyList" resultMap="ServiceApplyResultMap">
+    <resultMap id="ServiceApplyListItemMap" type="com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyListItemDTO">
+        <constructor>
+            <idArg column="id" javaType="Integer" />
+            <arg column="login_id" javaType="String" />
+            <arg column="name" javaType="String" />
+            <arg column="email" javaType="String" />
+            <arg column="tell" javaType="String" />
+            <arg column="type" javaType="String" />
+            <arg column="service_status" javaType="String" />
+            <arg column="application_at" javaType="String" />
+        </constructor>
+    </resultMap>
+    <select id="selectServiceApplyListV2" resultMap="ServiceApplyListItemMap">
         SELECT
-        sa.id,
-        sa.type,
-        sa.contact_tell,
-        sa.application_at,
-        m.id AS member_id,
-        m.login_id,
-        m.name,
-        m.email,
-        m.tell,
-        s.id AS service_status_id,
-        s.service_status
-        FROM services sa
-        JOIN members m ON sa.member_id = m.id
-        JOIN service_status s ON sa.service_status = s.id
+            s.id,
+            s.type,
+            s.application_at,
+            m.login_id,
+            m.name,
+            m.email,
+            m.tell,
+            ss.service_status
+        FROM services s
+        JOIN members m ON s.member_id = m.id
+        JOIN service_status ss ON s.service_status = ss.id
+        ORDER BY s.id DESC;
     </select>
 
     <select id="selectServiceApplyDetail" resultMap="ServiceApplyResultMap" >
@@ -69,23 +78,6 @@
         JOIN service_status ss ON s.service_status = ss.id
         WHERE s.id = #{id}
     </select>
-
-<!--    <insert id="insertServiceApply" parameterType="com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply">-->
-<!--        INSERT INTO services (-->
-<!--        member_id,-->
-<!--        type,-->
-<!--        contact_tell,-->
-<!--        content,-->
-<!--        memo-->
-<!--        )-->
-<!--        VALUES (-->
-<!--        #{memberId},-->
-<!--        #{type},-->
-<!--        #{contactTell},-->
-<!--        #{content},-->
-<!--        #{memo}-->
-<!--        )-->
-<!--    </insert>-->
 
     <insert id="insertServiceApplyV2">
         INSERT INTO services (member_id, type, contact_tell, content)
@@ -132,6 +124,4 @@
         DELETE FROM services
         WHERE id = #{id}
     </delete>
-
-
 </mapper>

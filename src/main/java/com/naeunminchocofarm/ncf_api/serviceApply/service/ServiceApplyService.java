@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.serviceApply.service;
 
+import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyListItemDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.SimpleServiceApplyDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply;
 import com.naeunminchocofarm.ncf_api.serviceApply.mapper.ServiceApplyMapper;
@@ -15,15 +16,12 @@ public class ServiceApplyService {
 		this.serviceApplyMapper = serviceApplyMapper;
 	}
 
-	public List<ServiceApply> selectServiceApplyList(){
-		return serviceApplyMapper.selectServiceApplyList();
+	public List<ServiceApplyListItemDTO> selectServiceApplyList(){
+		return serviceApplyMapper.selectServiceApplyListV2();
 	};
 	public ServiceApply selectServiceApplyDetail(Integer id){
 		return serviceApplyMapper.selectServiceApplyDetail(id);
 	};
-//	public void insertServiceApply(ServiceApply serviceApply){
-//		serviceApplyMapper.insertServiceApply(serviceApply);
-//	};
 	public List<ServiceApply> showMyServiceApplyList(Integer memberId){
 		return serviceApplyMapper.showMyServiceApplyList(memberId);
 	};
@@ -33,7 +31,6 @@ public class ServiceApplyService {
 	public void deleteServiceApply(Integer id){
 		serviceApplyMapper.deleteServiceApply(id);
 	};
-
     public void insertServiceApply(Integer memberId, SimpleServiceApplyDTO serviceApplyDto) {
 		serviceApplyMapper.insertServiceApplyV2(memberId, serviceApplyDto);
     }

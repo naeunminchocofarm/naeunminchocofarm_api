@@ -13,7 +13,6 @@ public class LoginInfo {
 	}
 
 	public LoginInfo(Integer id, String loginId, String name, String email, String tell, String roleName, Integer roleFlag) {
-
 		this.id = id;
 		this.loginId = loginId;
 		this.name = name;
