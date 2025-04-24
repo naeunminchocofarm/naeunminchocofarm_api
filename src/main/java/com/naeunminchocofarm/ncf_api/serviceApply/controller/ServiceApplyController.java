@@ -3,7 +3,7 @@ package com.naeunminchocofarm.ncf_api.serviceApply.controller;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthInfo;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthUser;
 import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
-import com.naeunminchocofarm.ncf_api.member.entity.Member;
+import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyDetailDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyListItemDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.SimpleServiceApplyDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply;
@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/service")
@@ -38,8 +39,9 @@ public class ServiceApplyController {
 
     // 특정 신청 상세 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ServiceApply> getServiceApply(@PathVariable Integer id) {
-        return ResponseEntity.ok(serviceApplyService.selectServiceApplyDetail(id));
+    @PreAuthorize("hasRole('ADMIN')")
+    public Optional<ServiceApplyDetailDTO> getServiceApply(@PathVariable Integer id) {
+        return serviceApplyService.selectServiceApplyDetail(id);
     }
 
     // 내 신청 목록 조회 (사용자)

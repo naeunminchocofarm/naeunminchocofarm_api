@@ -55,26 +55,36 @@
         ORDER BY s.id DESC;
     </select>
 
-    <select id="selectServiceApplyDetail" resultMap="ServiceApplyResultMap" >
+    <resultMap id="ServiceApplyDetailMap" type="com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyDetailDTO">
+        <constructor>
+            <idArg column="id" javaType="Integer" />
+            <arg column="service_status" javaType="String" />
+            <arg column="application_at" javaType="java.time.OffsetDateTime" />
+            <arg column="name" javaType="String" />
+            <arg column="member_id" javaType="String" />
+            <arg column="email" javaType="String" />
+            <arg column="tell" javaType="String" />
+            <arg column="type" javaType="String" />
+            <arg column="contact_tell" javaType="String" />
+            <arg column="content" javaType="String" />
+            <arg column="memo" javaType="String" />
+        </constructor>
+    </resultMap>
+    <select id="selectServiceApplyDetail" resultMap="ServiceApplyDetailMap" >
         SELECT
-        s.id,
-        s.type,
-        s.contact_tell,
-        s.content,
-        s.memo,
-        s.application_at,
-        m.id AS member_id,
-        m.login_id,
-        m.name,
-        m.email,
-        m.tell,
-        r.role_name,
-        r.role_flag,
-        ss.id AS service_status_id,
-        ss.service_status
+            s.id,
+            s.type,
+            s.contact_tell,
+            s.content,
+            s.memo,
+            s.application_at,
+            s.member_id,
+            m.name,
+            m.email,
+            m.tell,
+            ss.service_status
         FROM services s
         JOIN members m ON s.member_id = m.id
-        JOIN member_role r ON m.member_role = r.role_flag
         JOIN service_status ss ON s.service_status = ss.id
         WHERE s.id = #{id}
     </select>

@@ -1,5 +1,6 @@
 package com.naeunminchocofarm.ncf_api.serviceApply.mapper;
 
+import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyDetailDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.ServiceApplyListItemDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.dto.SimpleServiceApplyDTO;
 import com.naeunminchocofarm.ncf_api.serviceApply.entity.ServiceApply;
@@ -7,10 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface ServiceApplyMapper {
-    ServiceApply selectServiceApplyDetail(@Param("id") Integer id); // 관리자 상세
+    Optional<ServiceApplyDetailDTO> selectServiceApplyDetail(@Param("id") Integer id); // 관리자 상세
     List<ServiceApply> showMyServiceApplyList(Integer memberId); // 사용자 마이페이지 목록
     void updateServiceApply(ServiceApply serviceApply); // 관리자  수정
     void deleteServiceApply(Integer id); //
