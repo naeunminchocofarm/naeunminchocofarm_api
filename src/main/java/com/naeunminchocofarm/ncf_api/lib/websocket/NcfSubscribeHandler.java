@@ -6,6 +6,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class NcfSubscribeHandler {
@@ -37,7 +38,6 @@ public abstract class NcfSubscribeHandler {
                 x.sendMessage(responseMessage);
             } catch (IOException e) {
                 log.error(e.getMessage());
-                // throw new RuntimeException(e);
             }
         });
     }
@@ -48,5 +48,16 @@ public abstract class NcfSubscribeHandler {
 
     public boolean isEmpty() {
         return this.sessions.isEmpty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof NcfSubscribeHandler that)) return false;
+        return Objects.equals(destination, that.destination);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(destination);
     }
 }

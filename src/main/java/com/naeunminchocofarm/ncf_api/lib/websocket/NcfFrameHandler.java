@@ -7,18 +7,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Component
 public class NcfFrameHandler {
     private static final Logger log = LogManager.getLogger(NcfFrameHandler.class);
-    private final List<NcfSubscribeHandler> subscribeHandlers = new ArrayList<>();
+    private final Set<NcfSubscribeHandler> concurrentSubscriberHandlerSet = new CopyOnWriteArraySet<>();
 
     public void addSubscribeHandlers(NcfSubscribeHandler... handlers) {
-        this.subscribeHandlers.addAll(Arrays.stream(handlers).toList());
+        this.concurrentSubscriberHandlerSet.addAll(Arrays.stream(handlers).toList());
     }
 
     public void handleFrame(WebSocketSession session, NcfFrame frame) {
@@ -56,7 +54,7 @@ public class NcfFrameHandler {
     }
 
     private Optional<NcfSubscribeHandler> findSubscribeHandler(String destination) {
-        return this.subscribeHandlers.stream()
+        return this.concurrentSubscriberHandlerSet.stream()
                 .filter(x -> x.getDestination().equals(destination))
                 .findFirst();
     }
@@ -81,15 +79,10 @@ public class NcfFrameHandler {
     }
 
     public void disconnect(WebSocketSession session) {
-        synchronized (this.subscribeHandlers) {
-            var iterator = this.subscribeHandlers.iterator();
-            while(iterator.hasNext()) {
-                var subscribHandler = iterator.next();
-                subscribHandler.unsubscribe(session);
-                if (subscribHandler.isEmpty()) {
-                    iterator.remove();
-                }
-            }
+        var iterator = this.concurrentSubscriberHandlerSet.iterator();
+        while (iterator.hasNext()) {
+            var subscriberHandler = iterator.next();
+            subscriberHandler.unsubscribe(session);
         }
     }
 }
