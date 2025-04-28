@@ -68,6 +68,19 @@ public class AuthController {
                 .body(loginInfoDTO);
     }
 
+    @PostMapping("/app/login")
+    public ResponseEntity<LoginInfoDTO> loginApp(@RequestBody LoginRequest loginRequest) {
+        LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
+        String accessToken = jwtHandler.generateAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
+
+        return ResponseEntity.ok()
+                .headers(httpHeaders -> {
+                    httpHeaders.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
+                    httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
+                })
+                .body(loginInfoDTO);
+    }
+
     @PostMapping("/member/refresh")
     public ResponseEntity<LoginInfoDTO> refresh(@CookieValue("refreshToken") Optional<String> refreshTokenOptional) {
         var refreshToken = refreshTokenOptional.orElseThrow(() -> new ApiException("리프레쉬 토큰이 존재하지 않습니다.", "EMPTY_REFRESH", HttpStatus.BAD_REQUEST));
