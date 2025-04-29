@@ -68,13 +68,13 @@ public class NcfFrameHandler {
 
     private void handleSubscribe(WebSocketSession session, NcfFrame frame) throws IOException {
         String auth = frame.getAuthorization();
+        var destination = frame.getDestination();
         if (auth == null || !auth.startsWith("Bearer ")) {
-            sendSubscribeFailed(session, "EMPTY_TOKEN");
+            sendSubscribeFailed(session, destination, "EMPTY_TOKEN");
             return;
         }
 
         String accessToken = auth.substring("Bearer ".length());
-        var destination = frame.getDestination();
         try {
             Claims claims = jwtHandler.parseToken(accessToken);
             String roleName = claims.get("roleName", String.class);
@@ -83,23 +83,23 @@ public class NcfFrameHandler {
                     Integer memberId = jwtHandler.getId(claims);
                     Set<String> farmUuids = farmService.getFarmUuids(memberId);
                     if (!farmUuids.contains(destination)) {
-                        sendSubscribeFailed(session, "INVALID_ROLE");
+                        sendSubscribeFailed(session, destination, "INVALID_ROLE");
                         return;
                     }
                     break;
                 case "ROLE_FARM":
                     String farmUuid = claims.get("uuid", String.class);
                     if (!farmUuid.equals(destination)) {
-                        sendSubscribeFailed(session, "INVALID_ROLE");
+                        sendSubscribeFailed(session, destination, "INVALID_ROLE");
                         return;
                     }
                     break;
                 default:
-                    sendSubscribeFailed(session, "INVALID_ROLE");
+                    sendSubscribeFailed(session, destination, "INVALID_ROLE");
                     return;
             }
         } catch (Exception ex) {
-            sendSubscribeFailed(session, "INVALID_TOKEN");
+            sendSubscribeFailed(session, destination, "INVALID_TOKEN");
         }
 
         var subscribeHandlerOptional = findSubscribeHandler(destination);
@@ -110,11 +110,15 @@ public class NcfFrameHandler {
         });
 
         subscribeHandler.subscribe(session);
-        sendFrame(session, new NcfFrame("SUBSCRIBE_SUCCESS"));
+        var headers = new HashMap<String, String>();
+        headers.put("destination", destination);
+        sendFrame(session, new NcfFrame("SUBSCRIBE_SUCCESS", headers, ""));
     }
 
-    private void sendSubscribeFailed(WebSocketSession session, String reason) throws IOException {
-        sendFrame(session, new NcfFrame("SUBSCRIBE_FAILED", new HashMap<>(), "INVALID_ROLE"));
+    private void sendSubscribeFailed(WebSocketSession session, String destination, String reason) throws IOException {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("destination", destination);
+        sendFrame(session, new NcfFrame("SUBSCRIBE_FAILED", headers, reason));
     }
 
     private void sendFrame(WebSocketSession session, NcfFrame frame) throws IOException {
