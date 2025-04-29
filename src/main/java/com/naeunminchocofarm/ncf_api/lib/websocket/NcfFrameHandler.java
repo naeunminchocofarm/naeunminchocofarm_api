@@ -30,9 +30,6 @@ public class NcfFrameHandler {
             case "UNSUBSCRIBE":
                 handleUnsubscribe(session, frame);
                 break;
-            case "MESSAGE":
-                // 클라이언트가 서버로 메시지를 보낼 때는 항상 SEND 이용
-                // MESSAGE는 서버가 클라이언트로 메시지 보낼 때 사용
             default:
                 break;
         }
@@ -79,9 +76,7 @@ public class NcfFrameHandler {
     }
 
     public void disconnect(WebSocketSession session) {
-        var iterator = this.concurrentSubscriberHandlerSet.iterator();
-        while (iterator.hasNext()) {
-            var subscriberHandler = iterator.next();
+        for (NcfSubscribeHandler subscriberHandler : this.concurrentSubscriberHandlerSet) {
             subscriberHandler.unsubscribe(session);
         }
     }

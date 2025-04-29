@@ -6,8 +6,10 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class NcfSubscribeHandler {
     private static final Logger log = LogManager.getLogger(NcfSubscribeHandler.class);
@@ -31,14 +33,22 @@ public abstract class NcfSubscribeHandler {
     }
 
     public void broadcast(NcfFrame frame) {
+        var closedSessionSet = new HashSet<WebSocketSession>();
         var responseFrame = new NcfFrame("MESSAGE", frame.getHeaders(), frame.getBody());
         var responseMessage = new TextMessage(responseFrame.toString());
         this.sessions.values().forEach(x -> {
             try {
+                if (!x.isOpen()) {
+                    closedSessionSet.add(x);
+                    return;
+                }
                 x.sendMessage(responseMessage);
             } catch (IOException e) {
-                log.error(e.getMessage());
+                closedSessionSet.add(x);
             }
+        });
+        closedSessionSet.forEach(x -> {
+            sessions.remove(x.getId(), x);
         });
     }
 

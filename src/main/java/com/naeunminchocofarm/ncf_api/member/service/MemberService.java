@@ -40,10 +40,10 @@ public class MemberService {
 	};
 
 	public LoginInfoDTO login (LoginRequest request) {
-		Member member = memberMapper.findByLoginId(request.getLoginId())
+		Member member = memberMapper.findByLoginId(request.loginId())
 				.orElseThrow(() -> new ApiException("회원정보를 찾을 수 없습니다.", "NOT_FOUND_MEMBER", HttpStatus.NOT_FOUND));
 
-		if (!passwordEncoder.matches(request.getPassword(), member.getEncryptedLoginPw())) {
+		if (!passwordEncoder.matches(request.password(), member.getEncryptedLoginPw())) {
 			throw new ApiException("비밀번호를 확인해주세요", "INVALID_PW", HttpStatus.UNAUTHORIZED);
 		}
 

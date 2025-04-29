@@ -6,15 +6,20 @@ import org.springframework.web.socket.config.annotation.*;
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
-    private final NcfFrameHandler ncfFrameHandler;
+    private final WebSocketHandler webSocketHandler;
+    private final AuthWebSocketHandler authWebSocketHandler;
 
-    public WebSocketConfig(NcfFrameHandler ncfFrameHandler) {
-        this.ncfFrameHandler = ncfFrameHandler;
+    public WebSocketConfig(WebSocketHandler webSocketHandler, AuthWebSocketHandler authWebSocketHandler) {
+        this.webSocketHandler = webSocketHandler;
+        this.authWebSocketHandler = authWebSocketHandler;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new WebSocketHandler(ncfFrameHandler), "/ws")
+        registry.addHandler(webSocketHandler, "/ws")
+                .setAllowedOriginPatterns("*");
+
+        registry.addHandler(authWebSocketHandler, "/aws")
                 .setAllowedOriginPatterns("*");
     }
 }

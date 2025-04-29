@@ -146,8 +146,8 @@ public class Member {
 
 	public static Member from(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
 		Member member = new Member();// 로그인시 비교를 위해 넣어주는
-		member.setLoginId(loginRequest.getLoginId());
-		member.setEncryptedLoginPw(loginRequest.getPassword());
+		member.setLoginId(loginRequest.loginId());
+		member.setEncryptedLoginPw(loginRequest.password());
 		return member;
 	}
 
