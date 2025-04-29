@@ -150,5 +150,4 @@ public class Member {
 		member.setEncryptedLoginPw(loginRequest.password());
 		return member;
 	}
-
 }
