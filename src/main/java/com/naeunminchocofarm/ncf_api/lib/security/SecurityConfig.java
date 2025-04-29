@@ -62,7 +62,7 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-
+        config.addAllowedOriginPattern("http://localhost:8081");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
