@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -89,5 +90,13 @@ public class FarmService {
 
     public Optional<SimpleFarmDTO> getFarmByIdAndMemberId(Integer farmId, Integer memberId) {
         return farmMapper.findByIdAndMemberId(farmId, memberId);
+    }
+
+    public Optional<SimpleFarmDTO> getFarmByUuid(String farmUuid) {
+        return farmMapper.findByUuid(farmUuid);
+    }
+
+    public Set<String> getFarmUuids(Integer memberId) {
+        return farmMapper.findFarmUuidsByMemberId(memberId);
     }
 }

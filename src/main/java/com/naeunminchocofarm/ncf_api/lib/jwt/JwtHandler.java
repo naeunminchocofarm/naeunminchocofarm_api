@@ -54,10 +54,30 @@ public class JwtHandler {
      * @param roleFlag 사용자의 역할 번호
      * @return 액세스 토큰
      */
-    public String generateIndefiniteAccessToken(Integer id, String roleName, Integer roleFlag) {
+    public String generateAppAccessToken(Integer id, String roleName, Integer roleFlag) {
         return Jwts.builder()
                 .claims()
                 .add("id", id)
+                .add("roleName", roleName)
+                .add("roleFlag", roleFlag)
+                .and()
+                .signWith(this.PRIVATE_KEY)
+                .compact();
+    }
+
+    /**
+     * 스마트팜 전용 액세스 토큰을 생성합니다.
+     * @param id 스마트팜 아이디
+     * @param uuid 스마트팜 uuid
+     * @param roleName 스마트팜 권한 이름
+     * @param roleFlag 스마트팜 권한 플래그
+     * @return 액세스 토큰
+     */
+    public String generateFarmAccessToken(Integer id, String uuid, String roleName, Integer roleFlag) {
+        return Jwts.builder()
+                .claims()
+                .add("id", id)
+                .add("uuid", uuid)
                 .add("roleName", roleName)
                 .add("roleFlag", roleFlag)
                 .and()
@@ -97,5 +117,9 @@ public class JwtHandler {
         } catch (MalformedJwtException | SignatureException ex) {
             throw new InvalidAuthorizationDataException("인증정보가 유효하지 않습니다.");
         }
+    }
+
+    public Integer getId(Claims claims) {
+        return claims.get("id", Integer.class);
     }
 }

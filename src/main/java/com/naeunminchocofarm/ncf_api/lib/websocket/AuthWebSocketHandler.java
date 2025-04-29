@@ -14,7 +14,6 @@ import java.util.HashMap;
 
 @Component
 public class AuthWebSocketHandler extends TextWebSocketHandler {
-    private static final Logger log = LogManager.getLogger(AuthWebSocketHandler.class);
     private final NcfFrameHandler ncfFrameHandler;
     private final JwtHandler jwtHandler;
 

@@ -1,8 +1,6 @@
 package com.naeunminchocofarm.ncf_api.controller;
 
 import com.naeunminchocofarm.ncf_api.lib.exception.ApiException;
-import com.naeunminchocofarm.ncf_api.lib.exception.ExpiredAuthorizationDataException;
-import com.naeunminchocofarm.ncf_api.lib.exception.InvalidAuthorizationDataException;
 import com.naeunminchocofarm.ncf_api.lib.jwt.JwtHandler;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthInfo;
 import com.naeunminchocofarm.ncf_api.lib.security.AuthUser;
@@ -12,11 +10,8 @@ import com.naeunminchocofarm.ncf_api.member.dto.SignupRequest;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
 import com.naeunminchocofarm.ncf_api.member.service.MemberService;
 
+import com.naeunminchocofarm.ncf_api.smart_farm.service.FarmService;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.security.SignatureException;
-import org.apache.coyote.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +19,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,11 +32,13 @@ public class AuthController {
     private final JwtHandler jwtHandler;
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final FarmService farmService;
 
-    public AuthController(JwtHandler jwtHandler, MemberService memberService, PasswordEncoder passwordEncoder) {
+    public AuthController(JwtHandler jwtHandler, MemberService memberService, PasswordEncoder passwordEncoder, FarmService farmService) {
         this.jwtHandler = jwtHandler;
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
+        this.farmService = farmService;
     }
 
     @PostMapping("/member/login")
@@ -71,7 +67,7 @@ public class AuthController {
     @PostMapping("/app/login")
     public ResponseEntity<LoginInfoDTO> loginApp(@RequestBody LoginRequest loginRequest) {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
-        String accessToken = jwtHandler.generateIndefiniteAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
+        String accessToken = jwtHandler.generateAppAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
 
         return ResponseEntity.ok()
                 .headers(httpHeaders -> {
@@ -79,6 +75,19 @@ public class AuthController {
                     httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
                 })
                 .body(loginInfoDTO);
+    }
+
+    @PostMapping("/farm/login")
+    public ResponseEntity<LoginInfoDTO> loginFarm(@RequestParam("farm-uuid") String farmUuid) {
+        var simpleFarmDto = farmService.getFarmByUuid(farmUuid).orElseThrow(() -> new ApiException("farm-uuid를 다시 확인해주시기 바랍니다.", "INVALID_UUID", HttpStatus.UNAUTHORIZED));
+        var accessToken = jwtHandler.generateFarmAccessToken(simpleFarmDto.id(), simpleFarmDto.uuid(), "ROLE_FARM", 4);
+
+        return ResponseEntity.noContent()
+                .headers(httpHeaders -> {
+                    httpHeaders.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
+                    httpHeaders.set(HttpHeaders.AUTHORIZATION, accessToken);
+                })
+                .build();
     }
 
     @PostMapping("/member/refresh")
