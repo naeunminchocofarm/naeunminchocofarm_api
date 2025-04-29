@@ -71,7 +71,7 @@ public class AuthController {
     @PostMapping("/app/login")
     public ResponseEntity<LoginInfoDTO> loginApp(@RequestBody LoginRequest loginRequest) {
         LoginInfoDTO loginInfoDTO = memberService.login(loginRequest);
-        String accessToken = jwtHandler.generateAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
+        String accessToken = jwtHandler.generateIndefiniteAccessToken(loginInfoDTO.getId(), loginInfoDTO.getRoleName(), loginInfoDTO.getRoleFlag());
 
         return ResponseEntity.ok()
                 .headers(httpHeaders -> {

@@ -48,6 +48,24 @@ public class JwtHandler {
     }
 
     /**
+     * 액세스 토큰을 생성합니다.
+     * @param id 사용자를 식별할 수 있는 아이디
+     * @param roleName 사용자의 역할 이름
+     * @param roleFlag 사용자의 역할 번호
+     * @return 액세스 토큰
+     */
+    public String generateIndefiniteAccessToken(Integer id, String roleName, Integer roleFlag) {
+        return Jwts.builder()
+                .claims()
+                .add("id", id)
+                .add("roleName", roleName)
+                .add("roleFlag", roleFlag)
+                .and()
+                .signWith(this.PRIVATE_KEY)
+                .compact();
+    }
+
+    /**
      * 리프레쉬 토큰을 생성합니다.
      * @param id 사용자를 식별할 수 있는 식별자
      * @return 리프레쉬 토큰
