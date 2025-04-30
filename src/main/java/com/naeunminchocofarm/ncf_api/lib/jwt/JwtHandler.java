@@ -41,6 +41,7 @@ public class JwtHandler {
                 .add("id", id)
                 .add("roleName", roleName)
                 .add("roleFlag", roleFlag)
+                .add("tokenType", "access")
                 .and()
                 .expiration(new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS))
                 .signWith(this.PRIVATE_KEY)
@@ -60,6 +61,7 @@ public class JwtHandler {
                 .add("id", id)
                 .add("roleName", roleName)
                 .add("roleFlag", roleFlag)
+                .add("tokenType", "access")
                 .and()
                 .signWith(this.PRIVATE_KEY)
                 .compact();
@@ -80,6 +82,7 @@ public class JwtHandler {
                 .add("uuid", uuid)
                 .add("roleName", roleName)
                 .add("roleFlag", roleFlag)
+                .add("tokenType", "access")
                 .and()
                 .signWith(this.PRIVATE_KEY)
                 .compact();
@@ -87,13 +90,14 @@ public class JwtHandler {
 
     /**
      * 리프레쉬 토큰을 생성합니다.
-     * @param id 사용자를 식별할 수 있는 식별자
+     * @param memberId 사용자를 식별할 수 있는 식별자
      * @return 리프레쉬 토큰
      */
-    public String generateRefreshToken(Integer id) {
+    public String generateRefreshToken(Integer memberId) {
         return Jwts.builder()
                 .claims()
-                .add("id", id)
+                .add("id", memberId)
+                .add("tokenType", "refresh")
                 .and()
                 .expiration(new Date(System.currentTimeMillis() + 1000L * 3600 * 24 * 7))
                 .signWith(this.PRIVATE_KEY)
@@ -116,6 +120,14 @@ public class JwtHandler {
             throw new ExpiredAuthorizationDataException("인증정보가 만료되었습니다.");
         } catch (MalformedJwtException | SignatureException ex) {
             throw new InvalidAuthorizationDataException("인증정보가 유효하지 않습니다.");
+        }
+    }
+
+    public JwtParseResult tryParseToken(String jwt) {
+        try {
+            return JwtParseResult.success(parseToken(jwt));
+        } catch (Exception ex) {
+            return JwtParseResult.error(ex.getClass(), ex.getMessage());
         }
     }
 

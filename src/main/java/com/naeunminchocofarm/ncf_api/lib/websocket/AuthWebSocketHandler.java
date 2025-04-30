@@ -60,15 +60,13 @@ public class AuthWebSocketHandler extends TextWebSocketHandler {
             return false;
         }
 
-        try {
-            var auth = receivedFrame.getHeaders().getOrDefault("Authorization", null);
-            if (auth == null || !auth.startsWith("Bearer ")) {
-                return false;
-            }
-
-            var accessToken = auth.substring("Bearer ".length());
-            jwtHandler.parseToken(accessToken);
-        } catch (Exception ex) {
+        var auth = receivedFrame.getHeaders().getOrDefault("Authorization", null);
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            return false;
+        }
+        var accessToken = auth.substring("Bearer ".length());
+        var parseResult = jwtHandler.tryParseToken(accessToken);
+        if (!parseResult.isSuccess()) {
             return false;
         }
 

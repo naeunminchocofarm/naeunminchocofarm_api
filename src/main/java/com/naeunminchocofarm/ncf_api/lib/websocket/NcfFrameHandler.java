@@ -75,31 +75,31 @@ public class NcfFrameHandler {
         }
 
         String accessToken = auth.substring("Bearer ".length());
-        try {
-            Claims claims = jwtHandler.parseToken(accessToken);
-            String roleName = claims.get("roleName", String.class);
-            switch (roleName) {
-                case "ROLE_FAMMER":
-                    Integer memberId = jwtHandler.getId(claims);
-                    Set<String> farmUuids = farmService.getFarmUuids(memberId);
-                    if (!farmUuids.contains(destination)) {
-                        sendSubscribeFailed(session, destination, "INVALID_ROLE");
-                        return;
-                    }
-                    break;
-                case "ROLE_FARM":
-                    String farmUuid = claims.get("uuid", String.class);
-                    if (!farmUuid.equals(destination)) {
-                        sendSubscribeFailed(session, destination, "INVALID_ROLE");
-                        return;
-                    }
-                    break;
-                default:
+        var claims = jwtHandler.tryParseToken(accessToken).claims().orElse(null);
+        if (claims == null) {
+            sendSubscribeFailed(session, destination, "INVALID_TOKEN");
+            return;
+        }
+
+        switch (claims.get("roleName", String.class)) {
+            case "ROLE_FAMMER":
+                Integer memberId = jwtHandler.getId(claims);
+                Set<String> farmUuids = farmService.getFarmUuids(memberId);
+                if (!farmUuids.contains(destination)) {
                     sendSubscribeFailed(session, destination, "INVALID_ROLE");
                     return;
-            }
-        } catch (Exception ex) {
-            sendSubscribeFailed(session, destination, "INVALID_TOKEN");
+                }
+                break;
+            case "ROLE_FARM":
+                String farmUuid = claims.get("uuid", String.class);
+                if (!farmUuid.equals(destination)) {
+                    sendSubscribeFailed(session, destination, "INVALID_ROLE");
+                    return;
+                }
+                break;
+            default:
+                sendSubscribeFailed(session, destination, "INVALID_ROLE");
+                return;
         }
 
         var subscribeHandlerOptional = findSubscribeHandler(destination);
