@@ -34,18 +34,40 @@ public class JwtHandler {
 
     /**
      * 액세스 토큰을 생성합니다.
-     * @param id 사용자를 식별할 수 있는 아이디
-     * @param roleName 사용자의 역할 이름
-     * @param roleFlag 사용자의 역할 번호
+     * @param claims 토큰에 저장할 데이터의 키와 값
      * @return 액세스 토큰
      */
-    public String generateAccessToken(Integer id, String roleName, Integer roleFlag) {
-        var claims = new HashMap<String, Serializable>();
-        claims.put("id", id);
-        claims.put("roleName", roleName);
-        claims.put("roleFlag", roleFlag);
+    public String generateAccessToken(Map<String, Serializable> claims) {
         var expiration = new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS);
         return buildAccessToken(claims, expiration);
+    }
+
+    /**
+     * 리프레쉬 토큰을 생성합니다.
+     * @param claims 토큰에 저장할 데이터의 키와 값
+     * @return 리프레쉬 토큰
+     */
+    public String generateRefreshToken(Map<String, Serializable> claims) {
+        var expiration = new Date(System.currentTimeMillis() + 1000L * 3600 * 24 * 7);
+        return buildRefreshToken(claims, expiration);
+    }
+
+    /**
+     * 무기한의 액세스 토큰을 생성합니다.
+     * @param claims 토큰에 저장할 데이터의 키와 값
+     * @return 무기한 액세스 토큰
+     */
+    public String generateIndefiniteAccessToken(Map<String, Serializable> claims) {
+        return buildAccessToken(claims, null);
+    }
+
+    /**
+     * 무기한의 리프레쉬 토큰을 생성합니다.
+     * @param claims 토큰에 저장할 데이터의 키와 값
+     * @return 무기한 리프레쉬 토큰
+     */
+    public String generateIndefiniteRefreshToken(Map<String, Serializable> claims) {
+        return buildRefreshToken(claims, null);
     }
 
     private String buildAccessToken(Map<String, Serializable> claims, Date expiration) {
@@ -53,7 +75,7 @@ public class JwtHandler {
         return buildToken(claims, expiration);
     }
 
-    private String buildRefreshToken(HashMap<String, Serializable> claims, Date expiration) {
+    private String buildRefreshToken(Map<String, Serializable> claims, Date expiration) {
         claims.put(TOKEN_TYPE_KEY, TOKEN_TYPE_VALUE_REFRESH);
         return buildToken(claims, expiration);
     }
@@ -67,55 +89,34 @@ public class JwtHandler {
     }
 
     /**
-     * 액세스 토큰을 생성합니다.
-     * @param id 사용자를 식별할 수 있는 아이디
-     * @param roleName 사용자의 역할 이름
-     * @param roleFlag 사용자의 역할 번호
-     * @return 액세스 토큰
+     * 리프레쉬 토큰을 파싱합니다.
+     * @param refreshToken 리프레쉬 토큰
+     * @return claims
      */
-    public String generateAppAccessToken(Integer id, String roleName, Integer roleFlag) {
-        var claims = new HashMap<String, Serializable>();
-        claims.put("id", id);
-        claims.put("roleName", roleName);
-        claims.put("roleFlag", roleFlag);
-        return buildAccessToken(claims, null);
+    public Claims parseRefreshToken(String refreshToken) {
+        var claims = parseToken(refreshToken);
+        var tokenType = claims.get(TOKEN_TYPE_KEY, String.class);
+        if (!Objects.equals(tokenType, TOKEN_TYPE_VALUE_REFRESH)) {
+            throw new InvalidAuthorizationDataException("리프레쉬 토큰의 인증정보가 유효하지 않습니다.");
+        }
+        return claims;
     }
 
     /**
-     * 스마트팜 전용 액세스 토큰을 생성합니다.
-     * @param id 스마트팜 아이디
-     * @param uuid 스마트팜 uuid
-     * @param roleName 스마트팜 권한 이름
-     * @param roleFlag 스마트팜 권한 플래그
-     * @return 액세스 토큰
+     * 액세스 토큰을 파싱합니다.
+     * @param accessToken 액세스 토큰
+     * @return claims
      */
-    public String generateFarmAccessToken(Integer id, String uuid, String roleName, Integer roleFlag) {
-        var claims = new HashMap<String, Serializable>();
-        claims.put("id", id);
-        claims.put("uuid", uuid);
-        claims.put("roleName", roleName);
-        claims.put("roleFlag", roleFlag);
-        return buildAccessToken(claims, null);
+    public Claims parseAccessToken(String accessToken) {
+        var claims = parseToken(accessToken);
+        var tokenType = claims.get(TOKEN_TYPE_KEY, String.class);
+        if (!Objects.equals(tokenType, TOKEN_TYPE_VALUE_ACCESS)) {
+            throw new InvalidAuthorizationDataException("액세스 토큰의 인증정보가 유효하지 않습니다.");
+        }
+        return claims;
     }
 
-    /**
-     * 리프레쉬 토큰을 생성합니다.
-     * @param id 사용자를 식별할 수 있는 식별자
-     * @return 리프레쉬 토큰
-     */
-    public String generateRefreshToken(Integer id) {
-        var claims = new HashMap<String, Serializable>();
-        claims.put("id", id);
-        var expiration = new Date(System.currentTimeMillis() + 1000L * 3600 * 24 * 7);
-        return buildRefreshToken(claims, expiration);
-    }
-
-    /**
-     * 토큰을 파싱합니다.
-     * @param jwt jwt 토큰
-     * @return Claims
-     */
-    public Claims parseToken(String jwt) {
+    private Claims parseToken(String jwt) {
         try {
             return Jwts.parser()
                     .verifyWith(this.PUBLIC_KEY)
@@ -129,15 +130,19 @@ public class JwtHandler {
         }
     }
 
-    public JwtParseResult tryParseToken(String jwt) {
+    public JwtParseResult tryParseAccessToken(String accessToken) {
         try {
-            return JwtParseResult.success(parseToken(jwt));
+            return JwtParseResult.success(parseAccessToken(accessToken));
         } catch (Exception ex) {
             return JwtParseResult.error(ex.getClass(), ex.getMessage());
         }
     }
 
-    public Integer getId(Claims claims) {
-        return claims.get("id", Integer.class);
+    public JwtParseResult tryParseRefreshToken(String refreshToken) {
+        try {
+            return JwtParseResult.success(parseRefreshToken(refreshToken));
+        } catch (Exception ex) {
+            return JwtParseResult.error(ex.getClass(), ex.getMessage());
+        }
     }
 }

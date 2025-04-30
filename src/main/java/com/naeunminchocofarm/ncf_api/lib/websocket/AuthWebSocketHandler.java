@@ -65,7 +65,7 @@ public class AuthWebSocketHandler extends TextWebSocketHandler {
             return false;
         }
         var accessToken = auth.substring("Bearer ".length());
-        var parseResult = jwtHandler.tryParseToken(accessToken);
+        var parseResult = jwtHandler.tryParseAccessToken(accessToken);
         if (!parseResult.isSuccess()) {
             return false;
         }

@@ -75,7 +75,7 @@ public class NcfFrameHandler {
         }
 
         String accessToken = auth.substring("Bearer ".length());
-        var claims = jwtHandler.tryParseToken(accessToken).claims().orElse(null);
+        var claims = jwtHandler.tryParseAccessToken(accessToken).claims().orElse(null);
         if (claims == null) {
             sendSubscribeFailed(session, destination, "INVALID_TOKEN");
             return;
@@ -83,7 +83,7 @@ public class NcfFrameHandler {
 
         switch (claims.get("roleName", String.class)) {
             case "ROLE_FAMMER":
-                Integer memberId = jwtHandler.getId(claims);
+                Integer memberId = claims.get("id", Integer.class);
                 Set<String> farmUuids = farmService.getFarmUuids(memberId);
                 if (!farmUuids.contains(destination)) {
                     sendSubscribeFailed(session, destination, "INVALID_ROLE");
