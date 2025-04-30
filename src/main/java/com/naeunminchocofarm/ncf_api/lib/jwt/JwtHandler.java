@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -15,6 +16,9 @@ import java.util.*;
 
 @Component
 public class JwtHandler {
+    private static final String TOKEN_TYPE_KEY = "token-type";
+    private static final String TOKEN_TYPE_VALUE_ACCESS = "access";
+    private static final String TOKEN_TYPE_VALUE_REFRESH = "refresh";
     private final int EXPIRATION_SECONDS;
 
     // RSA 비대칭 키 사용
@@ -36,14 +40,28 @@ public class JwtHandler {
      * @return 액세스 토큰
      */
     public String generateAccessToken(Integer id, String roleName, Integer roleFlag) {
+        var claims = new HashMap<String, Serializable>();
+        claims.put("id", id);
+        claims.put("roleName", roleName);
+        claims.put("roleFlag", roleFlag);
+        var expiration = new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS);
+        return buildAccessToken(claims, expiration);
+    }
+
+    private String buildAccessToken(Map<String, Serializable> claims, Date expiration) {
+        claims.put(TOKEN_TYPE_KEY, TOKEN_TYPE_VALUE_ACCESS);
+        return buildToken(claims, expiration);
+    }
+
+    private String buildRefreshToken(HashMap<String, Serializable> claims, Date expiration) {
+        claims.put(TOKEN_TYPE_KEY, TOKEN_TYPE_VALUE_REFRESH);
+        return buildToken(claims, expiration);
+    }
+
+    private String buildToken(Map<String, Serializable> claims, Date expiration) {
         return Jwts.builder()
-                .claims()
-                .add("id", id)
-                .add("roleName", roleName)
-                .add("roleFlag", roleFlag)
-                .add("tokenType", "access")
-                .and()
-                .expiration(new Date(System.currentTimeMillis() + 1000L * this.EXPIRATION_SECONDS))
+                .claims(claims)
+                .expiration(expiration)
                 .signWith(this.PRIVATE_KEY)
                 .compact();
     }
@@ -56,15 +74,11 @@ public class JwtHandler {
      * @return 액세스 토큰
      */
     public String generateAppAccessToken(Integer id, String roleName, Integer roleFlag) {
-        return Jwts.builder()
-                .claims()
-                .add("id", id)
-                .add("roleName", roleName)
-                .add("roleFlag", roleFlag)
-                .add("tokenType", "access")
-                .and()
-                .signWith(this.PRIVATE_KEY)
-                .compact();
+        var claims = new HashMap<String, Serializable>();
+        claims.put("id", id);
+        claims.put("roleName", roleName);
+        claims.put("roleFlag", roleFlag);
+        return buildAccessToken(claims, null);
     }
 
     /**
@@ -76,32 +90,24 @@ public class JwtHandler {
      * @return 액세스 토큰
      */
     public String generateFarmAccessToken(Integer id, String uuid, String roleName, Integer roleFlag) {
-        return Jwts.builder()
-                .claims()
-                .add("id", id)
-                .add("uuid", uuid)
-                .add("roleName", roleName)
-                .add("roleFlag", roleFlag)
-                .add("tokenType", "access")
-                .and()
-                .signWith(this.PRIVATE_KEY)
-                .compact();
+        var claims = new HashMap<String, Serializable>();
+        claims.put("id", id);
+        claims.put("uuid", uuid);
+        claims.put("roleName", roleName);
+        claims.put("roleFlag", roleFlag);
+        return buildAccessToken(claims, null);
     }
 
     /**
      * 리프레쉬 토큰을 생성합니다.
-     * @param memberId 사용자를 식별할 수 있는 식별자
+     * @param id 사용자를 식별할 수 있는 식별자
      * @return 리프레쉬 토큰
      */
-    public String generateRefreshToken(Integer memberId) {
-        return Jwts.builder()
-                .claims()
-                .add("id", memberId)
-                .add("tokenType", "refresh")
-                .and()
-                .expiration(new Date(System.currentTimeMillis() + 1000L * 3600 * 24 * 7))
-                .signWith(this.PRIVATE_KEY)
-                .compact();
+    public String generateRefreshToken(Integer id) {
+        var claims = new HashMap<String, Serializable>();
+        claims.put("id", id);
+        var expiration = new Date(System.currentTimeMillis() + 1000L * 3600 * 24 * 7);
+        return buildRefreshToken(claims, expiration);
     }
 
     /**
