@@ -112,4 +112,51 @@
 
     <!-- 필요한거 web 마이페이지수정 insert-->
     <!-- 필요한거 web 회원탈퇴 delete-->
+
+    <!-- 프로필 이미지 등록 -->
+    <insert id="insertMemberImg" parameterType="com.naeunminchocofarm.ncf_api.member.entity.MemberImg">
+        INSERT INTO member_img (
+        origin_file_name,
+        attached_file_name,
+        member_id
+        ) VALUES (
+        #{originFileName},
+        #{attachedFileName},
+        #{memberId}
+        )
+    </insert>
+
+    <!-- 프로필 이미지 조회 (회원 ID로) -->
+    <resultMap id="memberImgMap" type="com.naeunminchocofarm.ncf_api.member.entity.MemberImg">
+        <id column="img_id" property="imgId"/>
+        <result column="origin_file_name" property="originFileName"/>
+        <result column="attached_file_name" property="attachedFileName"/>
+        <result column="member_id" property="memberId"/>
+    </resultMap>
+
+    <select id="getMemberImgByMemberId" resultMap="memberImgMap" parameterType="int">
+        SELECT
+        img_id,
+        origin_file_name,
+        attached_file_name,
+        member_id
+        FROM member_img
+        WHERE member_id = #{memberId}
+    </select>
+
+    <!-- 프로필 이미지 수정 -->
+    <update id="updateMemberImg" parameterType="com.naeunminchocofarm.ncf_api.member.entity.MemberImg">
+        UPDATE member_img
+        SET
+        origin_file_name = #{originFileName},
+        attached_file_name = #{attachedFileName}
+        WHERE member_id = #{memberId}
+    </update>
+
+    <!-- 프로필 이미지 삭제 -->
+    <delete id="deleteMemberImgByMemberId" parameterType="int">
+        DELETE FROM member_img
+        WHERE member_id = #{memberId}
+    </delete>
+
 </mapper>
