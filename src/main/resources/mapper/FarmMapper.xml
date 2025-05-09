@@ -37,6 +37,8 @@
             <arg column="crop" javaType="String" />
             <arg column="farm_addr" javaType="String" />
             <arg column="status" javaType="String" />
+            <arg column="role_flag" javaType="Integer" />
+            <arg column="role_name" javaType="String" />
         </constructor>
     </resultMap>
 
@@ -103,8 +105,11 @@
             , f.crop
             , f.farm_addr
             , f.status
+            , f.role_flag
+            , r.role_name
         FROM farms f
         JOIN uuids u ON u.id = f.uuid_id
+        LEFT JOIN member_role r ON r.role_flag = f.role_flag
         WHERE member_id = #{memberId}
         ORDER BY id DESC;
     </select>
@@ -119,11 +124,40 @@
             , f.crop
             , f.farm_addr
             , f.status
+            , f.role_flag
+            , r.role_name
         FROM farms f
         JOIN uuids u ON u.id = f.uuid_id
+        LEFT JOIN member_role r ON r.role_flag = f.role_flag
         WHERE f.member_id = #{memberId}
             AND f.id = #{farmId}
         ORDER BY f.id DESC;
+    </select>
+
+    <select id="findByUuid" resultMap="simpleFarmMap">
+        SELECT
+            f.id
+            , f.member_id
+            , f.farm_name
+            , u.uuid
+            , f.use_date
+            , f.crop
+            , f.farm_addr
+            , f.status
+            , f.role_flag
+            , r.role_name
+        FROM farms f
+        JOIN uuids u ON u.id = f.uuid_id
+        LEFT JOIN member_role r ON r.role_flag = f.role_flag
+        WHERE u.uuid = #{farmUuid};
+    </select>
+
+    <select id="findFarmUuidsByMemberId" resultType="String">
+        SELECT
+            u.uuid
+        FROM farms f
+        JOIN uuids u ON u.id = f.uuid_id
+        WHERE f.member_id = #{memberId};
     </select>
 
     <!-- 스마트팜 등록 -->

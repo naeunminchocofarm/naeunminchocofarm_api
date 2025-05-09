@@ -10,5 +10,7 @@ public record SimpleFarmDTO (
         OffsetDateTime useDate,
         String cropName,
         String address,
-        String status
+        String status,
+        Integer roleFlag,
+        String roleName
 ) {}

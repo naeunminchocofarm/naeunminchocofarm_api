@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Mapper
 public interface FarmMapper {
@@ -35,4 +36,6 @@ public interface FarmMapper {
     void deleteFarm(@Param("id") Integer id);
     List<SimpleFarmDTO> findByMemberId(@Param("memberId") Integer id);
     Optional<SimpleFarmDTO> findByIdAndMemberId(@Param("farmId") Integer farmId, @Param("memberId") Integer memberId);
+    Optional<SimpleFarmDTO> findByUuid(@Param("farmUuid") String farmUuid);
+    Set<String> findFarmUuidsByMemberId(@Param("memberId") Integer memberId);
 }

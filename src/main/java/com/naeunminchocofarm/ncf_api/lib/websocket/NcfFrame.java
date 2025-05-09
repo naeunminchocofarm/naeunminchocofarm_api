@@ -84,4 +84,8 @@ public class NcfFrame {
     public String getDestination() {
         return this.headers.getOrDefault("destination", "");
     }
+
+    public String getAuthorization() {
+        return this.headers.get("Authorization");
+    }
 }

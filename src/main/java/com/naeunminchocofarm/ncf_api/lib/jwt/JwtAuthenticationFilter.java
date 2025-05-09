@@ -34,8 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		final String AUTHORIZATION_PREFIX = "Bearer ";
 
 		if (header != null && header.startsWith(AUTHORIZATION_PREFIX)) {
-			final String jwt = header.substring(AUTHORIZATION_PREFIX.length());
-			Claims claims = this.jwtHandler.parseToken(jwt);
+			final String accessToken = header.substring(AUTHORIZATION_PREFIX.length());
+			var claims = jwtHandler.parseAccessToken(accessToken);
 			var authenticationToken = getAuthenticationToken(claims);
 			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		}
