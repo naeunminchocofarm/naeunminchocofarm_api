@@ -8,6 +8,7 @@ import com.naeunminchocofarm.ncf_api.member.dto.MemberDTO;
 import com.naeunminchocofarm.ncf_api.member.dto.MemberInfoDTO;
 import com.naeunminchocofarm.ncf_api.member.entity.LoginInfo;
 import com.naeunminchocofarm.ncf_api.member.entity.Member;
+import com.naeunminchocofarm.ncf_api.member.entity.MemberImg;
 import com.naeunminchocofarm.ncf_api.member.mapper.MemberMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,4 +61,27 @@ public class MemberService {
     public Optional<MemberInfoDTO> getMemberInfo(Integer id) {
 		return memberMapper.getMemberInfo(id);
     }
+
+		// 프로필 이미지 등록
+		public void insertMemberImg(MemberImg memberImg) {
+			memberMapper.insertMemberImg(memberImg);
+		}
+
+		// 회원 ID로 프로필 이미지 조회
+		public MemberImg getMemberImgByMemberId(Integer memberId) {
+			return memberMapper.getMemberImgByMemberId(memberId);
+		}
+
+		// 프로필 이미지 수정
+		public void updateMemberImg(MemberImg memberImg) {
+			memberMapper.updateMemberImg(memberImg);
+		}
+
+		//프로필 이미지 삭제
+		public void deleteMemberImgByMemberId(Integer memberId) {
+			memberMapper.deleteMemberImgByMemberId(memberId);
+		}
+
+
+
 }
