@@ -36,8 +36,12 @@ public class MemberController {
 	@GetMapping("/admin/members")
 	public List<MemberDTO> getMemberList(@RequestParam(value = "page", defaultValue = "1") Integer page,
 																			 @RequestParam(value = "size", defaultValue = "10") Integer size) {
-		Pagination pagination = new Pagination(size, page);
-		return memberService.getMemberList(pagination);
+		try {
+			Pagination pagination = new Pagination(size, page);
+			return memberService.getMemberList(pagination);
+		} catch (IllegalArgumentException ex) {
+			throw new ApiException(ex.getMessage(), "BAD_REQUEST", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping("/member/farms")
